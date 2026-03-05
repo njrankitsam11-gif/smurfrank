@@ -16,6 +16,132 @@ export default async function ListingPage({ params }) {
       description: 'Clean CS2 Prime account with Gold Nova III rank. Never cheated, no VAC bans. Comes with original email. UAE server region. Instant delivery after payment.',
       includes: ['Original Email Access', 'Prime Status', 'Clean VAC Record', '24/7 Support', 'Instant Delivery'],
     },
+    'cs2-prime-eu-1': {
+      title: 'CS2 Prime Account — Master Guardian',
+      game: 'Counter-Strike 2',
+      rank: 'Master Guardian II',
+      region: 'EU 🇪🇺',
+      price: '$19.99',
+      level: '45',
+      wins: '230',
+      hours: '560',
+      type: 'Prime',
+      instant: true,
+      description: 'Clean CS2 Prime account with Master Guardian II rank on EU servers. Never cheated, no VAC bans. Original email included.',
+      includes: ['Original Email Access', 'Prime Status', 'Clean VAC Record', '24/7 Support', 'Instant Delivery'],
+    },
+    'cs2-faceit-na-1': {
+      title: 'CS2 Faceit Account — Level 5',
+      game: 'Counter-Strike 2',
+      rank: 'Faceit Level 5',
+      region: 'NA 🇺🇸',
+      price: '$24.99',
+      level: '38',
+      wins: '198',
+      hours: '480',
+      type: 'Faceit',
+      instant: true,
+      description: 'CS2 Faceit Level 5 account on NA servers. Clean account, original email included. Perfect for competitive play.',
+      includes: ['Original Email Access', 'Faceit Level 5', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'cs2-prime-sea-1': {
+      title: 'CS2 Prime Account — Legendary Eagle',
+      game: 'Counter-Strike 2',
+      rank: 'Legendary Eagle',
+      region: 'SEA 🌏',
+      price: '$29.99',
+      level: '52',
+      wins: '310',
+      hours: '720',
+      type: 'Prime',
+      instant: true,
+      description: 'Clean CS2 Prime Legendary Eagle account on SEA servers. Never cheated, no VAC bans. Original email included.',
+      includes: ['Original Email Access', 'Prime Status', 'Legendary Eagle Rank', '24/7 Support', 'Instant Delivery'],
+    },
+    'cs2-highrank-uae-1': {
+      title: 'CS2 High Rank — Supreme',
+      game: 'Counter-Strike 2',
+      rank: 'Supreme Master First Class',
+      region: 'UAE 🇦🇪',
+      price: '$39.99',
+      level: '68',
+      wins: '420',
+      hours: '1100',
+      type: 'Prime',
+      instant: true,
+      description: 'CS2 Supreme Master First Class account on UAE servers. High level, clean account, original email included.',
+      includes: ['Original Email Access', 'Prime Status', 'Supreme Rank', '24/7 Support', 'Instant Delivery'],
+    },
+    'cs2-faceit-eu-1': {
+      title: 'CS2 Faceit Account — Level 8',
+      game: 'Counter-Strike 2',
+      rank: 'Faceit Level 8',
+      region: 'EU 🇪🇺',
+      price: '$49.99',
+      level: '72',
+      wins: '510',
+      hours: '1400',
+      type: 'Faceit',
+      instant: true,
+      description: 'CS2 Faceit Level 8 account on EU servers. High level competitive account, clean, original email included.',
+      includes: ['Original Email Access', 'Faceit Level 8', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'valorant-silver-uae-1': {
+      title: 'Valorant Smurf Account — Silver',
+      game: 'Valorant',
+      rank: 'Silver 2',
+      region: 'UAE 🇦🇪',
+      price: '$9.99',
+      level: '45',
+      wins: '98',
+      hours: '210',
+      type: 'Ranked',
+      instant: true,
+      description: 'Clean Valorant Silver 2 account on UAE server. Never banned, original email included. Perfect smurf account.',
+      includes: ['Original Email Access', 'Silver 2 Rank', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'valorant-gold-eu-1': {
+      title: 'Valorant Smurf Account — Gold',
+      game: 'Valorant',
+      rank: 'Gold 1',
+      region: 'EU 🇪🇺',
+      price: '$14.99',
+      level: '52',
+      wins: '145',
+      hours: '320',
+      type: 'Ranked',
+      instant: true,
+      description: 'Clean Valorant Gold 1 account on EU server. Never banned, original email included.',
+      includes: ['Original Email Access', 'Gold 1 Rank', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'valorant-platinum-na-1': {
+      title: 'Valorant Ranked Account — Platinum',
+      game: 'Valorant',
+      rank: 'Platinum 2',
+      region: 'NA 🇺🇸',
+      price: '$19.99',
+      level: '61',
+      wins: '198',
+      hours: '450',
+      type: 'Ranked',
+      instant: true,
+      description: 'Clean Valorant Platinum 2 account on NA server. Never banned, original email included.',
+      includes: ['Original Email Access', 'Platinum 2 Rank', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'valorant-diamond-sea-1': {
+      title: 'Valorant Ranked Account — Diamond',
+      game: 'Valorant',
+      rank: 'Diamond 1',
+      region: 'SEA 🌏',
+      price: '$29.99',
+      level: '70',
+      wins: '245',
+      hours: '620',
+      type: 'Ranked',
+      instant: true,
+      description: 'Clean Valorant Diamond 1 account on SEA server. Never banned, original email included.',
+      includes: ['Original Email Access', 'Diamond 1 Rank', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
     'valorant-immortal-uae-1': {
       title: 'Valorant Immortal Account — UAE',
       game: 'Valorant',
@@ -27,22 +153,106 @@ export default async function ListingPage({ params }) {
       hours: '890',
       type: 'Ranked',
       instant: true,
-      description: 'Valorant Immortal 2 account on UAE server. 85 skins including rare battlepass skins. Clean account, never banned. Instant delivery after payment.',
+      description: 'Valorant Immortal 2 account on UAE server. 85 skins including rare battlepass skins. Clean account, never banned.',
       includes: ['Original Email Access', '85 Skins', 'Immortal 2 Rank', 'Clean Account', 'Instant Delivery'],
     },
+    'valorant-radiant-eu-1': {
+      title: 'Valorant Top Rank — Radiant',
+      game: 'Valorant',
+      rank: 'Radiant',
+      region: 'EU 🇪🇺',
+      price: '$99.99',
+      level: '95',
+      wins: '489',
+      hours: '1200',
+      type: 'Ranked',
+      instant: true,
+      description: 'Valorant Radiant account on EU server. Top 500 players. Rare skins included. Never banned.',
+      includes: ['Original Email Access', 'Radiant Rank', 'Rare Skins', 'Clean Account', 'Instant Delivery'],
+    },
     'gta-v-modded-uae-1': {
+      title: 'GTA V Modded Account — Level 120',
+      game: 'GTA V Online',
+      rank: 'Level 120',
+      region: 'UAE 🇦🇪',
+      price: '$14.99',
+      level: '120',
+      wins: '-',
+      hours: '210',
+      type: 'Modded',
+      instant: true,
+      description: 'GTA V Online modded account with Level 120, $50M cash. Available for PC. Instant delivery after payment.',
+      includes: ['Level 120', '$50M Cash', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'gta-v-modded-na-1': {
       title: 'GTA V Modded Account — Level 200',
       game: 'GTA V Online',
       rank: 'Level 200',
-      region: 'UAE 🇦🇪',
+      region: 'NA 🇺🇸',
       price: '$19.99',
       level: '200',
       wins: '-',
       hours: '340',
       type: 'Modded',
       instant: true,
-      description: 'GTA V Online modded account with Level 200, $200M cash, all properties unlocked. Available for PC. Instant delivery after payment.',
+      description: 'GTA V Online modded account with Level 200, $200M cash, all properties unlocked. Available for PC.',
       includes: ['Level 200', '$200M Cash', 'All Properties', 'Rare Vehicles', 'Instant Delivery'],
+    },
+    'gta-v-fullunlock-eu-1': {
+      title: 'GTA V Full Unlock — Level 300',
+      game: 'GTA V Online',
+      rank: 'Level 300',
+      region: 'EU 🇪🇺',
+      price: '$29.99',
+      level: '300',
+      wins: '-',
+      hours: '520',
+      type: 'Full Unlock',
+      instant: true,
+      description: 'GTA V Online Level 300 account with all vehicles unlocked. Available for PC. Instant delivery.',
+      includes: ['Level 300', 'All Vehicles', 'Full Unlock', '24/7 Support', 'Instant Delivery'],
+    },
+    'gta-v-money-sea-1': {
+      title: 'GTA V Money Account — Level 150',
+      game: 'GTA V Online',
+      rank: 'Level 150',
+      region: 'SEA 🌏',
+      price: '$24.99',
+      level: '150',
+      wins: '-',
+      hours: '280',
+      type: 'Money',
+      instant: true,
+      description: 'GTA V Online Level 150 account with $100M cash. Available for PC. Instant delivery.',
+      includes: ['Level 150', '$100M Cash', 'Clean Account', '24/7 Support', 'Instant Delivery'],
+    },
+    'gta-v-modded-uae-2': {
+      title: 'GTA V Modded Account — Level 500',
+      game: 'GTA V Online',
+      rank: 'Level 500',
+      region: 'UAE 🇦🇪',
+      price: '$49.99',
+      level: '500',
+      wins: '-',
+      hours: '890',
+      type: 'Modded',
+      instant: true,
+      description: 'GTA V Online Level 500 account with max stats. Available for PC. Instant delivery.',
+      includes: ['Level 500', 'Max Stats', 'All Weapons', '24/7 Support', 'Instant Delivery'],
+    },
+    'gta-v-fullunlock-eu-2': {
+      title: 'GTA V Full Unlock — Level 8000',
+      game: 'GTA V Online',
+      rank: 'Level 8000',
+      region: 'EU 🇪🇺',
+      price: '$79.99',
+      level: '8000',
+      wins: '-',
+      hours: '2100',
+      type: 'Full Unlock',
+      instant: true,
+      description: 'GTA V Online Level 8000 account with everything unlocked. The ultimate GTA V account. Available for PC.',
+      includes: ['Level 8000', 'Everything Unlocked', 'All Vehicles', 'Max Money', 'Instant Delivery'],
     },
   };
 
@@ -85,21 +295,15 @@ export default async function ListingPage({ params }) {
       </div>
 
       <div style={{maxWidth: '1200px', margin: '0 auto', padding: '40px', display: 'grid', gridTemplateColumns: '1fr 360px', gap: '40px'}}>
-
         <div>
-          <div style={{background: '#0f0f17', border: '1px solid #1a1a1a', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', fontSize: '80px'}}>
-            🎮
-          </div>
-
+          <div style={{background: '#0f0f17', border: '1px solid #1a1a1a', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', fontSize: '80px'}}>🎮</div>
           <h1 style={{fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '8px'}}>{listing.title}</h1>
-          
           <div style={{display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap'}}>
             <span style={{background: 'rgba(255,106,0,0.1)', color: '#FF6A00', padding: '4px 12px', fontSize: '12px', border: '1px solid rgba(255,106,0,0.3)'}}>{listing.rank}</span>
             <span style={{background: '#0f0f17', color: '#999', padding: '4px 12px', fontSize: '12px', border: '1px solid #1a1a1a'}}>{listing.region}</span>
             <span style={{background: '#0f0f17', color: '#999', padding: '4px 12px', fontSize: '12px', border: '1px solid #1a1a1a'}}>{listing.type}</span>
             {listing.instant && <span style={{background: 'rgba(0,230,118,0.1)', color: '#00E676', padding: '4px 12px', fontSize: '12px', border: '1px solid rgba(0,230,118,0.3)'}}>⚡ Instant Delivery</span>}
           </div>
-
           <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: '#1a1a1a', marginBottom: '24px'}}>
             {[{label: 'Level', value: listing.level}, {label: 'Wins', value: listing.wins}, {label: 'Hours', value: listing.hours}].map((stat) => (
               <div key={stat.label} style={{background: '#0f0f17', padding: '20px', textAlign: 'center'}}>
@@ -108,12 +312,10 @@ export default async function ListingPage({ params }) {
               </div>
             ))}
           </div>
-
           <div style={{background: '#0f0f17', border: '1px solid #1a1a1a', padding: '24px', marginBottom: '24px'}}>
             <div style={{fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#FF6A00', marginBottom: '12px'}}>Description</div>
             <p style={{color: '#999', fontSize: '14px', lineHeight: '1.8'}}>{listing.description}</p>
           </div>
-
           <div style={{background: '#0f0f17', border: '1px solid #1a1a1a', padding: '24px'}}>
             <div style={{fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#FF6A00', marginBottom: '16px'}}>What's Included</div>
             {listing.includes.map((item) => (
@@ -139,7 +341,6 @@ export default async function ListingPage({ params }) {
             </div>
           </div>
         </div>
-
       </div>
 
       <footer style={{padding: '40px', textAlign: 'center', borderTop: '1px solid #1a1a1a', marginTop: '40px'}}>
