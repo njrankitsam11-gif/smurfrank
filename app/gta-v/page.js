@@ -47,7 +47,7 @@ export default async function GTAVPage() {
               <div style={{fontSize: '13px', color: '#FF6A00', marginBottom: '4px'}}>{listing.rank}</div>
               <div style={{fontSize: '12px', color: '#666', marginBottom: '20px'}}>{listing.region}</div>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <div style={{fontSize: '24px', fontWeight: 900, color: '#FF6A00'}}>${listing.price}</div>
+                <div style={{fontSize: '24px', fontWeight: 900, color: '#FF6A00'}}>${Number(listing.price).toFixed(2)}</div>
                 <a href={`/listings/${listing.id}`} style={{background: '#FF6A00', color: '#000', border: 'none', padding: '10px 20px', fontWeight: 700, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px', cursor: 'pointer', textDecoration: 'none'}}>
                   Buy Now
                 </a>
