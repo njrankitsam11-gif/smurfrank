@@ -19,9 +19,30 @@ export default async function ListingPage({ params }) {
     description: 'This listing does not exist.',
     includes: [],
   };
+  const schemaMarkup = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: listing.title,
+    description: listing.description,
+    offers: {
+      '@type': 'Offer',
+      price: listing.price,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'SmurfRank',
+      },
+    },
+  };
 
   return (
     <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
+      
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+  />
 
       <nav style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: '64px', borderBottom: '1px solid #1a1a1a', position: 'sticky', top: 0, backgroundColor: '#050507', zIndex: 100}}>
         <a href="/" style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white'}}>
