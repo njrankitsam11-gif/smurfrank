@@ -1,4 +1,8 @@
-export default function Home() {
+export const metadata = {
+  title: 'Buy CS2, Valorant & GTA V Smurf Accounts — SmurfRank',
+  description: 'Buy cheap smurf accounts for CS2, Valorant and GTA V. Instant delivery, escrow protected, verified sellers. From $9.99. UAE, NA, EU, SEA regions.',
+  keywords: ['buy smurf accounts', 'cs2 smurf account', 'valorant smurf account', 'gta v modded account', 'cheap gaming accounts', 'instant delivery'],
+};export default function Home() {
   return (
     <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
       
