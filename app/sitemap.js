@@ -1,136 +1,29 @@
-export default function sitemap() {
-  return [
-    {
-      url: 'https://smurfrank.vercel.app',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/cs2',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/valorant',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/gta-v',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/cs2-prime-uae-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/cs2-prime-eu-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/cs2-faceit-na-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/cs2-prime-sea-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/cs2-highrank-uae-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/cs2-faceit-eu-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/valorant-silver-uae-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/valorant-gold-eu-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/valorant-platinum-na-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/valorant-diamond-sea-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/valorant-immortal-uae-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/valorant-radiant-eu-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/gta-v-modded-uae-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/gta-v-modded-na-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/gta-v-fullunlock-eu-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/gta-v-money-sea-1',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/gta-v-modded-uae-2',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://smurfrank.vercel.app/listings/gta-v-fullunlock-eu-2',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-  ];
+import { prisma } from '../lib/prisma';
+
+export default async function sitemap() {
+  const BASE_URL = 'https://smurfrank.vercel.app';
+
+  // Fetch all active listings from your database
+  const listings = await prisma.listing.findMany({
+    where: { active: true },
+    select: { id: true, updatedAt: true },
+  });
+
+  // 1. Static Pages
+  const routes = ['', '/cs2', '/valorant', '/gta-v', '/sell', '/search'].map((route) => ({
+    url: `${BASE_URL}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1,
+  }));
+
+  // 2. Dynamic Listing Pages (Google finds every account automatically)
+  const listingRoutes = listings.map((item) => ({
+    url: `${BASE_URL}/listings/${item.id}`,
+    lastModified: item.updatedAt,
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  return [...routes, ...listingRoutes];
 }
