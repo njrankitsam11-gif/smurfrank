@@ -1,0 +1,136 @@
+export default function sitemap() {
+  return [
+    {
+      url: 'https://smurfrank.vercel.app',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/cs2',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/valorant',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/gta-v',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/cs2-prime-uae-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/cs2-prime-eu-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/cs2-faceit-na-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/cs2-prime-sea-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/cs2-highrank-uae-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/cs2-faceit-eu-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/valorant-silver-uae-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/valorant-gold-eu-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/valorant-platinum-na-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/valorant-diamond-sea-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/valorant-immortal-uae-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/valorant-radiant-eu-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/gta-v-modded-uae-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/gta-v-modded-na-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/gta-v-fullunlock-eu-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/gta-v-money-sea-1',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/gta-v-modded-uae-2',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://smurfrank.vercel.app/listings/gta-v-fullunlock-eu-2',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+  ];
+}
