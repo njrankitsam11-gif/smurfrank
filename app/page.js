@@ -86,6 +86,21 @@ export default function Home() {
         </div>
       </section>
 
+ {/* SEO CONTENT */}
+      <section style={{padding: '60px 40px', maxWidth: '900px', margin: '0 auto'}}>
+        <h2 style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '24px'}}>
+          Buy Smurf Accounts — <span style={{color: '#FF6A00'}}>Safe, Fast & Cheap</span>
+        </h2>
+        <p style={{color: '#666', fontSize: '14px', lineHeight: '1.8', marginBottom: '16px'}}>
+          SmurfRank is the most trusted marketplace to buy CS2 smurf accounts, Valorant smurf accounts, and GTA V modded accounts. All accounts are verified by our team before listing. We offer instant delivery across all regions including UAE, NA, EU, SEA, and SA.
+        </p>
+        <p style={{color: '#666', fontSize: '14px', lineHeight: '1.8', marginBottom: '16px'}}>
+          Whether you're looking for a cheap CS2 Prime account, a high-ranked Valorant account, or a GTA V modded account with millions in cash — SmurfRank has you covered. All purchases are escrow protected, meaning your money is safe until you receive your account.
+        </p>
+        <p style={{color: '#666', fontSize: '14px', lineHeight: '1.8'}}>
+          Our verified sellers offer accounts for all skill levels — from CS2 Gold Nova to Global Elite, Valorant Silver to Radiant, and GTA V Level 100 to Level 8000. Buy with confidence knowing every account comes with 24/7 support and instant delivery.
+        </p>
+      </section>
       {/* FOOTER */}
       <footer style={{padding: '40px', textAlign: 'center', color: '#333', fontSize: '13px'}}>
         <div style={{fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', color: 'white', marginBottom: '16px'}}>
