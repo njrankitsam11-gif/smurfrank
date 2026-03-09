@@ -1,4 +1,4 @@
-import { prisma } from './lib/prisma';
+import { prisma } from '../lib/prisma';
 
 export const metadata = {
   title: 'RankVault | Buy Ranked Gaming Accounts - UAE, NA, EU & SEA',
