@@ -1,125 +1,131 @@
+import { prisma } from './lib/prisma';
+
 export const metadata = {
-  title: 'Buy CS2, Valorant & GTA V Smurf Accounts — SmurfRank',
-  description: 'Buy cheap smurf accounts for CS2, Valorant and GTA V. Instant delivery, escrow protected, verified sellers. From $9.99. UAE, NA, EU, SEA regions.',
-  keywords: ['buy smurf accounts', 'cs2 smurf account', 'valorant smurf account', 'gta v modded account', 'cheap gaming accounts', 'instant delivery'],
-};export default function Home() {
+  title: 'RankVault | Buy Ranked Gaming Accounts - UAE, NA, EU & SEA',
+  description: 'The #1 marketplace for CS2, Valorant, and GTA V smurf accounts. Safe escrow protection, instant delivery, and verified sellers globally.',
+  keywords: ['buy smurf accounts', 'ranked gaming accounts', 'CS2 prime accounts UAE', 'Valorant smurfs'],
+};
+
+export default async function HomePage() {
+  // Fetch a few featured listings to show life on the homepage
+  const featuredListings = await prisma.listing.findMany({
+    where: { active: true },
+    take: 4,
+    orderBy: { createdAt: 'desc' },
+  });
+
+  const faqs = [
+    { q: 'Why choose RankVault for smurf accounts?', a: 'RankVault offers the most secure marketplace with instant delivery, verified sellers, and full escrow protection for every purchase.' },
+    { q: 'How does the escrow protection work?', a: 'Your payment is held securely by our platform until you verify the account credentials. Only then are the funds released to the seller.' },
+    { q: 'Can I buy accounts for specific regions like UAE or NA?', a: 'Yes, we specialize in multi-region accounts. You can filter by UAE, North America, Europe, and more for all major games.' },
+  ];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "RankVault",
+    "url": "https://smurfrank.vercel.app",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://smurfrank.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
-      
-      {/* NAVBAR */}
-      <nav style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: '64px', borderBottom: '1px solid #1a1a1a', position: 'sticky', top: 0, backgroundColor: '#050507', zIndex: 100}}>
-        <div style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase'}}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+      {/* Navigation */}
+      <nav style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: '64px', borderBottom: '1px solid #1a1a1a', backgroundColor: '#050507'}}>
+        <a href="/" style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white'}}>
           Smurf<span style={{color: '#FF6A00'}}>Rank</span>
-        </div>
-        <div style={{display: 'flex', gap: '32px', fontSize: '13px', color: '#999'}}>
+        </a>
+        <div style={{display: 'flex', gap: '32px', fontSize: '13px'}}>
           <a href="/cs2" style={{color: '#999', textDecoration: 'none'}}>CS2</a>
           <a href="/valorant" style={{color: '#999', textDecoration: 'none'}}>Valorant</a>
           <a href="/gta-v" style={{color: '#999', textDecoration: 'none'}}>GTA V</a>
         </div>
-        <a href="/login" style={{background: '#FF6A00', color: '#000', padding: '8px 20px', fontWeight: 700, textDecoration: 'none', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px'}}>Sign In</a>
+        <a href="/login" style={{background: '#FF6A00', color: '#000', padding: '8px 20px', fontWeight: 700, textDecoration: 'none', fontSize: '13px', textTransform: 'uppercase'}}>Sign In</a>
       </nav>
 
-      {/* HERO */}
-      <section style={{textAlign: 'center', padding: '100px 20px 80px'}}>
-        <div style={{fontSize: '13px', color: '#FF6A00', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '20px'}}>Trusted by 10,000+ Gamers Worldwide</div>
-        <h1 style={{fontSize: 'clamp(40px, 8vw, 90px)', fontWeight: 900, textTransform: 'uppercase', margin: '0 0 20px', lineHeight: 1}}>
-          Buy Ranked<br/><span style={{color: '#FF6A00'}}>Smurf Accounts</span>
+      {/* Hero Section - Blueprint Section 06 */}
+      <section style={{padding: '120px 40px 80px', textAlign: 'center', background: 'radial-gradient(circle at top, rgba(255,106,0,0.05) 0%, transparent 70%)'}}>
+        <div style={{fontSize: '12px', color: '#FF6A00', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '20px'}}>Technical Architecture v1.0</div>
+        <h1 style={{fontSize: 'clamp(40px, 8vw, 100px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 0.9, marginBottom: '24px'}}>
+          The Ultimate <span style={{color: '#FF6A00'}}>Marketplace</span><br/>for Ranked Accounts
         </h1>
-        <p style={{color: '#666', fontSize: '18px', maxWidth: '500px', margin: '0 auto 40px'}}>
-          CS2 · Valorant · GTA V — Instant delivery, escrow protected, verified sellers
+        <p style={{color: '#888', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px'}}>
+          Secure, instant, and verified. Skip the grind in CS2, Valorant, and GTA V with our premium account selection.
         </p>
-        <div style={{display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap'}}>
-          <a href="/cs2" style={{background: '#FF6A00', color: '#000', padding: '16px 40px', fontWeight: 700, textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '14px'}}>Browse Accounts</a>
-          <a href="/how-it-works" style={{background: 'transparent', color: 'white', padding: '16px 40px', fontWeight: 700, textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '14px', border: '1px solid #333'}}>How It Works</a>
+        <div style={{display: 'flex', gap: '16px', justifyContent: 'center'}}>
+          <a href="/cs2" style={{background: '#FF6A00', color: '#000', padding: '16px 32px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase'}}>Browse Games</a>
+          <a href="/sell" style={{border: '1px solid #333', color: 'white', padding: '16px 32px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase'}}>Start Selling</a>
         </div>
       </section>
 
-      {/* GAME CARDS */}
-      <section style={{padding: '60px 40px', maxWidth: '1200px', margin: '0 auto'}}>
-        <h2 style={{textAlign: 'center', fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '40px'}}>
-          Browse by <span style={{color: '#FF6A00'}}>Game</span>
-        </h2>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px'}}>
-          
-          {/* CS2 Card */}
-          <a href="/cs2" style={{textDecoration: 'none', background: '#0f0f17', border: '1px solid #1a1a1a', padding: '32px', display: 'block', transition: 'border-color 0.2s'}}>
-            <div style={{fontSize: '40px', marginBottom: '16px'}}>🎯</div>
-            <div style={{fontSize: '22px', fontWeight: 900, textTransform: 'uppercase', color: 'white', marginBottom: '8px'}}>Counter-Strike 2</div>
-            <div style={{fontSize: '13px', color: '#666', marginBottom: '20px'}}>Prime · Non-Prime · High Rank · Faceit accounts</div>
-            <div style={{color: '#FF6A00', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px'}}>Browse CS2 →</div>
-          </a>
-
-          {/* Valorant Card */}
-          <a href="/valorant" style={{textDecoration: 'none', background: '#0f0f17', border: '1px solid #1a1a1a', padding: '32px', display: 'block'}}>
-            <div style={{fontSize: '40px', marginBottom: '16px'}}>⚡</div>
-            <div style={{fontSize: '22px', fontWeight: 900, textTransform: 'uppercase', color: 'white', marginBottom: '8px'}}>Valorant</div>
-            <div style={{fontSize: '13px', color: '#666', marginBottom: '20px'}}>Iron · Bronze · Gold · Platinum · Diamond · Immortal · Radiant</div>
-            <div style={{color: '#FF6A00', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px'}}>Browse Valorant →</div>
-          </a>
-
-          {/* GTA V Card */}
-          <a href="/gta-v" style={{textDecoration: 'none', background: '#0f0f17', border: '1px solid #1a1a1a', padding: '32px', display: 'block'}}>
-            <div style={{fontSize: '40px', marginBottom: '16px'}}>🏎️</div>
-            <div style={{fontSize: '22px', fontWeight: 900, textTransform: 'uppercase', color: 'white', marginBottom: '8px'}}>GTA V</div>
-            <div style={{fontSize: '13px', color: '#666', marginBottom: '20px'}}>Modded · High Level · Money · Unlockables included</div>
-            <div style={{color: '#FF6A00', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px'}}>Browse GTA V →</div>
-          </a>
-
-        </div>
+      {/* Trust Banner - Blueprint Section 08 */}
+      <section style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1px', backgroundColor: '#1a1a1a', borderY: '1px solid #1a1a1a'}}>
+        {[
+          {title: 'Instant Delivery', desc: 'Credentials delivered in minutes'},
+          {title: 'Escrow Protection', desc: 'Money safe until you verify'},
+          {title: 'Verified Sellers', desc: 'Strict KYC & Trust standards'},
+          {title: '24/7 Support', desc: 'Dedicated dispute mediation'},
+        ].map((item, i) => (
+          <div key={i} style={{backgroundColor: '#050507', padding: '30px', textAlign: 'center'}}>
+            <div style={{color: '#FF6A00', fontWeight: 900, marginBottom: '8px', textTransform: 'uppercase', fontSize: '14px'}}>{item.title}</div>
+            <div style={{color: '#666', fontSize: '13px'}}>{item.desc}</div>
+          </div>
+        ))}
       </section>
 
-      {/* TRUST SECTION */}
-      <section style={{padding: '60px 40px', borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a', marginTop: '40px'}}>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px', maxWidth: '1000px', margin: '0 auto', textAlign: 'center'}}>
+      {/* SEO Content Block - Blueprint Section 09 */}
+      <section style={{padding: '100px 40px', maxWidth: '1200px', margin: '0 auto'}}>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center'}}>
           <div>
-            <div style={{fontSize: '42px', fontWeight: 900, color: '#FF6A00'}}>10K+</div>
-            <div style={{fontSize: '13px', color: '#666', textTransform: 'uppercase', letterSpacing: '2px', marginTop: '4px'}}>Accounts Sold</div>
+            <h2 style={{fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '24px'}}>
+              Why SmurfRank is the <span style={{color: '#FF6A00'}}>Gold Standard</span>
+            </h2>
+            <p style={{color: '#888', lineHeight: 1.8, marginBottom: '20px'}}>
+              Navigating the world of gaming accounts can be risky. SmurfRank was built to eliminate that risk. Our platform features an <strong>advanced escrow system</strong> that protects buyers from fraud and ensures sellers get paid for their high-quality work.
+            </p>
+            <p style={{color: '#888', lineHeight: 1.8}}>
+              From <strong>Valorant Radiant accounts</strong> in the UAE to <strong>CS2 Prime Smurfs</strong> in North America, we provide a localized experience with global reach.
+            </p>
           </div>
-          <div>
-            <div style={{fontSize: '42px', fontWeight: 900, color: '#FF6A00'}}>5★</div>
-            <div style={{fontSize: '13px', color: '#666', textTransform: 'uppercase', letterSpacing: '2px', marginTop: '4px'}}>Average Rating</div>
-          </div>
-          <div>
-            <div style={{fontSize: '42px', fontWeight: 900, color: '#FF6A00'}}>instant</div>
-            <div style={{fontSize: '13px', color: '#666', textTransform: 'uppercase', letterSpacing: '2px', marginTop: '4px'}}>Delivery</div>
-          </div>
-          <div>
-            <div style={{fontSize: '42px', fontWeight: 900, color: '#FF6A00'}}>24/7</div>
-            <div style={{fontSize: '13px', color: '#666', textTransform: 'uppercase', letterSpacing: '2px', marginTop: '4px'}}>Support</div>
+          <div style={{background: '#0f0f17', border: '1px solid #1a1a1a', padding: '40px'}}>
+            <div style={{fontSize: '48px', fontWeight: 900, color: '#FF6A00', marginBottom: '10px'}}>250K+</div>
+            <div style={{color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px'}}>Accounts Sold Globally</div>
+            <hr style={{border: 'none', borderTop: '1px solid #1a1a1a', margin: '20px 0'}}/>
+            <div style={{fontSize: '48px', fontWeight: 900, color: '#FF6A00', marginBottom: '10px'}}>10K+</div>
+            <div style={{color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px'}}>Verified Active Sellers</div>
           </div>
         </div>
       </section>
 
- {/* SEO CONTENT */}
+      {/* FAQ Section */}
       <section style={{padding: '60px 40px', maxWidth: '900px', margin: '0 auto'}}>
-        <h2 style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '24px'}}>
-          Buy Smurf Accounts — <span style={{color: '#FF6A00'}}>Safe, Fast & Cheap</span>
-        </h2>
-        <p style={{color: '#666', fontSize: '14px', lineHeight: '1.8', marginBottom: '16px'}}>
-          SmurfRank is the most trusted marketplace to buy CS2 smurf accounts, Valorant smurf accounts, and GTA V modded accounts. All accounts are verified by our team before listing. We offer instant delivery across all regions including UAE, NA, EU, SEA, and SA.
-        </p>
-        <p style={{color: '#666', fontSize: '14px', lineHeight: '1.8', marginBottom: '16px'}}>
-          Whether you're looking for a cheap CS2 Prime account, a high-ranked Valorant account, or a GTA V modded account with millions in cash — SmurfRank has you covered. All purchases are escrow protected, meaning your money is safe until you receive your account.
-        </p>
-        <p style={{color: '#666', fontSize: '14px', lineHeight: '1.8'}}>
-          Our verified sellers offer accounts for all skill levels — from CS2 Gold Nova to Global Elite, Valorant Silver to Radiant, and GTA V Level 100 to Level 8000. Buy with confidence knowing every account comes with 24/7 support and instant delivery.
-        </p>
+        <h2 style={{fontSize: '28px', fontWeight: 900, textTransform: 'uppercase', textAlign: 'center', marginBottom: '60px'}}>Common Questions</h2>
+        {faqs.map((faq) => (
+          <div key={faq.q} style={{borderBottom: '1px solid #1a1a1a', paddingBottom: '30px', marginBottom: '30px'}}>
+            <div style={{fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '12px'}}>{faq.q}</div>
+            <div style={{fontSize: '15px', color: '#666', lineHeight: '1.8'}}>{faq.a}</div>
+          </div>
+        ))}
       </section>
-      {/* FOOTER */}
-      <footer style={{padding: '40px', textAlign: 'center', color: '#333', fontSize: '13px'}}>
-        <div style={{fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', color: 'white', marginBottom: '16px'}}>
+
+      {/* Footer */}
+      <footer style={{padding: '80px 40px', borderTop: '1px solid #1a1a1a', textAlign: 'center'}}>
+        <div style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '24px'}}>
           Smurf<span style={{color: '#FF6A00'}}>Rank</span>
         </div>
-        <div style={{display: 'flex', gap: '24px', justifyContent: 'center', marginBottom: '24px', flexWrap: 'wrap'}}>
-          <a href="/cs2" style={{color: '#666', textDecoration: 'none'}}>CS2</a>
-          <a href="/valorant" style={{color: '#666', textDecoration: 'none'}}>Valorant</a>
-          <a href="/gta-v" style={{color: '#666', textDecoration: 'none'}}>GTA V</a>
-          <a href="/terms" style={{color: '#666', textDecoration: 'none'}}>Terms</a>
-          <a href="/privacy" style={{color: '#666', textDecoration: 'none'}}>Privacy</a>
+        <div style={{display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px'}}>
+          <a href="/terms" style={{color: '#333', textDecoration: 'none', fontSize: '12px'}}>Terms of Service</a>
+          <a href="/privacy" style={{color: '#333', textDecoration: 'none', fontSize: '12px'}}>Privacy Policy</a>
+          <a href="/refund" style={{color: '#333', textDecoration: 'none', fontSize: '12px'}}>Refund Policy</a>
         </div>
-        <div style={{color: '#333'}}>© 2025 SmurfRank. All rights reserved.</div>
+        <div style={{color: '#222', fontSize: '11px', letterSpacing: '2px'}}>© 2026 SMURFRANK MARKETPLACE. ALL RIGHTS RESERVED.</div>
       </footer>
-
     </main>
-  )
+  );
 }
