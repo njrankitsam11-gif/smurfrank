@@ -57,6 +57,25 @@ export default async function CS2Page() {
         </div>
       </section>
 
+{/* FAQ SECTION */}
+      <section style={{padding: '60px 40px', maxWidth: '900px', margin: '0 auto', borderTop: '1px solid #1a1a1a'}}>
+        <h2 style={{fontSize: '28px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '40px'}}>
+          Frequently Asked <span style={{color: '#FF6A00'}}>Questions</span>
+        </h2>
+        {[
+          {q: 'Is it safe to buy CS2 smurf accounts?', a: 'Yes. All CS2 accounts on SmurfRank are verified by our team. Every account comes with original email access and a clean VAC record. We use escrow protection so your money is safe until you receive the account.'},
+          {q: 'How fast is delivery for CS2 accounts?', a: 'All CS2 accounts on SmurfRank are delivered instantly after payment. You will receive the account credentials within minutes of your purchase being confirmed.'},
+          {q: 'What regions are CS2 smurf accounts available for?', a: 'We offer CS2 smurf accounts for UAE, NA (North America), EU (Europe), SEA (Southeast Asia), and SA (South America) regions.'},
+          {q: 'What is the difference between Prime and Non-Prime CS2 accounts?', a: 'Prime accounts have the Prime Status unlocked which gives access to Prime matchmaking with other verified players. Non-Prime accounts are standard accounts without Prime Status.'},
+          {q: 'Can I get banned for using a smurf account in CS2?', a: 'SmurfRank accounts are clean with no VAC bans or game bans. However, always follow the game\'s terms of service when using any account.'},
+        ].map((faq) => (
+          <div key={faq.q} style={{borderBottom: '1px solid #1a1a1a', paddingBottom: '24px', marginBottom: '24px'}}>
+            <div style={{fontSize: '16px', fontWeight: 700, color: 'white', marginBottom: '12px'}}>{faq.q}</div>
+            <div style={{fontSize: '14px', color: '#666', lineHeight: '1.8'}}>{faq.a}</div>
+          </div>
+        ))}
+      </section>
+
       <footer style={{padding: '40px', textAlign: 'center', borderTop: '1px solid #1a1a1a', marginTop: '40px'}}>
         <div style={{fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', color: 'white', marginBottom: '16px'}}>
           Smurf<span style={{color: '#FF6A00'}}>Rank</span>
