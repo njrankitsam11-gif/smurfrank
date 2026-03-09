@@ -58,6 +58,19 @@ export default async function HomePage() {
         <p style={{color: '#888', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px'}}>
           Secure, instant, and verified. Skip the grind in CS2, Valorant, and GTA V with our premium account selection.
         </p>
+        {/* Functional Search Bar */}
+        <div style={{ maxWidth: '600px', margin: '0 auto 40px' }}>
+          <form action="/search" method="GET" style={{ display: 'flex', gap: '1px', background: '#1a1a1a', padding: '1px' }}>
+            <input 
+              name="q"
+              placeholder="Search ranks (e.g. Immortal, Global Elite, Modded)..." 
+              style={{ flex: 1, padding: '18px', background: '#0f0f17', border: 'none', color: 'white', fontSize: '16px', outline: 'none' }} 
+            />
+            <button type="submit" style={{ background: '#FF6A00', color: '#000', border: 'none', padding: '0 30px', fontWeight: 900, textTransform: 'uppercase', cursor: 'pointer' }}>
+              Search
+            </button>
+          </form>
+        </div>
         <div style={{display: 'flex', gap: '16px', justifyContent: 'center'}}>
           <a href="/cs2" style={{background: '#FF6A00', color: '#000', padding: '16px 32px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase'}}>Browse Games</a>
           <a href="/sell" style={{border: '1px solid #333', color: 'white', padding: '16px 32px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase'}}>Start Selling</a>
