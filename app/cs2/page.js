@@ -7,12 +7,12 @@ export const metadata = {
 
 export default async function CS2Page() {
   const listings = await prisma.listing.findMany({
-    where: { 
-      game: { equals: 'CS2', mode: 'insensitive' }, 
-      active: true 
-    },
-    orderBy: { price: 'asc' },
-  });
+  where: { 
+    game: { equals: 'CS2', mode: 'insensitive' }, 
+    active: true 
+  },
+  orderBy: { price: 'asc' },
+});
 
   const faqs = [
     { q: 'Is it safe to buy CS2 smurf accounts?', a: 'Yes. All accounts are verified with original email access and a clean VAC record.' },

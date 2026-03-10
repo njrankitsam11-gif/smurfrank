@@ -8,12 +8,12 @@ export const metadata = {
 
 export default async function GTAVPage() {
   const listings = await prisma.listing.findMany({
-    where: { 
-      game: { equals: 'GTA V', mode: 'insensitive' }, 
-      active: true 
-    },
-    orderBy: { price: 'asc' },
-  });
+  where: { 
+    game: { equals: 'GTA V', mode: 'insensitive' }, 
+    active: true 
+  },
+  orderBy: { price: 'asc' },
+});
 
   const faqs = [
     { q: 'Are these GTA 5 accounts safe from bans?', a: 'Yes. Our modded accounts are created using the safest methods to ensure a 0% ban rate.' },

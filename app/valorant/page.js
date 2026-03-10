@@ -8,11 +8,13 @@ export const metadata = {
 
 export default async function ValorantPage() {
   // This part gets your real items from your database
-  const listings = await prisma.listing.findMany({
-    where: { game: 'Valorant', active: true },
+ const listings = await prisma.listing.findMany({
+    where: { 
+      game: { equals: 'Valorant', mode: 'insensitive' }, 
+      active: true 
+    },
     orderBy: { price: 'asc' },
   });
-
   // This part is for Google SEO
   const faqs = [
     { q: 'Are these Valorant accounts ranked ready?', a: 'Yes, all our smurf accounts are Level 20 or higher and ready for competitive ranked play immediately.' },
