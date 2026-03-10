@@ -1,60 +1,40 @@
-import "./globals.css";
+import './globals.css'
 
 export const metadata = {
-  title: {
-    default: 'SmurfRank — Buy CS2, Valorant & GTA V Smurf Accounts',
-    template: '%s | SmurfRank'
-  },
-  description: 'Buy ranked smurf accounts for CS2, Valorant and GTA V. Instant delivery, escrow protected, verified sellers. From $9.99.',
-  keywords: ['smurf accounts', 'buy cs2 smurf account', 'buy valorant smurf account', 'gta v modded account', 'cheap smurf accounts', 'instant delivery gaming accounts'],
-  openGraph: {
-    title: 'SmurfRank — Buy CS2, Valorant & GTA V Smurf Accounts',
-    description: 'Buy ranked smurf accounts for CS2, Valorant and GTA V. Instant delivery, escrow protected, verified sellers. From $9.99.',
-    url: 'https://smurfrank.vercel.app',
-    siteName: 'SmurfRank',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'SmurfRank — Buy CS2, Valorant & GTA V Smurf Accounts',
-    description: 'Buy ranked smurf accounts for CS2, Valorant and GTA V. Instant delivery, escrow protected, verified sellers. From $9.99.',
-  },
-  verification: {
-    google: 'p4bRNCBLstjbJWMwHzm-GRIOKwRnDpSt8LY4aHuCugQ',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
-
-const schemaMarkup = {
-  '@context': 'https://schema.org',
-  '@type': 'Store',
-  name: 'SmurfRank',
-  url: 'https://smurfrank.vercel.app',
-  description: 'Buy ranked smurf accounts for CS2, Valorant and GTA V. Instant delivery, escrow protected, verified sellers.',
-  currenciesAccepted: 'USD',
-  paymentAccepted: 'Credit Card',
-  priceRange: '$9.99 - $99.99',
-  offers: {
-    '@type': 'AggregateOffer',
-    lowPrice: '9.99',
-    highPrice: '99.99',
-    priceCurrency: 'USD',
-  },
-};
+  title: 'SmurfRank | Premium Ranked Accounts',
+  description: 'Buy premium CS2, Valorant, and GTA V accounts. Instant delivery.',
+}
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
-        />
-      </head>
-      <body>{children}</body>
+      <body style={{ backgroundColor: '#050507', color: 'white', margin: 0, fontFamily: 'system-ui, sans-serif' }}>
+        
+        {/* MASTER NAVIGATION BAR - IT WILL NEVER DISAPPEAR */}
+        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: '70px', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', position: 'sticky', top: 0, backgroundColor: 'rgba(5, 5, 7, 0.95)', backdropFilter: 'blur(8px)', zIndex: 1000 }}>
+          
+          <a href="/" style={{ fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white', letterSpacing: '-0.5px' }}>
+            SMURF<span style={{ color: '#FF6A00' }}>RANK</span>
+          </a>
+          
+          <div style={{ display: 'flex', gap: '32px', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <a href="/cs2" style={{ color: '#e2e8f0', textDecoration: 'none' }}>CS2</a>
+            <a href="/valorant" style={{ color: '#e2e8f0', textDecoration: 'none' }}>Valorant</a>
+            <a href="/gta-v" style={{ color: '#e2e8f0', textDecoration: 'none' }}>GTA V</a>
+            {/* The new Seller hook you requested */}
+            <a href="/sell" style={{ color: '#00FF66', textDecoration: 'none' }}>Sell With Us</a>
+          </div>
+          
+          <a href="/login" style={{ background: 'linear-gradient(45deg, #FF6A00, #e65c00)', color: '#000', padding: '10px 24px', borderRadius: '4px', fontWeight: 800, textDecoration: 'none', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', boxShadow: '0 4px 15px rgba(255, 106, 0, 0.2)' }}>
+            Sign In
+          </a>
+          
+        </nav>
+
+        {/* This is where your individual pages will load */}
+        {children}
+        
+      </body>
     </html>
-  );
+  )
 }
