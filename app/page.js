@@ -1,144 +1,70 @@
-import { prisma } from '../lib/prisma';
+'use client';
+import React from 'react';
 
-export const metadata = {
-  title: 'RankVault | Buy Ranked Gaming Accounts - UAE, NA, EU & SEA',
-  description: 'The #1 marketplace for CS2, Valorant, and GTA V smurf accounts. Safe escrow protection, instant delivery, and verified sellers globally.',
-  keywords: ['buy smurf accounts', 'ranked gaming accounts', 'CS2 prime accounts UAE', 'Valorant smurfs'],
-};
+// NOTE: Metadata cannot be exported from a file with 'use client'
+// We will use the <title> and <meta> tags directly for A++ SEO 
 
-export default async function HomePage() {
-  // Fetch a few featured listings to show life on the homepage
-  const featuredListings = await prisma.listing.findMany({
-    where: { active: true },
-    take: 4,
-    orderBy: { createdAt: 'desc' },
-  });
-
-  const faqs = [
-    { q: 'Why choose RankVault for smurf accounts?', a: 'RankVault offers the most secure marketplace with instant delivery, verified sellers, and full escrow protection for every purchase.' },
-    { q: 'How does the escrow protection work?', a: 'Your payment is held securely by our platform until you verify the account credentials. Only then are the funds released to the seller.' },
-    { q: 'Can I buy accounts for specific regions like UAE or NA?', a: 'Yes, we specialize in multi-region accounts. You can filter by UAE, North America, Europe, and more for all major games.' },
-  ];
-
+export default function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "RankVault",
+    "name": "SmurfRank",
     "url": "https://smurfrank.vercel.app",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://smurfrank.vercel.app/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "description": "Premium Marketplace for Ranked Accounts and Professional Boosting Services."
   };
 
   return (
-    <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <main style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingBottom: '100px', fontFamily: 'sans-serif' }}>
+      {/* ✅ A++ SEO TAGS (Manual Injection for Client Component) */}
+      <title>SmurfRank | Premium Ranked Accounts & Professional Boosting</title>
+      <meta name="description" content="The #1 marketplace for CS2, Valorant, and GTA V accounts. Instant delivery, verified sellers, and Radiant-tier boosting services." />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      {/* Navigation */}
-      <nav style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: '64px', borderBottom: '1px solid #1a1a1a', backgroundColor: '#050507'}}>
-        <a href="/" style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white'}}>
-          Smurf<span style={{color: '#FF6A00'}}>Rank</span>
-        </a>
-        <div style={{display: 'flex', gap: '32px', fontSize: '13px'}}>
-          <a href="/cs2" style={{color: '#999', textDecoration: 'none'}}>CS2</a>
-          <a href="/valorant" style={{color: '#999', textDecoration: 'none'}}>Valorant</a>
-          <a href="/gta-v" style={{color: '#999', textDecoration: 'none'}}>GTA V</a>
-        </div>
-        <a href="/login" style={{background: '#FF6A00', color: '#000', padding: '8px 20px', fontWeight: 700, textDecoration: 'none', fontSize: '13px', textTransform: 'uppercase'}}>Sign In</a>
-      </nav>
-
-      {/* Hero Section - Blueprint Section 06 */}
-      <section style={{padding: '120px 40px 80px', textAlign: 'center', background: 'radial-gradient(circle at top, rgba(255,106,0,0.05) 0%, transparent 70%)'}}>
-        <div style={{fontSize: '12px', color: '#FF6A00', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '20px'}}>Technical Architecture v1.0</div>
-        <h1 style={{fontSize: 'clamp(40px, 8vw, 100px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 0.9, marginBottom: '24px'}}>
-          The Ultimate <span style={{color: '#FF6A00'}}>Marketplace</span><br/>for Ranked Accounts
+      {/* 3D MATTE HERO */}
+      <section style={{ textAlign: 'center', padding: '120px 20px 80px' }}>
+        <h1 style={{ fontSize: 'clamp(50px, 9vw, 95px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 0.9, letterSpacing: '-4px', marginBottom: '30px' }}>
+          LEVEL UP <br/>
+          <span style={{ color: '#66FCF1', textShadow: '0 0 50px rgba(102, 252, 241, 0.5)' }}>SMURF RANK</span>
         </h1>
-        <p style={{color: '#888', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px'}}>
-          Secure, instant, and verified. Skip the grind in CS2, Valorant, and GTA V with our premium account selection.
+        <p style={{ color: '#888', fontSize: '20px', maxWidth: '650px', margin: '0 auto 40px' }}>
+          The elite choice for high-tier accounts and professional rank boosting.
         </p>
-        {/* Functional Search Bar */}
-        <div style={{ maxWidth: '600px', margin: '0 auto 40px' }}>
-          <form action="/search" method="GET" style={{ display: 'flex', gap: '1px', background: '#1a1a1a', padding: '1px' }}>
-            <input 
-              name="q"
-              placeholder="Search ranks (e.g. Immortal, Global Elite, Modded)..." 
-              style={{ flex: 1, padding: '18px', background: '#0f0f17', border: 'none', color: 'white', fontSize: '16px', outline: 'none' }} 
-            />
-            <button type="submit" style={{ background: '#FF6A00', color: '#000', border: 'none', padding: '0 30px', fontWeight: 900, textTransform: 'uppercase', cursor: 'pointer' }}>
-              Search
-            </button>
-          </form>
-        </div>
-        <div style={{display: 'flex', gap: '16px', justifyContent: 'center'}}>
-          <a href="/cs2" style={{background: '#FF6A00', color: '#000', padding: '16px 32px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase'}}>Browse Games</a>
-          <a href="/sell" style={{border: '1px solid #333', color: 'white', padding: '16px 32px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase'}}>Start Selling</a>
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+          <a href="/cs2" style={{ background: '#66FCF1', color: '#000', padding: '18px 40px', borderRadius: '4px', fontWeight: 900, textDecoration: 'none', boxShadow: '0 10px 30px rgba(102, 252, 241, 0.3)' }}>BROWSE ACCOUNTS</a>
+          <a href="/boosting" style={{ background: 'transparent', color: '#fff', padding: '18px 40px', borderRadius: '4px', fontWeight: 900, textDecoration: 'none', border: '1px solid #333' }}>EXPLORE BOOSTING</a>
         </div>
       </section>
 
-      {/* Trust Banner - Blueprint Section 08 */}
-      <section style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1px', backgroundColor: '#1a1a1a', borderY: '1px solid #1a1a1a'}}>
-        {[
-          {title: 'Instant Delivery', desc: 'Credentials delivered in minutes'},
-          {title: 'Escrow Protection', desc: 'Money safe until you verify'},
-          {title: 'Verified Sellers', desc: 'Strict KYC & Trust standards'},
-          {title: '24/7 Support', desc: 'Dedicated dispute mediation'},
-        ].map((item, i) => (
-          <div key={i} style={{backgroundColor: '#050507', padding: '30px', textAlign: 'center'}}>
-            <div style={{color: '#FF6A00', fontWeight: 900, marginBottom: '8px', textTransform: 'uppercase', fontSize: '14px'}}>{item.title}</div>
-            <div style={{color: '#666', fontSize: '13px'}}>{item.desc}</div>
-          </div>
-        ))}
-      </section>
-
-      {/* SEO Content Block - Blueprint Section 09 */}
-      <section style={{padding: '100px 40px', maxWidth: '1200px', margin: '0 auto'}}>
-        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center'}}>
-          <div>
-            <h2 style={{fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '24px'}}>
-              Why SmurfRank is the <span style={{color: '#FF6A00'}}>Gold Standard</span>
-            </h2>
-            <p style={{color: '#888', lineHeight: 1.8, marginBottom: '20px'}}>
-              Navigating the world of gaming accounts can be risky. SmurfRank was built to eliminate that risk. Our platform features an <strong>advanced escrow system</strong> that protects buyers from fraud and ensures sellers get paid for their high-quality work.
-            </p>
-            <p style={{color: '#888', lineHeight: 1.8}}>
-              From <strong>Valorant Radiant accounts</strong> in the UAE to <strong>CS2 Prime Smurfs</strong> in North America, we provide a localized experience with global reach.
-            </p>
-          </div>
-          <div style={{background: '#0f0f17', border: '1px solid #1a1a1a', padding: '40px'}}>
-            <div style={{fontSize: '48px', fontWeight: 900, color: '#FF6A00', marginBottom: '10px'}}>250K+</div>
-            <div style={{color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px'}}>Accounts Sold Globally</div>
-            <hr style={{border: 'none', borderTop: '1px solid #1a1a1a', margin: '20px 0'}}/>
-            <div style={{fontSize: '48px', fontWeight: 900, color: '#FF6A00', marginBottom: '10px'}}>10K+</div>
-            <div style={{color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px'}}>Verified Active Sellers</div>
+      {/* 3D MATTE BOOSTING SECTION */}
+      <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
+        <div style={{ background: 'linear-gradient(45deg, #16161a, #0a0a0b)', border: '1px solid #222', borderRadius: '20px', padding: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '40px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
+          <div style={{ flex: '1', minWidth: '300px' }}>
+            <h2 style={{ fontSize: '40px', fontWeight: 900, marginBottom: '20px' }}>NEED A <span style={{ color: '#9D00FF' }}>RANK BOOST?</span></h2>
+            <p style={{ color: '#aaa', marginBottom: '30px' }}>Hire our Radiant-tier professionals to secure your wins.</p>
+            <a href="/boosting" style={{ color: '#9D00FF', fontWeight: 900, textDecoration: 'none', borderBottom: '2px solid #9D00FF' }}>GET BOOSTED NOW →</a>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section style={{padding: '60px 40px', maxWidth: '900px', margin: '0 auto'}}>
-        <h2 style={{fontSize: '28px', fontWeight: 900, textTransform: 'uppercase', textAlign: 'center', marginBottom: '60px'}}>Common Questions</h2>
-        {faqs.map((faq) => (
-          <div key={faq.q} style={{borderBottom: '1px solid #1a1a1a', paddingBottom: '30px', marginBottom: '30px'}}>
-            <div style={{fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '12px'}}>{faq.q}</div>
-            <div style={{fontSize: '15px', color: '#666', lineHeight: '1.8'}}>{faq.a}</div>
-          </div>
-        ))}
+      {/* SELLER SECTION */}
+      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <h2 style={{ fontSize: '32px', fontWeight: 900 }}>EARN WITH <span style={{ color: '#FF6A00' }}>US</span></h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+           <div style={{ background: '#111', padding: '40px', borderRadius: '15px', border: '1px solid #222', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+              <h3 style={{ color: '#FF6A00', fontWeight: 900, marginBottom: '15px' }}>ZERO FEES</h3>
+              <p style={{ color: '#777', fontSize: '14px' }}>Market-leading rates with no hidden costs for sellers.</p>
+           </div>
+           <div style={{ background: '#111', padding: '40px', borderRadius: '15px', border: '1px solid #222', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+              <h3 style={{ color: '#FF6A00', fontWeight: 900, marginBottom: '15px' }}>GLOBAL REACH</h3>
+              <p style={{ color: '#777', fontSize: '14px' }}>Connect with buyers from UAE, NA, and EU instantly.</p>
+           </div>
+        </div>
       </section>
-
-      {/* Footer */}
-      <footer style={{padding: '80px 40px', borderTop: '1px solid #1a1a1a', textAlign: 'center'}}>
-        <div style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '24px'}}>
-          Smurf<span style={{color: '#FF6A00'}}>Rank</span>
-        </div>
-        <div style={{display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px'}}>
-          <a href="/terms" style={{color: '#333', textDecoration: 'none', fontSize: '12px'}}>Terms of Service</a>
-          <a href="/privacy" style={{color: '#333', textDecoration: 'none', fontSize: '12px'}}>Privacy Policy</a>
-          <a href="/refund" style={{color: '#333', textDecoration: 'none', fontSize: '12px'}}>Refund Policy</a>
-        </div>
-        <div style={{color: '#222', fontSize: '11px', letterSpacing: '2px'}}>© 2026 SMURFRANK MARKETPLACE. ALL RIGHTS RESERVED.</div>
-      </footer>
     </main>
   );
 }
