@@ -178,6 +178,41 @@ export default async function CS2Page() {
         </div>
 
       </section>
+    {/* PREMIUM REVIEWS SECTION - CS2 */}
+      <section style={{ maxWidth: '1200px', margin: '100px auto 0', padding: '0 20px' }}>
+        <div style={{ borderTop: '1px solid #222', paddingTop: '60px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '40px' }}>
+            ELITE <span style={{ color: '#66FCF1' }}>REVIEWS</span>
+          </h2>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+            {[
+              { user: "GlobalElite99", rank: "Verified Buyer", comment: "Premier 20k+ rating account. Everything works perfectly. Instant access.", rating: "⭐⭐⭐⭐⭐" },
+              { user: "KnifeCollector", rank: "Verified Buyer", comment: "Safe transaction and the account trust factor is high. Highly recommend.", rating: "⭐⭐⭐⭐⭐" },
+              { user: "RushB_DonStop", rank: "Verified Buyer", comment: "Got my smurf account in minutes. Fast and reliable as always.", rating: "⭐⭐⭐⭐⭐" }
+            ].map((review, i) => (
+              <div key={i} style={{ 
+                background: '#111', 
+                padding: '30px', 
+                borderRadius: '16px', 
+                border: '1px solid #222', 
+                textAlign: 'left',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+              }}>
+                <div style={{ color: '#D4AF37', marginBottom: '10px', fontSize: '14px' }}>{review.rating}</div>
+                <p style={{ color: '#fff', fontSize: '14px', fontStyle: 'italic', marginBottom: '20px' }}>"{review.comment}"</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#333' }}></div>
+                  <div>
+                    <div style={{ fontSize: '12px', fontWeight: 900 }}>{review.user}</div>
+                    <div style={{ fontSize: '10px', color: '#66FCF1', textTransform: 'uppercase' }}>{review.rank}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

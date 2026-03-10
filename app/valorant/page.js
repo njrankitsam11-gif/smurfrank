@@ -57,6 +57,41 @@ export default async function ValorantPage() {
           ))}
         </div>
       </section>
+    {/* PREMIUM REVIEWS SECTION - VALORANT */}
+      <section style={{ maxWidth: '1200px', margin: '100px auto 0', padding: '0 20px' }}>
+        <div style={{ borderTop: '1px solid #222', paddingTop: '60px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '40px' }}>
+            AGENT <span style={{ color: '#66FCF1' }}>FEEDBACK</span>
+          </h2>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+            {[
+              { user: "RadiantDreamer", rank: "Verified Buyer", comment: "Got my Radiant account instantly. Skins are amazing, exactly as pictured.", rating: "⭐⭐⭐⭐⭐" },
+              { user: "ViperMain99", rank: "Verified Buyer", comment: "Safe delivery and the peak rank was verified. 10/10 service.", rating: "⭐⭐⭐⭐⭐" },
+              { user: "JettDash", rank: "Verified Buyer", comment: "Immortal 3 account with full email access. Very happy with the purchase.", rating: "⭐⭐⭐⭐⭐" }
+            ].map((review, i) => (
+              <div key={i} style={{ 
+                background: '#111', 
+                padding: '30px', 
+                borderRadius: '16px', 
+                border: '1px solid #222', 
+                textAlign: 'left',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+              }}>
+                <div style={{ color: '#D4AF37', marginBottom: '10px', fontSize: '14px' }}>{review.rating}</div>
+                <p style={{ color: '#fff', fontSize: '14px', fontStyle: 'italic', marginBottom: '20px' }}>"{review.comment}"</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#333' }}></div>
+                  <div>
+                    <div style={{ fontSize: '12px', fontWeight: 900 }}>{review.user}</div>
+                    <div style={{ fontSize: '10px', color: '#66FCF1', textTransform: 'uppercase' }}>{review.rank}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

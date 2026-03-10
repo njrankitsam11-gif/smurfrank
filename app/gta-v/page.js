@@ -56,6 +56,41 @@ export default async function GTAVPage() {
           ))}
         </div>
       </section>
+    {/* PREMIUM REVIEWS SECTION */}
+      <section style={{ maxWidth: '1200px', margin: '100px auto 0', padding: '0 20px' }}>
+        <div style={{ borderTop: '1px solid #222', paddingTop: '60px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '32px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '40px' }}>
+            RECENT <span style={{ color: '#00FF66' }}>FEEDBACK</span>
+          </h2>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+            {[
+              { user: "HeistMaster", rank: "Verified Buyer", comment: "Account had the billions as promised. Best price on the market.", rating: "⭐⭐⭐⭐⭐" },
+              { user: "LosSantosKing", rank: "Verified Buyer", comment: "Modded stats are legit. Fast delivery, took less than 5 minutes.", rating: "⭐⭐⭐⭐⭐" },
+              { user: "CEO_Gamer", rank: "Verified Buyer", comment: "Safe and secure. Highly recommend for high-level accounts.", rating: "⭐⭐⭐⭐⭐" }
+            ].map((review, i) => (
+              <div key={i} style={{ 
+                background: '#111', 
+                padding: '30px', 
+                borderRadius: '16px', 
+                border: '1px solid #222', 
+                textAlign: 'left',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+              }}>
+                <div style={{ color: '#D4AF37', marginBottom: '10px', fontSize: '14px' }}>{review.rating}</div>
+                <p style={{ color: '#fff', fontSize: '14px', fontStyle: 'italic', marginBottom: '20px' }}>"{review.comment}"</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#333' }}></div>
+                  <div>
+                    <div style={{ fontSize: '12px', fontWeight: 900 }}>{review.user}</div>
+                    <div style={{ fontSize: '10px', color: '#00FF66', textTransform: 'uppercase' }}>{review.rank}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
