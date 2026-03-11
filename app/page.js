@@ -1,9 +1,6 @@
 'use client';
 import React from 'react';
 
-// NOTE: Metadata cannot be exported from a file with 'use client'
-// We will use the <title> and <meta> tags directly for A++ SEO 
-
 export default function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -16,9 +13,9 @@ export default function HomePage() {
   return (
     <main style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingBottom: '100px', fontFamily: 'sans-serif' }}>
       
-      {/* ✅ MANUAL SEO INJECTION (Works with 'use client') */}
-      <title>SmurfRank | Premium Marketplace for Ranked Accounts & Boosting</title>
-      <meta name="description" content="The elite marketplace for CS2, Valorant, and GTA V accounts. Professional rank boosting and instant delivery." />
+      {/* ✅ A++ SEO TAGS */}
+      <title>SmurfRank | Premium Ranked Accounts & Professional Boosting</title>
+      <meta name="description" content="The #1 marketplace for CS2, Valorant, and GTA V accounts. Instant delivery, verified sellers, and Radiant-tier boosting services." />
       <meta name="keywords" content="smurf accounts, valorant boosting, cs2 prime, gta v modded, rank boost" />
       
       <script
@@ -26,28 +23,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* --- REST OF YOUR HERO SECTION --- */}
-      <section style={{ textAlign: 'center', padding: '120px 20px 80px' }}>
-        <h1 style={{ fontSize: 'clamp(50px, 9vw, 95px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 0.9, letterSpacing: '-4px', marginBottom: '30px' }}>
-          LEVEL UP <br/>
-        </h1>
-        {/* ... etc ... */}
-      </section>
-    </main>
-  );
-}
-
-  return (
-    <main style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingBottom: '100px', fontFamily: 'sans-serif' }}>
-      {/* ✅ A++ SEO TAGS (Manual Injection for Client Component) */}
-      <title>SmurfRank | Premium Ranked Accounts & Professional Boosting</title>
-      <meta name="description" content="The #1 marketplace for CS2, Valorant, and GTA V accounts. Instant delivery, verified sellers, and Radiant-tier boosting services." />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
-      {/* 3D MATTE HERO */}
+      {/* 🪄 3D MATTE HERO */}
       <section style={{ textAlign: 'center', padding: '120px 20px 80px' }}>
         <h1 style={{ fontSize: 'clamp(50px, 9vw, 95px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 0.9, letterSpacing: '-4px', marginBottom: '30px' }}>
           LEVEL UP <br/>
@@ -62,7 +38,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3D MATTE BOOSTING SECTION */}
+      {/* 🟣 3D MATTE BOOSTING SECTION */}
       <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
         <div style={{ background: 'linear-gradient(45deg, #16161a, #0a0a0b)', border: '1px solid #222', borderRadius: '20px', padding: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '40px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
           <div style={{ flex: '1', minWidth: '300px' }}>
@@ -73,7 +49,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SELLER SECTION */}
+      {/* 🟠 SELLER SECTION */}
       <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         <div style={{ textAlign: 'center', marginBottom: '50px' }}>
           <h2 style={{ fontSize: '32px', fontWeight: 900 }}>EARN WITH <span style={{ color: '#FF6A00' }}>US</span></h2>
@@ -89,5 +65,7 @@ export default function HomePage() {
            </div>
         </div>
       </section>
+
     </main>
   );
+}
