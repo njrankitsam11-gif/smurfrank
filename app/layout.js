@@ -1,14 +1,6 @@
-import './globals.css'
+'use client';
 
-export const metadata = {
-  title: {
-    default: 'SmurfRank | Premium Marketplace for Ranked Accounts & Boosting',
-    template: '%s | SmurfRank'
-  },
-  description: 'The elite marketplace for CS2, Valorant, and GTA V accounts. Professional rank boosting and instant delivery.',
-  keywords: ['smurf accounts', 'valorant boosting', 'cs2 prime', 'gta v modded', 'rank boost'],
-  metadataBase: new URL('https://smurfrank.vercel.app'),
-}
+import './globals.css'
 
 export default function RootLayout({ children }) {
   // --- SEO SCHEMA DATA ---

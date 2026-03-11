@@ -15,6 +15,30 @@ export default function HomePage() {
 
   return (
     <main style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingBottom: '100px', fontFamily: 'sans-serif' }}>
+      
+      {/* ✅ MANUAL SEO INJECTION (Works with 'use client') */}
+      <title>SmurfRank | Premium Marketplace for Ranked Accounts & Boosting</title>
+      <meta name="description" content="The elite marketplace for CS2, Valorant, and GTA V accounts. Professional rank boosting and instant delivery." />
+      <meta name="keywords" content="smurf accounts, valorant boosting, cs2 prime, gta v modded, rank boost" />
+      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* --- REST OF YOUR HERO SECTION --- */}
+      <section style={{ textAlign: 'center', padding: '120px 20px 80px' }}>
+        <h1 style={{ fontSize: 'clamp(50px, 9vw, 95px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 0.9, letterSpacing: '-4px', marginBottom: '30px' }}>
+          LEVEL UP <br/>
+        </h1>
+        {/* ... etc ... */}
+      </section>
+    </main>
+  );
+}
+
+  return (
+    <main style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingBottom: '100px', fontFamily: 'sans-serif' }}>
       {/* ✅ A++ SEO TAGS (Manual Injection for Client Component) */}
       <title>SmurfRank | Premium Ranked Accounts & Professional Boosting</title>
       <meta name="description" content="The #1 marketplace for CS2, Valorant, and GTA V accounts. Instant delivery, verified sellers, and Radiant-tier boosting services." />
@@ -67,4 +91,3 @@ export default function HomePage() {
       </section>
     </main>
   );
-}
