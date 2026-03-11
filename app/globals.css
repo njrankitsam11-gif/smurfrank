@@ -40,3 +40,18 @@ a {
     color-scheme: dark;
   }
 }
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.live-feed-animation {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll 30s linear infinite;
+}
+
+/* Ensure the body doesn't horizontal scroll */
+body {
+  overflow-x: hidden;
+}
