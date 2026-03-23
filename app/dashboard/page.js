@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const metadata = {
   title: 'Dashboard | RankVault',
 };
@@ -7,12 +9,12 @@ export default function DashboardPage() {
     <main style={{ backgroundColor: '#050507', minHeight: '100vh', color: 'white', fontFamily: 'sans-serif' }}>
       {/* Sidebar / Top Nav Mockup */}
       <nav style={{ padding: '20px 40px', borderBottom: '1px solid #1a1a1a', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href="/" style={{ fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white' }}>
+        <Link href="/" style={{ fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white' }}>
           RANK<span style={{ color: '#FF6A00' }}>VAULT</span>
-        </a>
+        </Link>
         <div style={{ display: 'flex', gap: '20px', fontSize: '13px' }}>
           <span style={{ color: '#666' }}>Welcome, <strong style={{ color: 'white' }}>User</strong></span>
-          <a href="/login" style={{ color: '#FF6A00', textDecoration: 'none' }}>Logout</a>
+          <Link href="/login" style={{ color: '#FF6A00', textDecoration: 'none' }}>Logout</Link>
         </div>
       </nav>
 
@@ -23,8 +25,8 @@ export default function DashboardPage() {
           {/* Card 1: My Purchases */}
           <div style={{ background: '#0f0f17', border: '1px solid #1a1a1a', padding: '30px' }}>
             <h3 style={{ fontSize: '14px', textTransform: 'uppercase', color: '#FF6A00', marginBottom: '15px' }}>My Purchases</h3>
-            <p style={{ color: '#666', fontSize: '14px' }}>You haven't purchased any accounts yet.</p>
-            <a href="/search" style={{ display: 'inline-block', marginTop: '20px', color: 'white', fontSize: '12px', fontWeight: 700 }}>Browse Store →</a>
+            <p style={{ color: '#666', fontSize: '14px' }}>You haven&apos;t purchased any accounts yet.</p>
+            <Link href="/search" style={{ display: 'inline-block', marginTop: '20px', color: 'white', fontSize: '12px', fontWeight: 700 }}>Browse Store →</Link>
           </div>
 
           {/* Card 2: Wallet */}

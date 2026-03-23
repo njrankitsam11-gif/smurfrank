@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { prisma } from '../../lib/prisma';
 
 export const metadata = {
@@ -28,15 +29,15 @@ export default async function SearchPage({ searchParams }) {
       
       {/* Navigation */}
       <nav style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px', height: '64px', borderBottom: '1px solid #1a1a1a', backgroundColor: '#050507'}}>
-        <a href="/" style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white'}}>
+        <Link href="/" style={{fontSize: '24px', fontWeight: 900, textTransform: 'uppercase', textDecoration: 'none', color: 'white'}}>
           Smurf<span style={{color: '#FF6A00'}}>Rank</span>
-        </a>
+        </Link>
         <div style={{display: 'flex', gap: '32px', fontSize: '13px'}}>
-          <a href="/cs2" style={{color: '#999', textDecoration: 'none'}}>CS2</a>
-          <a href="/valorant" style={{color: '#999', textDecoration: 'none'}}>Valorant</a>
-          <a href="/gta-v" style={{color: '#999', textDecoration: 'none'}}>GTA V</a>
+          <Link href="/cs2" style={{color: '#999', textDecoration: 'none'}}>CS2</Link>
+          <Link href="/valorant" style={{color: '#999', textDecoration: 'none'}}>Valorant</Link>
+          <Link href="/gta-v" style={{color: '#999', textDecoration: 'none'}}>GTA V</Link>
         </div>
-        <a href="/login" style={{background: '#FF6A00', color: '#000', padding: '8px 20px', fontWeight: 700, textDecoration: 'none', fontSize: '13px', textTransform: 'uppercase'}}>Sign In</a>
+        <Link href="/login" style={{background: '#FF6A00', color: '#000', padding: '8px 20px', fontWeight: 700, textDecoration: 'none', fontSize: '13px', textTransform: 'uppercase'}}>Sign In</Link>
       </nav>
 
       {/* Search Header */}
@@ -71,16 +72,16 @@ export default async function SearchPage({ searchParams }) {
                 <div style={{fontSize: '13px', color: '#888', marginBottom: '20px'}}>{listing.rank} • {listing.region}</div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <div style={{fontSize: '24px', fontWeight: 900, color: '#FF6A00'}}>${Number(listing.price).toFixed(2)}</div>
-                  <a href={`/listings/${listing.id}`} style={{background: '#FF6A00', color: '#000', padding: '10px 20px', fontWeight: 700, fontSize: '12px', textDecoration: 'none', textTransform: 'uppercase'}}>
+                  <Link href={`/listings/${listing.id}`} style={{background: '#FF6A00', color: '#000', padding: '10px 20px', fontWeight: 700, fontSize: '12px', textDecoration: 'none', textTransform: 'uppercase'}}>
                     View
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))
           ) : (
             <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '80px 0'}}>
               <div style={{fontSize: '48px', marginBottom: '20px'}}>🔍</div>
-              <h3 style={{fontSize: '20px', color: 'white'}}>No accounts found matching "{query}"</h3>
+              <h3 style={{fontSize: '20px', color: 'white'}}>No accounts found matching &quot;{query}&quot;</h3>
               <p style={{color: '#666'}}>Try searching for a specific game, region, or rank tier.</p>
             </div>
           )}

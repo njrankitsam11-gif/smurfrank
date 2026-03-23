@@ -1,13 +1,23 @@
 'use client';
 import { useCart } from '../context/CartContext';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const { cart, setIsOpen } = useCart();
   const [mounted, setMounted] = useState(false);
+  const [users, setUsers] = useState([0, 0, 0]);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+      setUsers([
+        Math.floor(Math.random() * 999),
+        Math.floor(Math.random() * 999),
+        Math.floor(Math.random() * 999),
+      ]);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -17,9 +27,9 @@ export default function Navbar() {
         <div className="live-feed-animation">
           {mounted ? (
             <>
-              LIVE: USER_{Math.floor(Math.random()*999)} PURCHASED GTA V 2BN ACCOUNT — 1m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              LIVE: USER_{Math.floor(Math.random()*999)} PURCHASED CS2 GLOBAL ELITE — 3m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              LIVE: USER_{Math.floor(Math.random()*999)} PURCHASED VALORANT RADIANT — 5m AGO
+              LIVE: USER_{users[0]} PURCHASED GTA V 2BN ACCOUNT — 1m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              LIVE: USER_{users[1]} PURCHASED CS2 GLOBAL ELITE — 3m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              LIVE: USER_{users[2]} PURCHASED VALORANT RADIANT — 5m AGO
             </>
           ) : (
             "LOADING RECENT SALES..."
@@ -28,18 +38,18 @@ export default function Navbar() {
       </div>
 
       <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5vw', height: '80px', borderBottom: '1px solid #111' }}>
-        <a href="/" style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textDecoration: 'none' }}>SMURF<span style={{ color: '#66FCF1' }}>RANK</span></a>
+        <Link href="/" style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textDecoration: 'none' }}>SMURF<span style={{ color: '#66FCF1' }}>RANK</span></Link>
         
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <a href="/cs2" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>CS2</a>
-          <a href="/valorant" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>VAL</a>
-          <a href="/gta-v" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>GTA V</a>
-          <a href="/boosting" style={{ color: '#9D00FF', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>BOOSTING</a>
-          <a href="/sell" style={{ color: '#D4AF37', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>SELL</a>
+          <Link href="/cs2" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>CS2</Link>
+          <Link href="/valorant" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>VAL</Link>
+          <Link href="/gta-v" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>GTA V</Link>
+          <Link href="/boosting" style={{ color: '#9D00FF', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>BOOSTING</Link>
+          <Link href="/sell" style={{ color: '#D4AF37', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>SELL</Link>
           
           <div style={{ width: '1px', height: '20px', background: '#222', margin: '0 10px' }} />
           
-          <a href="/login" style={{ color: '#fff', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>SIGN IN</a>
+          <Link href="/login" style={{ color: '#fff', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>SIGN IN</Link>
           
           <button onClick={() => setIsOpen(true)} style={{ background: 'rgba(102, 252, 241, 0.1)', border: '1px solid #66FCF1', color: '#66FCF1', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontWeight: 900, fontSize: '11px' }}>
             CART ({cart.length})
