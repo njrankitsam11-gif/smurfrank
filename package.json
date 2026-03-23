@@ -12,7 +12,7 @@
     "@prisma/client": "^5.22.0",
     "@stripe/stripe-js": "^8.9.0",
     "bcryptjs": "^3.0.3",
-    "next": "16.1.6",
+    "next": "^16.1.6",
     "next-auth": "^4.24.13",
     "prisma": "^5.22.0",
     "react": "19.2.3",
@@ -20,7 +20,16 @@
     "stripe": "^20.4.1"
   },
   "devDependencies": {
+    "@swc/core": "^1.15.21",
+    "@swc/jest": "^0.2.39",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6"
+    "eslint-config-next": "16.1.6",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "node-mocks-http": "^1.17.2",
+    "ts-node": "^10.9.2"
   }
 }
