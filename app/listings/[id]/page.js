@@ -1,9 +1,14 @@
 import { prisma } from '../../../lib/prisma';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
+
+const getListing = cache(async (id) => {
+  return prisma.listing.findUnique({ where: { id } });
+});
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const listing = await prisma.listing.findUnique({ where: { id } });
+  const listing = await getListing(id);
   if (!listing) return { title: 'Listing Not Found' };
   return {
     title: `${listing.title} | Buy ${listing.game} Accounts`,
@@ -13,7 +18,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ListingDetailPage({ params }) {
   const { id } = await params;
-  const listing = await prisma.listing.findUnique({ where: { id } });
+  const listing = await getListing(id);
 
   if (!listing) notFound();
 
