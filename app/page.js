@@ -1,4 +1,7 @@
 'use client';
+
+import { motion } from 'framer-motion';
+
 import { useCart } from '../context/CartContext';
 
 export default function HomePage() {
@@ -11,11 +14,15 @@ export default function HomePage() {
       <meta name="description" content="Buy premium ranked accounts with instant delivery. Professional boosting and verified seller marketplace." />
       
       {/* 🪄 HERO */}
-      <section style={{ textAlign: 'center', padding: '100px 20px 80px' }}>
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        style={{ textAlign: 'center', padding: '100px 20px 80px' }}>
         <h1 style={{ fontSize: 'clamp(50px, 10vw, 100px)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-5px', margin: 0, lineHeight: 0.9 }}>
           LEVEL UP <br/> <span style={{ color: '#66FCF1' }}>SMURF RANK</span>
         </h1>
-      </section>
+      </motion.section>
 
       {/* ⚡ HOT DEALS */}
       <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
@@ -26,14 +33,17 @@ export default function HomePage() {
             { id: 'h2', title: 'VALORANT RADIANT', price: '$125.00', desc: 'Skins • Peak Rank' },
             { id: 'h3', title: 'GTA V MODDED 2BN', price: '$29.00', desc: 'Level 500 • Unlocks' }
           ].map((acc) => (
-            <div key={acc.id} style={{ background: '#111', padding: '30px', borderRadius: '15px', border: '1px solid #222' }}>
+            <motion.div
+              key={acc.id}
+              whileHover={{ scale: 1.05, rotateX: 10, rotateY: -10, boxShadow: '0px 0px 30px rgba(102, 252, 241, 0.4)' }}
+              style={{ background: '#111', padding: '30px', borderRadius: '15px', border: '1px solid #222', perspective: '1000px', transformStyle: 'preserve-3d' }}>
               <h3 style={{ fontWeight: 900, marginBottom: '8px' }}>{acc.title}</h3>
               <p style={{ color: '#444', fontSize: '12px', marginBottom: '25px' }}>{acc.desc}</p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontWeight: 900, fontSize: '20px' }}>{acc.price}</span>
                 <button onClick={() => addToCart(acc)} style={{ background: '#fff', color: '#000', border: 'none', padding: '10px 18px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer' }}>ADD TO CART</button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
