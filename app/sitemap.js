@@ -1,13 +1,22 @@
 import { prisma } from '../lib/prisma';
+import { unstable_cache } from 'next/cache';
+
+const getListings = unstable_cache(
+  async () => {
+    return await prisma.listing.findMany({
+      where: { active: true },
+      select: { id: true, updatedAt: true },
+    });
+  },
+  ['sitemap-listings'],
+  { revalidate: 3600 }
+);
 
 export default async function sitemap() {
   const BASE_URL = 'https://smurfrank.vercel.app';
 
   // Fetch all active listings from your database
-  const listings = await prisma.listing.findMany({
-    where: { active: true },
-    select: { id: true, updatedAt: true },
-  });
+  const listings = await getListings();
 
   // 1. Static Pages
   const routes = ['', '/cs2', '/valorant', '/gta-v', '/sell', '/search'].map((route) => ({
