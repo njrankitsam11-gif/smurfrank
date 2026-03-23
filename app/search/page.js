@@ -1,3 +1,5 @@
+import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
 import { prisma } from '../../lib/prisma';
 
 export const metadata = {
@@ -5,23 +7,36 @@ export const metadata = {
   description: 'Search for specific ranks, regions, and games across the SmurfRank marketplace.',
 };
 
+const getSearchResults = cache(
+  unstable_cache(
+    async (query) => {
+      return prisma.listing.findMany({
+        where: {
+          active: true,
+          OR: [
+            { title: { contains: query, mode: 'insensitive' } },
+            { game: { contains: query, mode: 'insensitive' } },
+            { rank: { contains: query, mode: 'insensitive' } },
+            { region: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+    },
+    ['search-results'],
+    {
+      revalidate: 3600,
+      tags: ['search'],
+    }
+  )
+);
+
 export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
   const query = (await searchParams).q || '';
 
   // Find listings that match the search word in the title, game, or rank
-  const results = await prisma.listing.findMany({
-    where: {
-      active: true,
-      OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { game: { contains: query, mode: 'insensitive' } },
-        { rank: { contains: query, mode: 'insensitive' } },
-        { region: { contains: query, mode: 'insensitive' } },
-      ],
-    },
-    orderBy: { createdAt: 'desc' },
-  });
+  const results = await getSearchResults(query);
 
   return (
     <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
@@ -80,7 +95,7 @@ export default async function SearchPage({ searchParams }) {
           ) : (
             <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '80px 0'}}>
               <div style={{fontSize: '48px', marginBottom: '20px'}}>🔍</div>
-              <h3 style={{fontSize: '20px', color: 'white'}}>No accounts found matching "{query}"</h3>
+              <h3 style={{fontSize: '20px', color: 'white'}}>No accounts found matching &quot;{query}&quot;</h3>
               <p style={{color: '#666'}}>Try searching for a specific game, region, or rank tier.</p>
             </div>
           )}
