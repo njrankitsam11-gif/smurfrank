@@ -1,4 +1,5 @@
 import { prisma } from '../../lib/prisma';
+import { unstable_cache } from 'next/cache';
 
 export const metadata = {
   title: 'Buy Valorant Smurf Accounts | Radiant & Immortal Ranked',
@@ -11,11 +12,19 @@ const valorantImages = [
   'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
 ];
 
+const getValorantListings = unstable_cache(
+  async () => {
+    return prisma.listing.findMany({
+      where: { game: { contains: 'Valorant', mode: 'insensitive' }, active: true },
+      orderBy: { price: 'asc' },
+    });
+  },
+  ['valorant-listings'],
+  { revalidate: 3600, tags: ['listings', 'valorant'] }
+);
+
 export default async function ValorantPage() {
-  const listings = await prisma.listing.findMany({
-    where: { game: { contains: 'Valorant', mode: 'insensitive' }, active: true },
-    orderBy: { price: 'asc' },
-  });
+  const listings = await getValorantListings();
 
   return (
     <main style={{ minHeight: '100vh', padding: '60px 20px', backgroundColor: '#050507' }}>
