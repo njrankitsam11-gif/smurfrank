@@ -128,12 +128,12 @@ export default function RootLayout({ children }) {
               <div style={{ fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '20px', color: '#fff' }}>Connect With Us</div>
               <div style={{ display: 'flex', gap: '15px' }}>
                 {/* DISCORD */}
-                <a href="YOUR_DISCORD_LINK" target="_blank" style={socialIconStyle}>
+                <a href="YOUR_DISCORD_LINK" target="_blank" rel="noopener noreferrer" style={socialIconStyle}>
                   <span style={{ fontSize: '18px' }}>💬</span>
                   <span style={{ fontSize: '11px', fontWeight: 800 }}>DISCORD</span>
                 </a>
                 {/* TELEGRAM */}
-                <a href="YOUR_TELEGRAM_LINK" target="_blank" style={socialIconStyle}>
+                <a href="YOUR_TELEGRAM_LINK" target="_blank" rel="noopener noreferrer" style={socialIconStyle}>
                   <span style={{ fontSize: '18px' }}>✈️</span>
                   <span style={{ fontSize: '11px', fontWeight: 800 }}>TELEGRAM</span>
                 </a>
