@@ -11,6 +11,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
+import Link from 'next/link';
+
 export default async function ListingDetailPage({ params }) {
   const { id } = await params;
   const listing = await prisma.listing.findUnique({ where: { id } });
@@ -30,7 +32,7 @@ export default async function ListingDetailPage({ params }) {
         
         {/* LEFT COLUMN: Details */}
         <div>
-          <a href="/" style={{color: '#FF6A00', textDecoration: 'none', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px'}}>← Back to Marketplace</a>
+          <Link href="/" style={{color: '#FF6A00', textDecoration: 'none', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px'}}>← Back to Marketplace</Link>
           
           <h1 style={{fontSize: '48px', fontWeight: 900, textTransform: 'uppercase', margin: '24px 0 32px', lineHeight: 1.1}}>
             {listing.title}

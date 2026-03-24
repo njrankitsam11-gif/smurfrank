@@ -15,7 +15,7 @@ export default function CartDrawer() {
       <div style={{ position: 'absolute', right: 0, top: 0, height: '100%', width: '400px', background: '#0a0a0b', borderLeft: '1px solid #222', padding: '40px 30px', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
           <h2 style={{ fontWeight: 900, margin: 0, letterSpacing: '-1px' }}>YOUR <span style={{ color: '#66FCF1' }}>CART</span></h2>
-          <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '24px' }}>✕</button>
+          <button aria-label="Close cart" onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '24px' }}>✕</button>
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -24,7 +24,7 @@ export default function CartDrawer() {
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 0', borderBottom: '1px solid #111' }}>
                 <div>
                   <p style={{ margin: 0, fontWeight: 800, fontSize: '14px' }}>{item.title}</p>
-                  <button onClick={() => removeFromCart(i)} style={{ background: 'none', border: 'none', color: '#ff4444', fontSize: '10px', cursor: 'pointer', padding: 0 }}>REMOVE</button>
+                  <button aria-label="Remove item" onClick={() => removeFromCart(i)} style={{ background: 'none', border: 'none', color: '#ff4444', fontSize: '10px', cursor: 'pointer', padding: 0 }}>REMOVE</button>
                 </div>
                 <p style={{ margin: 0, fontWeight: 900, color: '#66FCF1' }}>{item.price}</p>
               </div>

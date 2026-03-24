@@ -8,6 +8,16 @@
 - Environments: .env
 
 ✓ Starting...
-✓ Ready in 608ms
- GET / 200 in 3.4s (compile: 3.0s, render: 341ms)
- GET /cs2 200 in 561ms (compile: 513ms, render: 48ms)
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+✓ Ready in 759ms
+ GET /login 200 in 3.9s (compile: 3.4s, render: 408ms)
+ GET /register 200 in 783ms (compile: 635ms, render: 148ms)
+✓ Compiled in 5ms
+✓ Compiled in 65ms
+✓ Compiled in 45ms
+✓ Compiled in 9ms
+✓ Compiled in 7ms
