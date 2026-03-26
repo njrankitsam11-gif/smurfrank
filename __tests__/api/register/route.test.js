@@ -1,7 +1,6 @@
 import { POST } from '../../../app/api/register/route';
 import { prisma } from '../../../lib/prisma';
 import bcrypt from 'bcryptjs';
-import { NextResponse } from 'next/server';
 
 // Mock dependencies
 jest.mock('../../../lib/prisma', () => ({
@@ -29,7 +28,7 @@ describe('POST /api/register', () => {
       json: jest.fn().mockResolvedValue({
         name: 'Test User',
         email: 'test@example.com',
-        password: 'password123',
+        password: 'Password123!',
       }),
     };
   });
@@ -37,7 +36,7 @@ describe('POST /api/register', () => {
   it('should return 400 if email is missing', async () => {
     mockRequest.json.mockResolvedValueOnce({
       name: 'Test User',
-      password: 'password123',
+      password: 'Password123!',
     });
 
     const response = await POST(mockRequest);
@@ -60,7 +59,7 @@ describe('POST /api/register', () => {
     expect(data.error).toBe('Email and password are required');
   });
 
-  it('should return 400 if password is less than 6 characters', async () => {
+  it('should return 400 if password does not meet complexity requirements', async () => {
     mockRequest.json.mockResolvedValueOnce({
       name: 'Test User',
       email: 'test@example.com',
@@ -71,7 +70,7 @@ describe('POST /api/register', () => {
     const data = await response.json();
 
     expect(response.status).toBe(400);
-    expect(data.error).toBe('Password must be at least 6 characters');
+    expect(data.error).toMatch(/Password must be at least 8 characters long/);
   });
 
   it('should return 400 if email is already registered', async () => {
@@ -94,7 +93,7 @@ describe('POST /api/register', () => {
     const data = await response.json();
 
     expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email: 'test@example.com' } });
-    expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10);
+    expect(bcrypt.hash).toHaveBeenCalledWith('Password123!', 10);
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: { name: 'Test User', email: 'test@example.com', password: 'hashed_password' },
     });
