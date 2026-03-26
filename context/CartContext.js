@@ -16,7 +16,6 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // ⚡ Bolt: Memoize expensive cart total calculation to prevent recalculation on every render
   const total = useMemo(
     () => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0),
     [cart]
