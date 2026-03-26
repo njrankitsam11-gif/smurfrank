@@ -5,10 +5,15 @@ export const dynamic = 'force-dynamic';
 
 const getListings = unstable_cache(
   async () => {
-    return await prisma.listing.findMany({
-      where: { active: true },
-      select: { id: true, updatedAt: true },
-    });
+    try {
+      return await prisma.listing.findMany({
+        where: { active: true },
+        select: { id: true, updatedAt: true },
+      });
+    } catch (error) {
+      console.warn("Could not reach DB for sitemap generation. Using empty list.", error);
+      return [];
+    }
   },
   ['sitemap-listings'],
   { revalidate: 3600 }
