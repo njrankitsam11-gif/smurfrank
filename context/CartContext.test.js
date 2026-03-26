@@ -1,4 +1,4 @@
-import { expect, test, describe } from "@jest/globals";
+import { expect, test, describe } from "bun:test";
 
 // MANUALLY RE-IMPLEMENTING CartProvider logic for testing since we can't easily import it with the environment issues
 // This ensures the LOGIC is tested, while acknowledging the environment's inability to import the component.
