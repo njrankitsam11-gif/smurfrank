@@ -17,9 +17,10 @@ export function CartProvider({ children }) {
   };
 
   // ⚡ Bolt: Memoize expensive cart total calculation to prevent recalculation on every render
-  const total = useMemo(() => {
-    return cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
-  }, [cart]);
+  const total = useMemo(
+    () => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0),
+    [cart]
+  );
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, isOpen, setIsOpen, total }}>
