@@ -3,15 +3,10 @@ import { unstable_cache } from 'next/cache';
 
 const getListings = unstable_cache(
   async () => {
-    try {
-      return await prisma.listing.findMany({
-        where: { active: true },
-        select: { id: true, updatedAt: true },
-      });
-    } catch (error) {
-      console.error('Failed to fetch listings for sitemap:', error);
-      return [];
-    }
+    return await prisma.listing.findMany({
+      where: { active: true },
+      select: { id: true, updatedAt: true },
+    });
   },
   ['sitemap-listings'],
   { revalidate: 3600 }
