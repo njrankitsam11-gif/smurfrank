@@ -7,7 +7,9 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "bun test"
+    "test:jest": "jest",
+    "test:bun": "bun test bun.test",
+    "test": "npm run test:jest && npm run test:bun"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
