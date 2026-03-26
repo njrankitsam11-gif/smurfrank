@@ -1,0 +1,9 @@
+--- .jules/bolt.md
++++ .jules/bolt.md
+@@ -1,6 +1,3 @@
+-<<<<<<< HEAD
+ # Bolt's Journal
+
+-=======
+->>>>>>> origin/main
+ ## 2023-11-20 - [Query Deduplication]
