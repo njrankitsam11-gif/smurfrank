@@ -1,6 +1,6 @@
 import { expect, test, describe } from "bun:test";
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
 describe("Password Complexity Validation", () => {
   test("should accept valid passwords with various special characters", () => {
@@ -8,6 +8,7 @@ describe("Password Complexity Validation", () => {
     expect(passwordRegex.test("Strong#Pass1")).toBe(true);
     expect(passwordRegex.test("User_123$")).toBe(true);
     expect(passwordRegex.test("Admin(2024)*")).toBe(true);
+    expect(passwordRegex.test("Pass with space 1!")).toBe(true);
   });
 
   test("should reject short passwords", () => {
