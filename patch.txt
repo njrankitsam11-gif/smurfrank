@@ -1,0 +1,13 @@
+--- context/CartContext.js
++++ context/CartContext.js
+@@ -19,10 +19,7 @@
+     setCart((prev) => prev.filter((_, i) => i !== index));
+   };
+
+-<<<<<<< HEAD
+   // ⚡ Bolt: Memoize expensive cart total calculation to prevent recalculation on every render
+-=======
+->>>>>>> origin/main
+   const total = useMemo(
+     () => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0),
+     [cart]
