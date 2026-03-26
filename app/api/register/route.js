@@ -12,9 +12,7 @@ export async function POST(request) {
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
     if (!passwordRegex.test(password)) {
-      return NextResponse.json({
-        error: 'Password must be at least 8 characters long and include uppercase, lowercase, a number, and a special character'
-      }, { status: 400 });
+      return NextResponse.json({ error: 'Password must be at least 8 characters long, and include uppercase, lowercase, a digit, and a special character' }, { status: 400 });
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
