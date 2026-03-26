@@ -33,17 +33,17 @@ describe('POST /api/register', () => {
     expect(json.error).toBe('Email and password are required');
   });
 
-  it('returns 400 if password is less than 6 characters', async () => {
+  it('returns 400 if password is invalid format', async () => {
     const req = mockRequest({ email: 'test@example.com', password: '123' });
     const res = await POST(req);
     const json = await res.json();
 
     expect(res.status).toBe(400);
-    expect(json.error).toBe('Password must be at least 6 characters');
+    expect(json.error).toBe('Password must be at least 8 characters long, and include uppercase, lowercase, a digit, and a special character');
   });
 
   it('returns 400 if email is already registered', async () => {
-    const req = mockRequest({ email: 'existing@example.com', password: 'password123' });
+    const req = mockRequest({ email: 'existing@example.com', password: 'Password123!' });
 
     prisma.user.findUnique.mockResolvedValue({
       id: 1,
@@ -61,7 +61,7 @@ describe('POST /api/register', () => {
   });
 
   it('returns 201 on successful registration', async () => {
-    const req = mockRequest({ name: 'Test User', email: 'new@example.com', password: 'password123' });
+    const req = mockRequest({ name: 'Test User', email: 'new@example.com', password: 'Password123!' });
 
     prisma.user.findUnique.mockResolvedValue(null);
     bcrypt.hash.mockResolvedValue('hashedPassword123');
@@ -76,14 +76,14 @@ describe('POST /api/register', () => {
     expect(prisma.user.findUnique).toHaveBeenCalledWith({
       where: { email: 'new@example.com' },
     });
-    expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10);
+    expect(bcrypt.hash).toHaveBeenCalledWith('Password123!', 10);
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: { name: 'Test User', email: 'new@example.com', password: 'hashedPassword123' },
     });
   });
 
   it('returns 500 on server error', async () => {
-    const req = mockRequest({ name: 'Test User', email: 'error@example.com', password: 'password123' });
+    const req = mockRequest({ name: 'Test User', email: 'error@example.com', password: 'Password123!' });
 
     prisma.user.findUnique.mockRejectedValue(new Error('Database error'));
 
