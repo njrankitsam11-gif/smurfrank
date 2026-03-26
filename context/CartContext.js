@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState, useMemo } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const CartContext = createContext();
 
@@ -16,10 +16,7 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = useMemo(
-    () => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0),
-    [cart]
-  );
+  const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, isOpen, setIsOpen, total }}>

@@ -2,7 +2,7 @@ import { expect, test, describe } from "bun:test";
 
 // MANUALLY RE-IMPLEMENTING CartProvider logic for testing since we can't easily import it with the environment issues
 // This ensures the LOGIC is tested, while acknowledging the environment's inability to import the component.
-function CartProviderLogic(useState, useMemo) {
+function CartProviderLogic(useState) {
   const [cart, setCart] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,10 +15,7 @@ function CartProviderLogic(useState, useMemo) {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = useMemo(
-    () => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0),
-    [cart]
-  );
+  const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
 
   return { cart, addToCart, removeFromCart, isOpen, setIsOpen, total };
 }
@@ -38,11 +35,9 @@ describe("CartContext Logic", () => {
       return [states[i], setVal];
     };
 
-    const mockUseMemo = (factory, deps) => factory();
-
     const render = () => {
       stateIndex = 0;
-      return CartProviderLogic(mockUseState, mockUseMemo);
+      return CartProviderLogic(mockUseState);
     };
 
     let contextValue = render();
