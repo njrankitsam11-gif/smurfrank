@@ -38,9 +38,6 @@ describe("CartContext Logic", () => {
       return [states[i], setVal];
     };
 
-    const render = () => {
-      stateIndex = 0;
-      return CartProviderLogic(mockUseState);
     const mockUseMemo = (factory, deps) => factory();
 
     const render = () => {
