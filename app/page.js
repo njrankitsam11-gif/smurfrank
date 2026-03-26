@@ -1,7 +1,5 @@
 'use client';
-
 import { motion } from 'framer-motion';
-
 import { useCart } from '../context/CartContext';
 
 export default function HomePage() {
