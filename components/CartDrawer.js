@@ -24,7 +24,7 @@ export default function CartDrawer() {
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 0', borderBottom: '1px solid #111' }}>
                 <div>
                   <p style={{ margin: 0, fontWeight: 800, fontSize: '14px' }}>{item.title}</p>
-                  <button aria-label="Remove item" onClick={() => removeFromCart(i)} style={{ background: 'none', border: 'none', color: '#ff4444', fontSize: '10px', cursor: 'pointer', padding: 0 }}>REMOVE</button>
+                  <button aria-label={`Remove ${item.title} from cart`} onClick={() => removeFromCart(i)} style={{ background: 'none', border: 'none', color: '#ff4444', fontSize: '10px', cursor: 'pointer', padding: 0 }}>REMOVE</button>
                 </div>
                 <p style={{ margin: 0, fontWeight: 900, color: '#66FCF1' }}>{item.price}</p>
               </div>
