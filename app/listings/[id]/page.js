@@ -1,15 +1,6 @@
 import { cache } from 'react';
 import { prisma } from '../../../lib/prisma';
 import { notFound } from 'next/navigation';
-import { cache } from 'react';
-
-// ⚡ BOLT OPTIMIZATION: Wrap Prisma call in React.cache()
-// 💡 What: Deduplicate direct database queries across generateMetadata and the Server Component.
-// 🎯 Why: Next.js does not automatically deduplicate direct database ORM calls during a request cycle.
-// 📊 Impact: Eliminates 1 redundant database query per page load, improving TTFB and reducing DB load by 50%.
-const getListing = cache(async (id) => {
-  return await prisma.listing.findUnique({ where: { id } });
-});
 
 // ⚡ BOLT OPTIMIZATION: Wrap Prisma call in React.cache()
 // 💡 What: Deduplicate direct database queries across generateMetadata and the Server Component.

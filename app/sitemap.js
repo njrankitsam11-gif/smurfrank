@@ -1,6 +1,8 @@
 import { prisma } from '../lib/prisma';
 import { unstable_cache } from 'next/cache';
 
+export const dynamic = 'force-dynamic';
+
 const getListings = unstable_cache(
   async () => {
     return await prisma.listing.findMany({

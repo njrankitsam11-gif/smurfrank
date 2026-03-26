@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 
 const seo = {
   title: "Verified Seller Portal | List Your Account | SmurfRank",
