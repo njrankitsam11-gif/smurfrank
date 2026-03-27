@@ -1,38 +1,106 @@
-const { performance } = require('perf_hooks');
+// The file requires JSX transpilation, so let's mock the component logic instead, just like the bun test does.
+function createCartProviderLogic(useState, trackCalculations) {
+  const [cart, setCart] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-// Mock data
-const cart = Array.from({ length: 100000 }, (_, i) => ({ price: `$${(Math.random() * 100).toFixed(2)}` }));
+  const addToCart = (product) => {
+    setCart((prev) => [...prev, product]);
+    setIsOpen(true);
+  };
 
-// Baseline: unmemoized
-function calcTotalBaseline(cart) {
-  return cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
+  const removeFromCart = (index) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Simulate unmemoized total:
+  trackCalculations();
+  const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
+
+  return { cart, addToCart, removeFromCart, isOpen, setIsOpen, total };
 }
 
-// Optimization: memoized (simulated by not calling it on re-render)
-let memoizedTotal = null;
-function calcTotalMemoized(cart, cartChanged) {
-  if (cartChanged || memoizedTotal === null) {
-    memoizedTotal = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
+function createMemoizedCartProviderLogic(useState, useMemo, trackCalculations) {
+    const [cart, setCart] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const addToCart = (product) => {
+      setCart((prev) => [...prev, product]);
+      setIsOpen(true);
+    };
+
+    const removeFromCart = (index) => {
+      setCart((prev) => prev.filter((_, i) => i !== index));
+    };
+
+    // Simulate memoized total:
+    const total = useMemo(() => {
+        trackCalculations();
+        return cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0)
+    }, [cart]);
+
+    return { cart, addToCart, removeFromCart, isOpen, setIsOpen, total };
   }
-  return memoizedTotal;
-}
 
-const iterations = 100;
+const runBenchmark = (providerFactory, iterations) => {
+    let stateIndex = 0;
+    const states = [];
 
-let start = performance.now();
-for (let i = 0; i < iterations; i++) {
-  calcTotalBaseline(cart);
-}
-let end = performance.now();
-const baselineTime = end - start;
-console.log(`Baseline time (100 renders): ${baselineTime.toFixed(2)}ms`);
+    // Naive mock React hooks that just retain values between calls
+    let memoizedDeps = null;
+    let memoizedVal = null;
 
-start = performance.now();
-for (let i = 0; i < iterations; i++) {
-  // cart has not changed
-  calcTotalMemoized(cart, false);
-}
-end = performance.now();
-const optimizedTime = end - start;
-console.log(`Optimized time (100 renders without cart change): ${optimizedTime.toFixed(2)}ms`);
-console.log(`Improvement: ${((baselineTime - optimizedTime) / baselineTime * 100).toFixed(2)}%`);
+    const mockUseState = (initial) => {
+      const i = stateIndex++;
+      if (states[i] === undefined) states[i] = initial;
+      const setVal = (newVal) => {
+        if (typeof newVal === 'function') states[i] = newVal(states[i]);
+        else states[i] = newVal;
+      };
+      return [states[i], setVal];
+    };
+
+    const mockUseMemo = (factory, deps) => {
+        if (!memoizedDeps || deps.some((dep, i) => dep !== memoizedDeps[i])) {
+            memoizedVal = factory();
+            memoizedDeps = deps;
+        }
+        return memoizedVal;
+    };
+
+    let calcCount = 0;
+    const track = () => calcCount++;
+
+    const render = () => {
+        stateIndex = 0;
+        return providerFactory(mockUseState, mockUseMemo, track);
+    };
+
+    let ctx = render();
+    // Add some items
+    for(let i = 0; i < 50; i++) {
+        ctx.addToCart({ price: '$10' });
+        ctx = render();
+    }
+
+    // Now, toggle isOpen `iterations` times
+    const start = performance.now();
+    for(let i = 0; i < iterations; i++) {
+        ctx.setIsOpen(!ctx.isOpen);
+        ctx = render();
+    }
+    const end = performance.now();
+
+    return { time: end - start, calculations: calcCount };
+};
+
+const iterations = 100000;
+
+console.log("Unmemoized Baseline:");
+const unmemoized = runBenchmark((uS, uM, t) => createCartProviderLogic(uS, t), iterations);
+console.log(`Calculations: ${unmemoized.calculations}`);
+console.log(`Time: ${unmemoized.time.toFixed(2)}ms`);
+
+console.log("\nMemoized Improvement:");
+const memoized = runBenchmark((uS, uM, t) => createMemoizedCartProviderLogic(uS, uM, t), iterations);
+console.log(`Calculations: ${memoized.calculations}`);
+console.log(`Time: ${memoized.time.toFixed(2)}ms`);

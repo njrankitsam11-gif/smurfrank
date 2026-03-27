@@ -15,7 +15,7 @@ function CartProviderLogic(useState, useMemo) {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')) , 0), [cart]);
+  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
 
   return { cart, addToCart, removeFromCart, isOpen, setIsOpen, total };
 }
@@ -24,6 +24,9 @@ describe("CartContext Logic", () => {
   test("full cart lifecycle", () => {
     const states = [];
     let stateIndex = 0;
+
+    let memoizedDeps = null;
+    let memoizedVal = null;
 
     const mockUseState = (initial) => {
       const i = stateIndex++;
@@ -35,9 +38,16 @@ describe("CartContext Logic", () => {
       return [states[i], setVal];
     };
 
+    const mockUseMemo = (factory, deps) => {
+      if (!memoizedDeps || deps.some((dep, i) => dep !== memoizedDeps[i])) {
+          memoizedVal = factory();
+          memoizedDeps = deps;
+      }
+      return memoizedVal;
+    };
+
     const render = () => {
       stateIndex = 0;
-      const mockUseMemo = (fn, deps) => fn();
       return CartProviderLogic(mockUseState, mockUseMemo);
     };
 
