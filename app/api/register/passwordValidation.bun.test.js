@@ -1,10 +1,14 @@
 import { describe, expect, it, mock } from "bun:test";
 import { POST } from "./route.js";
 
+let reqCounter = 0;
 class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
+    this.headers = {
+      get: (key) => key === 'x-forwarded-for' ? 'test-ip-' + (++reqCounter) : (init.headers?.[key] || null)
+    };
   }
   async json() {
     return JSON.parse(this.init.body);
