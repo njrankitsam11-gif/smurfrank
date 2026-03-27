@@ -16,7 +16,7 @@ function CartProviderLogic(useState, useMemo) {
       }
       return [...prev, { ...product, quantity: 1 }];
     });
-    setIsOpen(true);
+    setIsOpen(true); // Automatically opens drawer when buying
   };
 
   const increaseQuantity = (index) => {
