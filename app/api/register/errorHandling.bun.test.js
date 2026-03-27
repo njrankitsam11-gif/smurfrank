@@ -23,7 +23,7 @@ mock.module('next/server', () => ({
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async () => { throw new Error('Database connection failed'); },
+      findUnique: async () => null,
       create: async () => { throw new Error('Database connection failed'); }
     }
   }
@@ -35,16 +35,14 @@ mock.module('bcryptjs', () => ({
   }
 }));
 
-describe("Registration Error Handling", () => {
-  it("should return a 500 error if something goes wrong internally", async () => {
+describe("Register API Error Handling", () => {
+  it("should return a 500 error if an unexpected error occurs", async () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
       headers: { "Content-Type": "application/json" }
     });
-
     const res = await POST(req);
-
     expect(res.status).toBe(500);
     const data = await res.json();
     expect(data.error).toBe("Something went wrong");

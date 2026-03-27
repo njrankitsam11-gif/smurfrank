@@ -111,4 +111,16 @@ describe('POST /api/register', () => {
     expect(response.status).toBe(500);
     expect(data.error).toBe('Something went wrong');
   });
+
+  it('should return 500 if an error occurs during user creation', async () => {
+    prisma.user.findUnique.mockResolvedValueOnce(null);
+    bcrypt.hash.mockResolvedValueOnce('hashed_password');
+    prisma.user.create.mockRejectedValueOnce(new Error('Database error during creation'));
+
+    const response = await POST(mockRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe('Something went wrong');
+  });
 });
