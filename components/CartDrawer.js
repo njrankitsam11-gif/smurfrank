@@ -2,7 +2,7 @@
 import { useCart } from '../context/CartContext';
 
 export default function CartDrawer() {
-  const { cart, isOpen, setIsOpen, total, removeFromCart } = useCart();
+  const { cart, isOpen, setIsOpen, total, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
   if (!isOpen) return null;
 
@@ -22,11 +22,20 @@ export default function CartDrawer() {
           {cart.length === 0 ? <p style={{ color: '#444', textAlign: 'center', marginTop: '50px' }}>Empty.</p> : 
             cart.map((item, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 0', borderBottom: '1px solid #111' }}>
-                <div>
+                <div style={{ flex: 1 }}>
                   <p style={{ margin: 0, fontWeight: 800, fontSize: '14px' }}>{item.title}</p>
-                  <button aria-label={`Remove ${item.title} from cart`} onClick={() => removeFromCart(i)} style={{ background: 'none', border: 'none', color: '#ff4444', fontSize: '10px', cursor: 'pointer', padding: 0 }}>REMOVE</button>
+                  <div style={{ display: 'flex', alignItems: 'center', marginTop: '5px', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#111', padding: '2px 8px', borderRadius: '4px' }}>
+                      <button aria-label={`Decrease quantity of ${item.title}`} onClick={() => decreaseQuantity(i)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '0 4px', fontSize: '14px' }}>-</button>
+                      <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.quantity}</span>
+                      <button aria-label={`Increase quantity of ${item.title}`} onClick={() => increaseQuantity(i)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '0 4px', fontSize: '14px' }}>+</button>
+                    </div>
+                    <button aria-label={`Remove ${item.title} from cart`} onClick={() => removeFromCart(i)} style={{ background: 'none', border: 'none', color: '#ff4444', fontSize: '10px', cursor: 'pointer', padding: 0 }}>REMOVE</button>
+                  </div>
                 </div>
-                <p style={{ margin: 0, fontWeight: 900, color: '#66FCF1' }}>{item.price}</p>
+                <div style={{ textAlign: 'right' }}>
+                  <p style={{ margin: 0, fontWeight: 900, color: '#66FCF1' }}>${(parseFloat(item.price.replace('$', '')) * (item.quantity || 1)).toFixed(2)}</p>
+                </div>
               </div>
             ))
           }
