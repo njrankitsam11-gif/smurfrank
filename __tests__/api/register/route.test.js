@@ -115,7 +115,7 @@ describe('POST /api/register', () => {
   it('should return 500 if an error occurs during user creation', async () => {
     prisma.user.findUnique.mockResolvedValueOnce(null);
     bcrypt.hash.mockResolvedValueOnce('hashed_password');
-    prisma.user.create.mockRejectedValueOnce(new Error('Database error'));
+    prisma.user.create.mockRejectedValueOnce(new Error('Database error during creation'));
 
     const response = await POST(mockRequest);
     const data = await response.json();
