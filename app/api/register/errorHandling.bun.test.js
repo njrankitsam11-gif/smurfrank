@@ -47,4 +47,19 @@ describe("Register API Error Handling", () => {
     const data = await res.json();
     expect(data.error).toBe("Something went wrong");
   });
+
+  it("should return a 500 error if request.json() throws an error (e.g., invalid JSON)", async () => {
+    const req = new MockRequest("http://localhost/api/register", {
+      method: "POST",
+      body: "invalid-json",
+      headers: { "Content-Type": "application/json" }
+    });
+    // Override json method for this specific request mock to throw
+    req.json = async () => { throw new Error('SyntaxError: Unexpected token'); };
+
+    const res = await POST(req);
+    expect(res.status).toBe(500);
+    const data = await res.json();
+    expect(data.error).toBe("Something went wrong");
+  });
 });
