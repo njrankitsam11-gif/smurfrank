@@ -13,3 +13,7 @@
 ## 2026-03-26 - Memoize cart total calculation
 **Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render, even for unrelated state changes like toggling a UI drawer.
 **Action:** Always wrap derived data calculations from arrays in Context Providers with `useMemo`.
+
+## 2026-03-27 - Memoize cart total calculation in tests
+**Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render. Test setups for components using hooks should mock hooks accurately.
+**Action:** Wraps derived data calculations from arrays in Context Providers test mocks with `useMemo`.
