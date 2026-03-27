@@ -16,14 +16,40 @@ function CartProviderLogic(useState, useMemo) {
       }
       return [...prev, { ...product, quantity: 1 }];
     });
-    setIsOpen(true);
+    setIsOpen(true); // Automatically opens drawer when buying
   };
 
   const removeFromCart = (index) => {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
+  const increaseQuantity = (index) => {
+    setCart((prev) => {
+      const newCart = [...prev];
+      newCart[index].quantity = (newCart[index].quantity || 1) + 1;
+      return newCart;
+    });
+  };
+
+  const decreaseQuantity = (index) => {
+    setCart((prev) => {
+      const newCart = [...prev];
+      if (newCart[index].quantity > 1) {
+        newCart[index].quantity -= 1;
+        return newCart;
+      }
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const total = useMemo(() => {
+    return cart.reduce((sum, item) => {
+      if (!item || item.price == null) return sum;
+      const priceVal = parseFloat(String(item.price).replace('$', ''));
+      const quantity = item.quantity || 1;
+      return sum + (isNaN(priceVal) ? 0 : priceVal * quantity);
+    }, 0);
+  }, [cart]);
 
   return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };
 }
