@@ -9,20 +9,32 @@ export const metadata = {
 export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
   const query = (await searchParams).q || '';
+  const page = Math.max(1, parseInt((await searchParams).page) || 1);
+  const limit = 12;
+  const skip = (page - 1) * limit;
+
+  const where = {
+    active: true,
+    OR: [
+      { title: { contains: query, mode: 'insensitive' } },
+      { game: { contains: query, mode: 'insensitive' } },
+      { rank: { contains: query, mode: 'insensitive' } },
+      { region: { contains: query, mode: 'insensitive' } },
+    ],
+  };
 
   // Find listings that match the search word in the title, game, or rank
-  const results = await prisma.listing.findMany({
-    where: {
-      active: true,
-      OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { game: { contains: query, mode: 'insensitive' } },
-        { rank: { contains: query, mode: 'insensitive' } },
-        { region: { contains: query, mode: 'insensitive' } },
-      ],
-    },
-    orderBy: { createdAt: 'desc' },
-  });
+  const [results, totalCount] = await Promise.all([
+    prisma.listing.findMany({
+      where,
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+      skip,
+    }),
+    prisma.listing.count({ where }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / limit);
 
   return (
     <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
@@ -86,6 +98,32 @@ export default async function SearchPage({ searchParams }) {
             </div>
           )}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '40px' }}>
+            {page > 1 && (
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}&page=${page - 1}`}
+                style={{ padding: '10px 20px', border: '1px solid #1a1a1a', color: 'white', textDecoration: 'none', background: '#0f0f17' }}
+              >
+                Previous
+              </Link>
+            )}
+            <span style={{ padding: '10px 20px', color: '#666' }}>
+              Page {page} of {totalPages}
+            </span>
+            {page < totalPages && (
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}&page=${page + 1}`}
+                style={{ padding: '10px 20px', border: '1px solid #1a1a1a', color: 'white', textDecoration: 'none', background: '#0f0f17' }}
+              >
+                Next
+              </Link>
+            )}
+          </div>
+        )}
+
       </section>
 
       {/* Footer */}

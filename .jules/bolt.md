@@ -17,3 +17,7 @@
 ## 2026-03-27 - Memoize cart total calculation in tests
 **Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render. Test setups for components using hooks should mock hooks accurately.
 **Action:** Wraps derived data calculations from arrays in Context Providers test mocks with `useMemo`.
+
+## 2026-03-27 - Implement Database Pagination for Unbounded Queries
+**Learning:** Returning unbounded results from `prisma.findMany` operations is highly inefficient when dealing with large datasets, leading to severe memory bloat and JSON parsing overhead during data transfer.
+**Action:** Always constrain `findMany` operations using `take` and `skip` based on a URL `page` parameter to reduce memory allocation, and handle URL edge cases robustly by ensuring the parsed `page` defaults to at least `1` via `Math.max(1, parseInt(...) || 1)`.
