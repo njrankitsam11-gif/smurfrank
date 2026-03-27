@@ -1,62 +1,51 @@
-import { expect, test, describe } from "bun:test";
+import { mock, expect, test, describe } from "bun:test";
 
-// MANUALLY RE-IMPLEMENTING CartProvider logic for testing since we can't easily import it with the environment issues
-// This ensures the LOGIC is tested, while acknowledging the environment's inability to import the component.
-function CartProviderLogic(useState, useMemo) {
-  const [cart, setCart] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+let states = [];
+let stateIndex = 0;
+let memoizedDeps = null;
+let memoizedVal = null;
 
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const existingItemIndex = prev.findIndex(item => item.title === product.title);
-      if (existingItemIndex >= 0) {
-        const newCart = [...prev];
-        newCart[existingItemIndex].quantity = (newCart[existingItemIndex].quantity || 1) + 1;
-        return newCart;
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
-    setIsOpen(true);
+const mockUseState = (initial) => {
+  const i = stateIndex++;
+  if (states[i] === undefined) states[i] = initial;
+  const setVal = (newVal) => {
+    if (typeof newVal === 'function') states[i] = newVal(states[i]);
+    else states[i] = newVal;
   };
+  return [states[i], setVal];
+};
 
-  const removeFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-  };
+const mockUseMemo = (factory, deps) => {
+  if (!memoizedDeps || deps.some((dep, i) => dep !== memoizedDeps[i])) {
+      memoizedVal = factory();
+      memoizedDeps = deps;
+  }
+  return memoizedVal;
+};
 
-  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
+mock.module("react", () => ({
+  createContext: () => ({ Provider: ({ value, children }) => ({ type: 'Provider', props: { value, children } }) }),
+  useContext: () => ({}),
+  useState: mockUseState,
+  useMemo: mockUseMemo
+}));
 
-  return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };
-}
+mock.module("react/jsx-dev-runtime", () => ({
+    jsxDEV: (type, props, key, isStaticChildren, source, self) => ({ type, props })
+}));
 
 describe("CartContext Logic", () => {
-  test("full cart lifecycle with quantities", () => {
-    const states = [];
-    let stateIndex = 0;
+  test("full cart lifecycle with quantities", async () => {
+    const { CartProvider } = await import("./CartContext.js");
 
-    let memoizedDeps = null;
-    let memoizedVal = null;
-
-    const mockUseState = (initial) => {
-      const i = stateIndex++;
-      if (states[i] === undefined) states[i] = initial;
-      const setVal = (newVal) => {
-        if (typeof newVal === 'function') states[i] = newVal(states[i]);
-        else states[i] = newVal;
-      };
-      return [states[i], setVal];
-    };
-
-    const mockUseMemo = (factory, deps) => {
-      if (!memoizedDeps || deps.some((dep, i) => dep !== memoizedDeps[i])) {
-          memoizedVal = factory();
-          memoizedDeps = deps;
-      }
-      return memoizedVal;
-    };
+    states = [];
+    stateIndex = 0;
+    memoizedDeps = null;
+    memoizedVal = null;
 
     const render = () => {
       stateIndex = 0;
-      return CartProviderLogic(mockUseState, mockUseMemo);
+      return CartProvider({children: null}).props.value;
     };
 
     let contextValue = render();
