@@ -23,7 +23,26 @@ function CartProviderLogic(useState, useMemo) {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
+  const increaseQuantity = (index) => {
+    setCart((prev) => {
+      const newCart = [...prev];
+      newCart[index].quantity += 1;
+      return newCart;
+    });
+  };
+
+  const decreaseQuantity = (index) => {
+    setCart((prev) => {
+      const newCart = [...prev];
+      if (newCart[index].quantity > 1) {
+        newCart[index].quantity -= 1;
+        return newCart;
+      }
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const total = useMemo(() => cart.reduce((sum, item) => sum + (parseFloat(item.price.replace('$', '')) * (item.quantity || 1)), 0), [cart]);
 
   return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };
 }
