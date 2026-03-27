@@ -9,3 +9,7 @@
 ## 2025-03-05 - Fix Next.js Build Vercel Issue with Prisma Queries
 **Learning:** In Next.js App Router, using Prisma to query the database inside `sitemap.js` will cause `npm run build` to fail on platforms like Vercel if the `DATABASE_URL` environment variable is not available during the static prerendering phase. Next.js attempts to execute `sitemap.js` at build time to statically generate `/sitemap.xml`.
 **Action:** When a server component or route like `sitemap.js` relies on a database connection that is only available at runtime, explicitly opt it out of static generation by adding `export const dynamic = 'force-dynamic';`. This forces the route to evaluate on-demand during the request, skipping the failing query during the build step.
+
+## 2026-03-26 - Memoize cart total calculation
+**Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render, even for unrelated state changes like toggling a UI drawer.
+**Action:** Always wrap derived data calculations from arrays in Context Providers with `useMemo`.

@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 
 const CartContext = createContext();
 
@@ -16,7 +16,11 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0);
+  // ⚡ BOLT OPTIMIZATION: Memoize cart total
+  // 💡 What: Wrapped the total calculation in useMemo
+  // 🎯 Why: Prevents recalculating the cart total on every single render when the cart hasn't changed
+  // 📊 Impact: O(N) operation bypassed on unrelated state changes (like opening/closing the drawer)
+  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, isOpen, setIsOpen, total }}>
