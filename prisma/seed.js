@@ -30,6 +30,7 @@ async function main() {
     ]
   });
 
+  console.info('✅ Database seeded with all listings!');
 }
 
 main()
