@@ -7,7 +7,15 @@ function CartProviderLogic(useState, useMemo) {
   const [isOpen, setIsOpen] = useState(false);
 
   const addToCart = (product) => {
-    setCart((prev) => [...prev, product]);
+    setCart((prev) => {
+      const existingItemIndex = prev.findIndex(item => item.title === product.title);
+      if (existingItemIndex >= 0) {
+        const newCart = [...prev];
+        newCart[existingItemIndex].quantity = (newCart[existingItemIndex].quantity || 1) + 1;
+        return newCart;
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
     setIsOpen(true);
   };
 
@@ -17,11 +25,11 @@ function CartProviderLogic(useState, useMemo) {
 
   const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
 
-  return { cart, addToCart, removeFromCart, isOpen, setIsOpen, total };
+  return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };
 }
 
 describe("CartContext Logic", () => {
-  test("full cart lifecycle", () => {
+  test("full cart lifecycle with quantities", () => {
     const states = [];
     let stateIndex = 0;
 
@@ -58,27 +66,52 @@ describe("CartContext Logic", () => {
     expect(contextValue.isOpen).toBe(false);
     expect(contextValue.total).toBe(0);
 
-    // 2. Add to Cart
-    contextValue.addToCart({ id: 1, price: "$10.00", name: "Product 1" });
+    // 2. Add to Cart (New item)
+    contextValue.addToCart({ id: 1, price: "$10.00", title: "Product 1" });
     contextValue = render();
 
-    expect(contextValue.cart).toEqual([{ id: 1, price: "$10.00", name: "Product 1" }]);
+    expect(contextValue.cart).toEqual([{ id: 1, price: "$10.00", title: "Product 1", quantity: 1 }]);
     expect(contextValue.isOpen).toBe(true);
     expect(contextValue.total).toBe(10);
 
-    // 3. Add another
-    contextValue.addToCart({ id: 2, price: "$15.50", name: "Product 2" });
+    // 3. Add to Cart (Existing item - increment quantity)
+    contextValue.addToCart({ id: 1, price: "$10.00", title: "Product 1" });
+    contextValue = render();
+    expect(contextValue.cart).toEqual([{ id: 1, price: "$10.00", title: "Product 1", quantity: 2 }]);
+    expect(contextValue.total).toBe(20);
+
+    // 4. Add another item
+    contextValue.addToCart({ id: 2, price: "$15.50", title: "Product 2" });
     contextValue = render();
     expect(contextValue.cart.length).toBe(2);
-    expect(contextValue.total).toBe(25.5);
+    expect(contextValue.total).toBe(35.5);
 
-    // 4. Remove
+    // 5. Increase Quantity
+    contextValue.increaseQuantity(1); // Increase Product 2
+    contextValue = render();
+    expect(contextValue.cart[1].quantity).toBe(2);
+    expect(contextValue.total).toBe(51.0); // 20 + 31
+
+    // 6. Decrease Quantity
+    contextValue.decreaseQuantity(1); // Decrease Product 2
+    contextValue = render();
+    expect(contextValue.cart[1].quantity).toBe(1);
+    expect(contextValue.total).toBe(35.5);
+
+    // 7. Decrease Quantity to 0 (Removes item)
+    contextValue.decreaseQuantity(1); // Decrease Product 2 again
+    contextValue = render();
+    expect(contextValue.cart.length).toBe(1);
+    expect(contextValue.cart[0].title).toBe("Product 1");
+    expect(contextValue.total).toBe(20);
+
+    // 8. Remove item explicitly
     contextValue.removeFromCart(0);
     contextValue = render();
-    expect(contextValue.cart).toEqual([{ id: 2, price: "$15.50", name: "Product 2" }]);
-    expect(contextValue.total).toBe(15.5);
+    expect(contextValue.cart).toEqual([]);
+    expect(contextValue.total).toBe(0);
 
-    // 5. Toggling
+    // 9. Toggling
     contextValue.setIsOpen(false);
     contextValue = render();
     expect(contextValue.isOpen).toBe(false);
