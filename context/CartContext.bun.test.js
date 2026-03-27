@@ -19,11 +19,36 @@ function CartProviderLogic(useState, useMemo) {
     setIsOpen(true);
   };
 
+  const increaseQuantity = (index) => {
+    setCart((prev) => {
+      const newCart = [...prev];
+      if (newCart[index]) {
+        newCart[index].quantity = (newCart[index].quantity || 1) + 1;
+      }
+      return newCart;
+    });
+  };
+
+  const decreaseQuantity = (index) => {
+    setCart((prev) => {
+      const newCart = [...prev];
+      if (newCart[index]) {
+        if (newCart[index].quantity > 1) {
+          newCart[index].quantity -= 1;
+        } else {
+          // Remove item if quantity drops to 0
+          return prev.filter((_, i) => i !== index);
+        }
+      }
+      return newCart;
+    });
+  };
+
   const removeFromCart = (index) => {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);
+  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')) * (item.quantity || 1), 0), [cart]);
 
   return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };
 }
