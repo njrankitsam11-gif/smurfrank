@@ -52,7 +52,7 @@ export function CartProvider({ children }) {
       if (!item || item.price == null) return sum;
       const priceVal = parseFloat(String(item.price).replace('$', ''));
       const quantity = item.quantity || 1;
-      return sum + ((isNaN(priceVal) ? 0 : priceVal) * quantity);
+      return sum + (isNaN(priceVal) ? 0 : priceVal * quantity);
     }, 0);
   }, [cart]);
 
