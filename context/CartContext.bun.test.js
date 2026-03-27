@@ -19,14 +19,12 @@ function CartProviderLogic(useState, useMemo) {
     setIsOpen(true); // Automatically opens drawer when buying
   };
 
-  const removeFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const increaseQuantity = (index) => {
     setCart((prev) => {
       const newCart = [...prev];
-      newCart[index].quantity = (newCart[index].quantity || 1) + 1;
+      if (newCart[index]) {
+        newCart[index].quantity = (newCart[index].quantity || 1) + 1;
+      }
       return newCart;
     });
   };
@@ -34,22 +32,23 @@ function CartProviderLogic(useState, useMemo) {
   const decreaseQuantity = (index) => {
     setCart((prev) => {
       const newCart = [...prev];
-      if (newCart[index].quantity > 1) {
-        newCart[index].quantity -= 1;
-        return newCart;
+      if (newCart[index]) {
+        if (newCart[index].quantity > 1) {
+          newCart[index].quantity -= 1;
+        } else {
+          // Remove item if quantity drops to 0
+          return prev.filter((_, i) => i !== index);
+        }
       }
-      return prev.filter((_, i) => i !== index);
+      return newCart;
     });
   };
 
-  const total = useMemo(() => {
-    return cart.reduce((sum, item) => {
-      if (!item || item.price == null) return sum;
-      const priceVal = parseFloat(String(item.price).replace('$', ''));
-      const quantity = item.quantity || 1;
-      return sum + (isNaN(priceVal) ? 0 : priceVal * quantity);
-    }, 0);
-  }, [cart]);
+  const removeFromCart = (index) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')) * (item.quantity || 1), 0), [cart]);
 
   return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };
 }
