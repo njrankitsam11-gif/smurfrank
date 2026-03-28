@@ -3,6 +3,10 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from '../../../../lib/prisma';
 import bcrypt from 'bcryptjs';
 
+const rateLimitMap = new Map();
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_TIME = 15 * 60 * 1000; // 15 minutes
+
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -14,15 +18,60 @@ const handler = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
+        const originalEmail = credentials.email;
+        const rateLimitEmailKey = originalEmail.trim().toLowerCase();
+        const now = Date.now();
+
+        const record = rateLimitMap.get(rateLimitEmailKey);
+        if (record && record.lockoutUntil > now) {
+          throw new Error('Too many failed login attempts. Please try again later.');
+        }
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: originalEmail },
         });
 
-        if (!user) return null;
+        const recordFailure = () => {
+          let currentRecord = rateLimitMap.get(rateLimitEmailKey);
+
+          if (currentRecord && currentRecord.lockoutUntil <= now && currentRecord.lockoutUntil !== 0) {
+            currentRecord.attempts = 0;
+            currentRecord.lockoutUntil = 0;
+          }
+
+          if (!currentRecord) {
+            if (rateLimitMap.size >= 10000) {
+              const expireTime = Date.now();
+              for (const [key, val] of rateLimitMap.entries()) {
+                if (val.lockoutUntil < expireTime) {
+                  rateLimitMap.delete(key);
+                }
+              }
+              if (rateLimitMap.size >= 10000) {
+                rateLimitMap.clear();
+              }
+            }
+            currentRecord = { attempts: 0, lockoutUntil: 0 };
+          }
+          currentRecord.attempts += 1;
+          if (currentRecord.attempts >= MAX_ATTEMPTS) {
+            currentRecord.lockoutUntil = Date.now() + LOCKOUT_TIME;
+          }
+          rateLimitMap.set(rateLimitEmailKey, currentRecord);
+        };
+
+        if (!user) {
+          recordFailure();
+          return null;
+        }
 
         const passwordMatch = await bcrypt.compare(credentials.password, user.password);
-        if (!passwordMatch) return null;
+        if (!passwordMatch) {
+          recordFailure();
+          return null;
+        }
 
+        rateLimitMap.delete(rateLimitEmailKey);
         return { id: user.id, email: user.email, name: user.name, role: user.role };
       },
     }),
