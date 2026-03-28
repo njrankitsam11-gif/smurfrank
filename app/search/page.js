@@ -9,6 +9,19 @@ export const metadata = {
 export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
   const query = (await searchParams).q || '';
+  const page = Math.max(1, parseInt((await searchParams).page) || 1);
+  const limit = 12;
+  const skip = (page - 1) * limit;
+
+  const where = {
+    active: true,
+    OR: [
+      { title: { contains: query, mode: 'insensitive' } },
+      { game: { contains: query, mode: 'insensitive' } },
+      { rank: { contains: query, mode: 'insensitive' } },
+      { region: { contains: query, mode: 'insensitive' } },
+    ],
+  };
 
   // ⚡ BOLT OPTIMIZATION: Skip OR conditions on empty queries
   // 💡 What: Conditionally build the where clause to avoid the multi-column string scan entirely if query is empty.
@@ -92,6 +105,32 @@ export default async function SearchPage({ searchParams }) {
             </div>
           )}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '40px' }}>
+            {page > 1 && (
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}&page=${page - 1}`}
+                style={{ padding: '10px 20px', border: '1px solid #1a1a1a', color: 'white', textDecoration: 'none', background: '#0f0f17' }}
+              >
+                Previous
+              </Link>
+            )}
+            <span style={{ padding: '10px 20px', color: '#666' }}>
+              Page {page} of {totalPages}
+            </span>
+            {page < totalPages && (
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}&page=${page + 1}`}
+                style={{ padding: '10px 20px', border: '1px solid #1a1a1a', color: 'white', textDecoration: 'none', background: '#0f0f17' }}
+              >
+                Next
+              </Link>
+            )}
+          </div>
+        )}
+
       </section>
 
       {/* Footer */}
