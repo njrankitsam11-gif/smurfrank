@@ -37,10 +37,18 @@ export default async function SearchPage({ searchParams }) {
     ];
   }
 
+  // Get the total number of items to calculate totalPages
+  const totalItems = await prisma.listing.count({
+    where: whereClause,
+  });
+  const totalPages = Math.ceil(totalItems / limit);
+
   // Find listings that match the search word in the title, game, or rank
   const results = await prisma.listing.findMany({
     where: whereClause,
     orderBy: { createdAt: 'desc' },
+    skip,
+    take: limit,
   });
 
   return (
