@@ -37,22 +37,19 @@ export default async function SearchPage({ searchParams }) {
     ];
   }
 
-  // Find listings that match the search word in the title, game, or rank
-  // ⚡ BOLT OPTIMIZATION: Use skip/take for pagination and count for totalPages
-  // 💡 What: Replaced unbounded findMany with a bounded query using skip and take, plus a concurrent count query.
-  // 🎯 Why: Unbounded queries fetch all matching records into application memory, causing massive memory spikes and slow network I/O as the database grows.
-  // 📊 Impact: Network data transfer and JS object allocation are now capped at 'limit' (12) items, providing O(1) memory usage regardless of result set size.
-  const [results, totalCount] = await Promise.all([
-    prisma.listing.findMany({
-      where: whereClause,
-      orderBy: { createdAt: 'desc' },
-      skip: skip,
-      take: limit,
-    }),
-    prisma.listing.count({ where: whereClause })
-  ]);
+  // Get the total number of items to calculate totalPages
+  const totalItems = await prisma.listing.count({
+    where: whereClause,
+  });
+  const totalPages = Math.ceil(totalItems / limit);
 
-  const totalPages = Math.ceil(totalCount / limit);
+  // Find listings that match the search word in the title, game, or rank
+  const results = await prisma.listing.findMany({
+    where: whereClause,
+    orderBy: { createdAt: 'desc' },
+    skip,
+    take: limit,
+  });
 
   return (
     <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
