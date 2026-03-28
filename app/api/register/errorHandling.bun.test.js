@@ -95,4 +95,21 @@ describe("Register API Error Handling", () => {
     const data = await res.json();
     expect(data.error).toBe("Something went wrong");
   });
+
+  it("should return a 500 error if a Prisma unique constraint violation occurs during user creation", async () => {
+    mockCreate = async () => {
+      const error = new Error('Unique constraint failed');
+      error.code = 'P2002';
+      throw error;
+    };
+    const req = new MockRequest("http://localhost/api/register", {
+      method: "POST",
+      body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
+      headers: { "Content-Type": "application/json" }
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(500);
+    const data = await res.json();
+    expect(data.error).toBe("Something went wrong");
+  });
 });
