@@ -10,17 +10,23 @@ export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
   const query = (await searchParams).q || '';
 
+  // ⚡ BOLT OPTIMIZATION: Skip OR conditions on empty queries
+  // 💡 What: Conditionally build the where clause to avoid the multi-column string scan entirely if query is empty.
+  // 🎯 Why: Sending { contains: '', mode: 'insensitive' } forces a full scan on 4 string columns unnecessarily.
+  // 📊 Impact: Bypasses string evaluation on the entire active dataset, saving DB CPU and improving query response time for the default search page view.
+  const whereClause = { active: true };
+  if (query) {
+    whereClause.OR = [
+      { title: { contains: query, mode: 'insensitive' } },
+      { game: { contains: query, mode: 'insensitive' } },
+      { rank: { contains: query, mode: 'insensitive' } },
+      { region: { contains: query, mode: 'insensitive' } },
+    ];
+  }
+
   // Find listings that match the search word in the title, game, or rank
   const results = await prisma.listing.findMany({
-    where: {
-      active: true,
-      OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { game: { contains: query, mode: 'insensitive' } },
-        { rank: { contains: query, mode: 'insensitive' } },
-        { region: { contains: query, mode: 'insensitive' } },
-      ],
-    },
+    where: whereClause,
     orderBy: { createdAt: 'desc' },
   });
 
