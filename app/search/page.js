@@ -8,7 +8,12 @@ export const metadata = {
 
 export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
-  const query = (await searchParams).q || '';
+  let query = (await searchParams).q || '';
+
+  // 🛡️ Security: Limit input length to prevent Regex/DB Denial of Service
+  if (query.length > 100) {
+    query = query.substring(0, 100);
+  }
 
   // Find listings that match the search word in the title, game, or rank
   const results = await prisma.listing.findMany({
