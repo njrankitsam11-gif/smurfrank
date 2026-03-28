@@ -9,18 +9,37 @@ export const metadata = {
 export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
   const query = (await searchParams).q || '';
+  const page = Math.max(1, parseInt((await searchParams).page) || 1);
+  const limit = 12;
+  const skip = (page - 1) * limit;
+
+  const where = {
+    active: true,
+    OR: [
+      { title: { contains: query, mode: 'insensitive' } },
+      { game: { contains: query, mode: 'insensitive' } },
+      { rank: { contains: query, mode: 'insensitive' } },
+      { region: { contains: query, mode: 'insensitive' } },
+    ],
+  };
+
+  // ⚡ BOLT OPTIMIZATION: Skip OR conditions on empty queries
+  // 💡 What: Conditionally build the where clause to avoid the multi-column string scan entirely if query is empty.
+  // 🎯 Why: Sending { contains: '', mode: 'insensitive' } forces a full scan on 4 string columns unnecessarily.
+  // 📊 Impact: Bypasses string evaluation on the entire active dataset, saving DB CPU and improving query response time for the default search page view.
+  const whereClause = { active: true };
+  if (query) {
+    whereClause.OR = [
+      { title: { contains: query, mode: 'insensitive' } },
+      { game: { contains: query, mode: 'insensitive' } },
+      { rank: { contains: query, mode: 'insensitive' } },
+      { region: { contains: query, mode: 'insensitive' } },
+    ];
+  }
 
   // Find listings that match the search word in the title, game, or rank
   const results = await prisma.listing.findMany({
-    where: {
-      active: true,
-      OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { game: { contains: query, mode: 'insensitive' } },
-        { rank: { contains: query, mode: 'insensitive' } },
-        { region: { contains: query, mode: 'insensitive' } },
-      ],
-    },
+    where: whereClause,
     orderBy: { createdAt: 'desc' },
   });
 
@@ -86,6 +105,32 @@ export default async function SearchPage({ searchParams }) {
             </div>
           )}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '40px' }}>
+            {page > 1 && (
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}&page=${page - 1}`}
+                style={{ padding: '10px 20px', border: '1px solid #1a1a1a', color: 'white', textDecoration: 'none', background: '#0f0f17' }}
+              >
+                Previous
+              </Link>
+            )}
+            <span style={{ padding: '10px 20px', color: '#666' }}>
+              Page {page} of {totalPages}
+            </span>
+            {page < totalPages && (
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}&page=${page + 1}`}
+                style={{ padding: '10px 20px', border: '1px solid #1a1a1a', color: 'white', textDecoration: 'none', background: '#0f0f17' }}
+              >
+                Next
+              </Link>
+            )}
+          </div>
+        )}
+
       </section>
 
       {/* Footer */}

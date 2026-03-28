@@ -33,13 +33,13 @@ export default function SellPage() {
 
             {/* --- TEXT DETAILS --- */}
             <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Listing Title</label>
-              <input type="text" placeholder="e.g. Stacked Valorant Account - All Battlepasses" style={inputStyle} />
+              <label htmlFor="listingTitle" style={labelStyle}>Listing Title</label>
+              <input id="listingTitle" type="text" placeholder="e.g. Stacked Valorant Account - All Battlepasses" style={inputStyle} />
             </div>
 
             <div>
-              <label style={labelStyle}>Game Tier</label>
-              <select style={inputStyle}>
+              <label htmlFor="gameTier" style={labelStyle}>Game Tier</label>
+              <select id="gameTier" style={inputStyle}>
                 <option>Valorant</option>
                 <option>CS2</option>
                 <option>GTA V</option>
@@ -47,8 +47,8 @@ export default function SellPage() {
             </div>
 
             <div>
-              <label style={labelStyle}>Asking Price ($)</label>
-              <input type="number" placeholder="0.00" style={inputStyle} />
+              <label htmlFor="askingPrice" style={labelStyle}>Asking Price ($)</label>
+              <input id="askingPrice" type="number" placeholder="0.00" style={inputStyle} />
             </div>
 
             {/* --- 📸 NEW: SCREENSHOT UPLOAD SECTION --- */}
@@ -85,8 +85,8 @@ export default function SellPage() {
             </div>
 
             <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Detailed description</label>
-              <textarea placeholder="List all rare skins, peak ranks, and region info..." style={{...inputStyle, height: '120px', resize: 'none'}} />
+              <label htmlFor="detailedDescription" style={labelStyle}>Detailed description</label>
+              <textarea id="detailedDescription" placeholder="List all rare skins, peak ranks, and region info..." style={{...inputStyle, height: '120px', resize: 'none'}} />
             </div>
 
             <div style={{ gridColumn: 'span 2' }}>

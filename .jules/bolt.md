@@ -17,3 +17,7 @@
 ## 2026-03-27 - Memoize cart total calculation in tests
 **Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render. Test setups for components using hooks should mock hooks accurately.
 **Action:** Wraps derived data calculations from arrays in Context Providers test mocks with `useMemo`.
+
+## 2026-03-29 - Bypass expensive OR string evaluations on empty search queries
+**Learning:** Defaulting empty search variables (like `const query = searchParams.q || ''`) and passing them directly into Prisma `contains` clauses (e.g., `{ title: { contains: query } }`) creates a severe performance bottleneck. Prisma executes a full-table string evaluation looking for empty strings (which matches everything), burning DB CPU unnecessarily instead of just doing a direct unfiltered fetch.
+**Action:** Conditionally apply `OR` arrays and `contains` string filters only when the search query is truthy, falling back to a direct, unfiltered database fetch (`where: { active: true }`) for default or empty states.
