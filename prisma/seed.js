@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const { logger } = require('../lib/logger');
 const prisma = new PrismaClient();
 
 async function main() {
@@ -30,11 +31,11 @@ async function main() {
     ]
   });
 
-  console.info('✅ Database seeded with all listings!');
+  logger.info('✅ Database seeded with all listings!');
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
   })
   .finally(() => prisma.$disconnect());
