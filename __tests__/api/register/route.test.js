@@ -137,4 +137,14 @@ describe('POST /api/register', () => {
     expect(response.status).toBe(500);
     expect(data.error).toBe('Something went wrong');
   });
+
+  it('should return 500 if an error occurs while parsing request JSON', async () => {
+    mockRequest.json.mockRejectedValueOnce(new Error('Invalid JSON'));
+
+    const response = await POST(mockRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe('Something went wrong');
+  });
 });
