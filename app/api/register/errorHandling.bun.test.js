@@ -1,4 +1,4 @@
-import { describe, expect, it, mock } from "bun:test";
+import { describe, expect, it, mock, afterEach } from "bun:test";
 import { POST } from "./route.js";
 
 class MockRequest {
@@ -20,23 +20,35 @@ mock.module('next/server', () => ({
   }
 }));
 
+let mockFindUnique = async () => null;
+let mockCreate = async () => { throw new Error('Database connection failed'); };
+
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async () => null,
-      create: async () => { throw new Error('Database connection failed'); }
+      findUnique: async (...args) => mockFindUnique(...args),
+      create: async (...args) => mockCreate(...args)
     }
   }
 }));
 
+let mockHash = async () => 'hashed';
+
 mock.module('bcryptjs', () => ({
   default: {
-    hash: async () => 'hashed'
+    hash: async (...args) => mockHash(...args)
   }
 }));
 
 describe("Register API Error Handling", () => {
-  it("should return a 500 error if an unexpected error occurs", async () => {
+  afterEach(() => {
+    // Reset mocks to default behavior between tests
+    mockFindUnique = async () => null;
+    mockCreate = async () => { throw new Error('Database connection failed'); };
+    mockHash = async () => 'hashed';
+  });
+
+  it("should return a 500 error if an unexpected error occurs during user creation", async () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
@@ -48,15 +60,36 @@ describe("Register API Error Handling", () => {
     expect(data.error).toBe("Something went wrong");
   });
 
-  it("should return a 500 error if request.json() throws an error (e.g., invalid JSON)", async () => {
+  it("should return a 500 error if finding unique user fails", async () => {
+    mockFindUnique = async () => { throw new Error('Database error during find'); };
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
-      body: "invalid-json",
+      body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
       headers: { "Content-Type": "application/json" }
     });
-    // Override json method for this specific request mock to throw
-    req.json = async () => { throw new Error('SyntaxError: Unexpected token'); };
+    const res = await POST(req);
+    expect(res.status).toBe(500);
+    const data = await res.json();
+    expect(data.error).toBe("Something went wrong");
+  });
 
+  it("should return a 500 error if password hashing fails", async () => {
+    mockHash = async () => { throw new Error('Hashing error'); };
+    const req = new MockRequest("http://localhost/api/register", {
+      method: "POST",
+      body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
+      headers: { "Content-Type": "application/json" }
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(500);
+    const data = await res.json();
+    expect(data.error).toBe("Something went wrong");
+  });
+
+  it("should return a 500 error if parsing request body fails", async () => {
+    const req = {
+      json: async () => { throw new SyntaxError("Unexpected token"); }
+    };
     const res = await POST(req);
     expect(res.status).toBe(500);
     const data = await res.json();
