@@ -1,23 +1,5 @@
-## 2025-03-05 - Deduplicate Prisma Queries with React cache()
-**Learning:** Next.js pages often duplicate database queries if the same data is needed in both `generateMetadata` and the page component (e.g., fetching a listing by ID).
-**Action:** Use `React.cache()` to wrap the Prisma query function. This memoizes the request for the lifetime of the server request, deduplicating identical queries and improving performance without changing the data flow or requiring manual state management.
+## 2024-03-28 - Bounding Unbounded Database Queries with Pagination
 
-## 2023-11-20 - [Query Deduplication]
-**Learning:** Next.js Server Components and generateMetadata do not deduplicate direct Prisma database queries by default.
-**Action:** Always wrap Prisma calls in React.cache() when using them across multiple server-side functions for the same request to prevent redundant queries.
+**Learning:** Unbounded database queries (e.g., `findMany` without `take`/`limit`) cause significant performance degradation as the dataset grows. They force the database to scan, serialize, and transmit potentially millions of rows, and force the Node.js application to allocate massive amounts of memory for the resulting objects, leading to increased garbage collection pauses and potential OOM crashes. Bounding the query using `take` and `skip` ensures O(1) memory usage in the application and drastically reduces network I/O, independent of the total dataset size.
 
-## 2025-03-05 - Fix Next.js Build Vercel Issue with Prisma Queries
-**Learning:** In Next.js App Router, using Prisma to query the database inside `sitemap.js` will cause `npm run build` to fail on platforms like Vercel if the `DATABASE_URL` environment variable is not available during the static prerendering phase. Next.js attempts to execute `sitemap.js` at build time to statically generate `/sitemap.xml`.
-**Action:** When a server component or route like `sitemap.js` relies on a database connection that is only available at runtime, explicitly opt it out of static generation by adding `export const dynamic = 'force-dynamic';`. This forces the route to evaluate on-demand during the request, skipping the failing query during the build step.
-
-## 2026-03-26 - Memoize cart total calculation
-**Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render, even for unrelated state changes like toggling a UI drawer.
-**Action:** Always wrap derived data calculations from arrays in Context Providers with `useMemo`.
-
-## 2026-03-27 - Memoize cart total calculation in tests
-**Learning:** Unmemoized array reductions in React Context Providers cause O(N) recalculations on every render. Test setups for components using hooks should mock hooks accurately.
-**Action:** Wraps derived data calculations from arrays in Context Providers test mocks with `useMemo`.
-
-## 2026-03-29 - Bypass expensive OR string evaluations on empty search queries
-**Learning:** Defaulting empty search variables (like `const query = searchParams.q || ''`) and passing them directly into Prisma `contains` clauses (e.g., `{ title: { contains: query } }`) creates a severe performance bottleneck. Prisma executes a full-table string evaluation looking for empty strings (which matches everything), burning DB CPU unnecessarily instead of just doing a direct unfiltered fetch.
-**Action:** Conditionally apply `OR` arrays and `contains` string filters only when the search query is truthy, falling back to a direct, unfiltered database fetch (`where: { active: true }`) for default or empty states.
+**Action:** Always apply pagination controls (`take` and `skip` in Prisma, or equivalent `LIMIT`/`OFFSET` in raw SQL) to list endpoints or pages where the result set is variable and potentially large. When the total number of pages is needed for UI pagination, use a concurrent `.count()` query alongside the bounded `.findMany()` using `Promise.all` to minimize total response time.

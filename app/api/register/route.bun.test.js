@@ -5,6 +5,9 @@ class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
+    this.headers = {
+      get: (key) => this.init?.headers?.[key] || null
+    };
   }
   async json() {
     return JSON.parse(this.init.body);
