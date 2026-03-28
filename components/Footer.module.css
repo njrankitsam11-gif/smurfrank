@@ -3,6 +3,8 @@
   border-top: 1px solid #222;
   padding: 4rem 2rem;
   margin-top: auto;
+  position: relative;
+  z-index: 50;
 }
 
 .grid {
