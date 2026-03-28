@@ -2,7 +2,7 @@
 import React from 'react';
 import { useCart } from '../../context/CartContext';
 
-export default function GTAVPage() {
+export default function GTAVPageClient() {
   const { addToCart } = useCart();
 
   const products = [
