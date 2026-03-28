@@ -8,7 +8,9 @@ export const metadata = {
 
 export default async function SearchPage({ searchParams }) {
   // Get the search word from the URL (e.g., /search?q=valorant)
-  const query = (await searchParams).q || '';
+  const queryRaw = (await searchParams).q || '';
+  const queryStr = Array.isArray(queryRaw) ? queryRaw[0] : String(queryRaw);
+  const query = queryStr.substring(0, 100);
   const page = Math.max(1, parseInt((await searchParams).page) || 1);
   const limit = 12;
   const skip = (page - 1) * limit;
