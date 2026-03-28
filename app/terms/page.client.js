@@ -23,13 +23,13 @@ export default function TermsPageClient() {
         </p>
 
         <h2 style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '1rem', marginTop: '2rem' }}>3. Refunds and Warranty</h2>
-        <p style={{ marginBottom: '1.5rem' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
           We provide a lifetime warranty covering bans related explicitly to the account creation or leveling process prior to your purchase.
           <ul>
             <li style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }}>We offer a 14-day refund window if the account credentials provided do not work upon initial delivery.</li>
             <li style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }}>We <strong>do not</strong> provide refunds for accounts that are banned due to user actions after the purchase, including but not limited to: toxicity, cheating, hacking, or using unauthorized third-party software.</li>
           </ul>
-        </p>
+        </div>
 
         <h2 style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '1rem', marginTop: '2rem' }}>4. Intellectual Property</h2>
         <p style={{ marginBottom: '1.5rem' }}>

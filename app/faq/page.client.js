@@ -99,7 +99,9 @@ export default function FAQPageClient() {
         <h3 style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '1rem' }}>Still have questions?</h3>
         <p style={{ color: '#888', marginBottom: '1.5rem' }}>Our support team is available 24/7 on our Discord server.</p>
         <a
-          href="#"
+          href="https://discord.gg/smurfrank"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             display: 'inline-block',
             backgroundColor: '#00ff88',

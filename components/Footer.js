@@ -37,12 +37,12 @@ export default function Footer() {
           <h4 className={styles.heading}>Socials</h4>
           <ul className={styles.list}>
             <li>
-              <a href="#" target="_blank" rel="noopener noreferrer" className={styles.instagramLink}>
+              <a href="https://instagram.com/smurfrank" target="_blank" rel="noopener noreferrer" className={styles.instagramLink}>
                 Follow us on Instagram
               </a>
             </li>
-            <li><a href="#" className={styles.link}>Join our Discord</a></li>
-            <li><a href="#" className={styles.link}>Twitter</a></li>
+            <li><a href="https://discord.gg/smurfrank" target="_blank" rel="noopener noreferrer" className={styles.link}>Join our Discord</a></li>
+            <li><a href="https://twitter.com/smurfrank" target="_blank" rel="noopener noreferrer" className={styles.link}>Twitter</a></li>
           </ul>
         </div>
       </div>
