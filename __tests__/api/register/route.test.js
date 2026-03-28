@@ -59,6 +59,20 @@ describe('POST /api/register', () => {
     expect(data.error).toBe('Email and password are required');
   });
 
+  it('should return 400 if invalid email format', async () => {
+    mockRequest.json.mockResolvedValueOnce({
+      name: 'Test User',
+      email: 'invalid-email',
+      password: 'Password123!',
+    });
+
+    const response = await POST(mockRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Invalid email format');
+  });
+
   it('should return 400 if password does not meet complexity requirements', async () => {
     mockRequest.json.mockResolvedValueOnce({
       name: 'Test User',
@@ -116,6 +130,16 @@ describe('POST /api/register', () => {
     prisma.user.findUnique.mockResolvedValueOnce(null);
     bcrypt.hash.mockResolvedValueOnce('hashed_password');
     prisma.user.create.mockRejectedValueOnce(new Error('Database error during creation'));
+
+    const response = await POST(mockRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe('Something went wrong');
+  });
+
+  it('should return 500 if an error occurs while parsing request JSON', async () => {
+    mockRequest.json.mockRejectedValueOnce(new Error('Invalid JSON'));
 
     const response = await POST(mockRequest);
     const data = await response.json();

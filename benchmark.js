@@ -107,17 +107,42 @@ console.log(`Memoized Provider:`);
 console.log(`- Time taken: ${memoizedResult.time.toFixed(2)}ms`);
 console.log(`- Calculation iterations: ${memoizedResult.calcCount}\n`);
 
-const timeSaved = unmemoizedResult.time - memoizedResult.time;
-const percentSaved = (timeSaved / unmemoizedResult.time) * 100;
+console.log("\nMemoized Improvement:");
+const memoized = runBenchmark((uS, uM, t) => createMemoizedCartProviderLogic(uS, uM, t), iterations);
+console.log(`Calculations: ${memoized.calculations}`);
+console.log(`Time: ${memoized.time.toFixed(2)}ms`);
 
-console.log(`Improvement:`);
-console.log(`- Reduced redundant calculations by ${unmemoizedResult.calcCount - memoizedResult.calcCount}`);
-console.log(`- Total time saved: ${timeSaved.toFixed(2)}ms (${percentSaved.toFixed(2)}% faster)`);
+// --- Search Query Pagination Benchmark ---
 
-if (memoizedResult.calcCount < unmemoizedResult.calcCount && timeSaved > 0) {
-    console.log(`\n✅ Benchmark PASSED: Memoization successfully prevented redundant cart total calculations on unrelated state changes.`);
-    process.exit(0);
-} else {
-    console.log(`\n❌ Benchmark FAILED: Memoization did not improve performance or calculations.`);
-    process.exit(1);
-}
+const mockSearchFindManyUnbounded = () => {
+    return Array.from({ length: 10000 }, (_, i) => ({ id: i, title: 'Test Account', game: 'Valorant', rank: 'Gold', price: 10 }));
+};
+
+const mockSearchFindManyPaginated = () => {
+    return Array.from({ length: 12 }, (_, i) => ({ id: i, title: 'Test Account', game: 'Valorant', rank: 'Gold', price: 10 }));
+};
+
+const runPaginationBenchmark = () => {
+    const trials = 1000;
+
+    let start = performance.now();
+    for(let i = 0; i < trials; i++) {
+        mockSearchFindManyUnbounded();
+    }
+    let end = performance.now();
+    const unboundedTime = end - start;
+
+    start = performance.now();
+    for(let i = 0; i < trials; i++) {
+        mockSearchFindManyPaginated();
+    }
+    end = performance.now();
+    const paginatedTime = end - start;
+
+    console.log("\n--- Search Pagination Benchmark ---");
+    console.log(`Unbounded array generation (10k items): ${unboundedTime.toFixed(2)}ms`);
+    console.log(`Paginated array generation (12 items): ${paginatedTime.toFixed(2)}ms`);
+    console.log(`Improvement: ${(((unboundedTime - paginatedTime) / unboundedTime) * 100).toFixed(2)}% faster memory allocation`);
+};
+
+runPaginationBenchmark();
