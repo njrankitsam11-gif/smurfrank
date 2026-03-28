@@ -2,6 +2,7 @@
 import { useCart } from '../context/CartContext';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const { cart, setIsOpen } = useCart();
@@ -21,9 +22,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 1000, background: '#050505' }}>
+    <header className={styles.header}>
       {/* MOVING LIVE FEED */}
-      <div style={{ background: '#66FCF1', color: '#000', padding: '8px 0', fontSize: '10px', fontWeight: 900, overflow: 'hidden', whiteSpace: 'nowrap' }}>
+      <div className={styles.liveFeedContainer}>
         <div className="live-feed-animation">
           {mounted ? (
             <>
@@ -37,21 +38,21 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5vw', height: '80px', borderBottom: '1px solid #111' }}>
-        <Link href="/" style={{ fontSize: '20px', fontWeight: 900, color: '#fff', textDecoration: 'none' }}>SMURF<span style={{ color: '#66FCF1' }}>RANK</span></Link>
+      <nav className={styles.nav}>
+        <Link href="/" className={styles.logo}>SMURF<span className={styles.logoHighlight}>RANK</span></Link>
         
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <Link href="/cs2" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>CS2</Link>
-          <Link href="/valorant" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>VAL</Link>
-          <Link href="/gta-v" style={{ color: '#888', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>GTA V</Link>
-          <Link href="/boosting" style={{ color: '#9D00FF', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>BOOSTING</Link>
-          <Link href="/sell" style={{ color: '#D4AF37', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>SELL</Link>
+        <div className={styles.navLinks}>
+          <Link href="/cs2" className={styles.link}>CS2</Link>
+          <Link href="/valorant" className={styles.link}>VAL</Link>
+          <Link href="/gta-v" className={styles.link}>GTA V</Link>
+          <Link href="/boosting" className={styles.linkBoosting}>BOOSTING</Link>
+          <Link href="/sell" className={styles.linkSell}>SELL</Link>
           
-          <div style={{ width: '1px', height: '20px', background: '#222', margin: '0 10px' }} />
+          <div className={styles.divider} />
           
-          <Link href="/login" style={{ color: '#fff', textDecoration: 'none', fontSize: '11px', fontWeight: 800 }}>SIGN IN</Link>
+          <Link href="/login" className={styles.linkSignIn}>SIGN IN</Link>
           
-          <button onClick={() => setIsOpen(true)} style={{ background: 'rgba(102, 252, 241, 0.1)', border: '1px solid #66FCF1', color: '#66FCF1', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontWeight: 900, fontSize: '11px' }}>
+          <button onClick={() => setIsOpen(true)} className={styles.cartButton}>
             CART ({cart.length})
           </button>
         </div>

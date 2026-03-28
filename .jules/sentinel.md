@@ -8,7 +8,7 @@
 **Learning:** Security headers (e.g., Strict-Transport-Security, X-Frame-Options, Content-Security-Policy) are enforced globally by configuring an async `headers()` method in `next.config.mjs`.
 **Prevention:** Always include a baseline set of security headers in Next.js configuration for all routes (`/(.*)`).
 
-## 2026-03-25 - [Missing Rate Limiting on Registration]
-**Vulnerability:** The registration endpoint lacks rate limiting, allowing attackers to spam registration requests, potentially leading to a denial of service (DoS) condition or user enumeration.
-**Learning:** Basic in-memory rate limiting using a Map to track IPs and timestamps can mitigate simple abuse on unprotected endpoints.
-**Prevention:** Always implement rate limiting on authentication and registration endpoints to prevent brute-force and spam attacks.
+## 2026-03-27 - [Missing Input Length Limits]
+**Vulnerability:** Unbounded query parameters in the search page allowed arbitrarily long strings to be passed to the database query engine.
+**Learning:** While Prisma protects against SQL injection, extremely long search strings can still cause excessive memory usage or ReDoS-style performance degradation during database index lookups.
+**Prevention:** Always enforce reasonable maximum lengths (e.g., 100 characters) on unconstrained user input like search queries before passing them to the backend.
