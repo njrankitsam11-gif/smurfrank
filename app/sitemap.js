@@ -26,7 +26,7 @@ export default async function sitemap() {
   const listings = await getListings();
 
   // 1. Static Pages
-  const routes = ['', '/cs2', '/valorant', '/gta-v', '/sell', '/search'].map((route) => ({
+  const routes = ['', '/cs2', '/valorant', '/gta-v', '/boosting', '/sell', '/search'].map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
