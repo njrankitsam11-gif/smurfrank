@@ -25,6 +25,9 @@ describe('POST /api/register', () => {
 
     // Default valid mock request
     mockRequest = {
+      headers: {
+        get: (key) => key === 'x-forwarded-for' ? '127.0.0.1-' + Math.random() : null
+      },
       json: jest.fn().mockResolvedValue({
         name: 'Test User',
         email: 'test@example.com',

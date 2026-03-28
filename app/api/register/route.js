@@ -2,8 +2,30 @@ import { prisma } from '../../../lib/prisma';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
+const rateLimitMap = new Map();
+
 export async function POST(request) {
   try {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    const windowMs = 15 * 60 * 1000; // 15 minutes
+    const limit = 5;
+
+    const rateLimitInfo = rateLimitMap.get(ip) || { count: 0, startTime: now };
+
+    if (now - rateLimitInfo.startTime > windowMs) {
+      rateLimitInfo.count = 1;
+      rateLimitInfo.startTime = now;
+    } else {
+      rateLimitInfo.count++;
+    }
+
+    rateLimitMap.set(ip, rateLimitInfo);
+
+    if (rateLimitInfo.count > limit) {
+      return NextResponse.json({ error: 'Too many registration attempts from this IP, please try again after 15 minutes' }, { status: 429 });
+    }
+
     const { name, email, password } = await request.json();
 
     if (!email || !password) {
