@@ -12,3 +12,8 @@
 **Vulnerability:** Unbounded query parameters in the search page allowed arbitrarily long strings to be passed to the database query engine.
 **Learning:** While Prisma protects against SQL injection, extremely long search strings can still cause excessive memory usage or ReDoS-style performance degradation during database index lookups.
 **Prevention:** Always enforce reasonable maximum lengths (e.g., 100 characters) on unconstrained user input like search queries before passing them to the backend.
+
+## 2026-03-29 - [Missing Input Length Limits]
+**Vulnerability:** Unbounded query parameters in the search page allowed arbitrarily long strings to be passed to the database query engine.
+**Learning:** While Prisma protects against SQL injection, extremely long search strings can still cause excessive memory usage or ReDoS-style performance degradation during database index lookups.
+**Prevention:** Always enforce reasonable maximum lengths (e.g., 100 characters) on unconstrained user input like search queries before passing them to the backend.
