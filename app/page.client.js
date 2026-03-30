@@ -24,19 +24,22 @@ export default function HomePage() {
         <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px' }}>HOT <span style={{ color: '#66FCF1' }}>DEALS</span></h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
           {[
-            { id: 'h1', title: 'CS2 GLOBAL ELITE', price: '$45.00', desc: 'Prime • Instant' },
-            { id: 'h2', title: 'VALORANT RADIANT', price: '$125.00', desc: 'Skins • Peak Rank' },
-            { id: 'h3', title: 'GTA V MODDED 2BN', price: '$29.00', desc: 'Level 500 • Unlocks' }
+            { id: 'h1', title: 'CS2 GLOBAL ELITE', price: '$45.00', desc: 'Prime • Instant', img: 'https://cdn.akamai.steamstatic.com/steam/apps/730/capsule_616x353.jpg' },
+            { id: 'h2', title: 'VALORANT RADIANT', price: '$125.00', desc: 'Skins • Peak Rank', img: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg' },
+            { id: 'h3', title: 'GTA V MODDED 2BN', price: '$29.00', desc: 'Level 500 • Unlocks', img: 'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/640/V.jpg' }
           ].map((acc) => (
             <motion.div
               key={acc.id}
               whileHover={{ scale: 1.05, rotateX: 10, rotateY: -10, boxShadow: '0px 0px 30px rgba(102, 252, 241, 0.4)' }}
-              style={{ background: '#111', padding: '30px', borderRadius: '15px', border: '1px solid #222', perspective: '1000px', transformStyle: 'preserve-3d' }}>
-              <h3 style={{ fontWeight: 900, marginBottom: '8px' }}>{acc.title}</h3>
-              <p style={{ color: '#444', fontSize: '12px', marginBottom: '25px' }}>{acc.desc}</p>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontWeight: 900, fontSize: '20px' }}>{acc.price}</span>
-                <button onClick={() => addToCart(acc)} style={{ background: '#fff', color: '#000', border: 'none', padding: '10px 18px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer' }}>ADD TO CART</button>
+              style={{ background: '#111', borderRadius: '15px', border: '1px solid #222', perspective: '1000px', transformStyle: 'preserve-3d', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ width: '100%', height: '180px', backgroundImage: `url(${acc.img})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundColor: '#0a0a0b', borderBottom: '2px solid #66FCF1' }}></div>
+              <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <h3 style={{ fontWeight: 900, marginBottom: '8px', fontSize: '20px' }}>{acc.title}</h3>
+                <p style={{ color: '#aaa', fontSize: '13px', marginBottom: 'auto', minHeight: '30px' }}>{acc.desc}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+                  <span style={{ fontWeight: 900, fontSize: '22px', color: '#66FCF1' }}>{acc.price}</span>
+                  <button onClick={() => addToCart(acc)} style={{ background: '#fff', color: '#000', border: 'none', padding: '10px 18px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', transition: 'background 0.2s' }}>ADD TO CART</button>
+                </div>
               </div>
             </motion.div>
           ))}
