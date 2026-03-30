@@ -9,3 +9,7 @@
 ## 2026-03-26 - Scoping Focus Outline Accessibility
 **Learning:** Applying a bright focus outline globally (e.g. `button:focus-visible` in `globals.css`) breaks design boundaries by polluting unrelated components across the application.
 **Action:** Always verify keyboard accessibility, but when adding custom `:focus-visible` outlines in a codebase lacking utility class systems, strictly scope them to the targeted components (e.g. using a localized `<style>` block and `.focus-outline` class) to prevent regressions on other pages.
+
+## 2026-03-30 - Keyboard Focus on Hidden File Inputs
+**Learning:** Hiding file inputs using `display: 'none'` completely removes them from the document tab order, making custom drag-and-drop upload zones completely inaccessible to keyboard users. Using `:has()` selectors enables applying focus outlines to the parent container when the hidden input receives focus.
+**Action:** Always replace `display: 'none'` on file inputs with visually hidden styles (e.g., `opacity: 0, width: '1px', position: 'absolute'`) so they remain focusable, and apply the focus outline to the visible dropzone container using the `:has(:focus-visible)` selector.

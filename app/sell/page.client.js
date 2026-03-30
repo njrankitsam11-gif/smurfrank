@@ -9,6 +9,16 @@ const seo = {
 export default function SellPage() {
   return (
     <main style={{ minHeight: '100vh', background: '#050505', color: '#fff', paddingBottom: '100px' }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        .focus-outline:focus-visible {
+          outline: 2px solid #D4AF37;
+          outline-offset: 2px;
+        }
+        .file-dropzone:has(input:focus-visible) {
+          outline: 2px solid #D4AF37;
+          outline-offset: 2px;
+        }
+      `}} />
       {/* 1. HEADER */}
       <section style={{ textAlign: 'center', padding: '100px 20px 60px' }}>
         <div style={{ color: '#D4AF37', fontSize: '12px', fontWeight: 900, letterSpacing: '3px', marginBottom: '20px', textTransform: 'uppercase' }}>
@@ -34,12 +44,12 @@ export default function SellPage() {
             {/* --- TEXT DETAILS --- */}
             <div style={{ gridColumn: 'span 2' }}>
               <label htmlFor="listingTitle" style={labelStyle}>Listing Title</label>
-              <input id="listingTitle" type="text" placeholder="e.g. Stacked Valorant Account - All Battlepasses" style={inputStyle} />
+              <input className="focus-outline" id="listingTitle" type="text" placeholder="e.g. Stacked Valorant Account - All Battlepasses" style={inputStyle} />
             </div>
 
             <div>
               <label htmlFor="gameTier" style={labelStyle}>Game Tier</label>
-              <select id="gameTier" style={inputStyle}>
+              <select className="focus-outline" id="gameTier" style={inputStyle}>
                 <option>Valorant</option>
                 <option>CS2</option>
                 <option>GTA V</option>
@@ -48,13 +58,13 @@ export default function SellPage() {
 
             <div>
               <label htmlFor="askingPrice" style={labelStyle}>Asking Price ($)</label>
-              <input id="askingPrice" type="number" placeholder="0.00" style={inputStyle} />
+              <input className="focus-outline" id="askingPrice" type="number" placeholder="0.00" style={inputStyle} />
             </div>
 
             {/* --- 📸 NEW: SCREENSHOT UPLOAD SECTION --- */}
             <div style={{ gridColumn: 'span 2' }}>
               <span id="fileUploadLabel" style={labelStyle}>Account Visuals (Screenshots)</span>
-              <label htmlFor="fileUpload" style={{
+              <label htmlFor="fileUpload" className="file-dropzone" style={{
                 display: 'block',
                 border: '2px dashed #333',
                 borderRadius: '16px',
@@ -70,7 +80,7 @@ export default function SellPage() {
                 <div style={{ fontSize: '40px', marginBottom: '15px' }}>🖼️</div>
                 <div style={{ fontSize: '14px', fontWeight: 700, color: '#D4AF37', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
                 <div style={{ fontSize: '11px', color: '#555' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
-                <input aria-labelledby="fileUploadLabel" type="file" multiple style={{ display: 'none' }} id="fileUpload" />
+                <input aria-labelledby="fileUploadLabel" className="focus-outline" type="file" multiple style={{ opacity: 0, width: '1px', height: '1px', position: 'absolute' }} id="fileUpload" />
                 <span style={{
                   display: 'inline-block',
                   marginTop: '20px',
@@ -87,11 +97,11 @@ export default function SellPage() {
 
             <div style={{ gridColumn: 'span 2' }}>
               <label htmlFor="detailedDescription" style={labelStyle}>Detailed description</label>
-              <textarea id="detailedDescription" placeholder="List all rare skins, peak ranks, and region info..." style={{...inputStyle, height: '120px', resize: 'none'}} />
+              <textarea className="focus-outline" id="detailedDescription" placeholder="List all rare skins, peak ranks, and region info..." style={{...inputStyle, height: '120px', resize: 'none'}} />
             </div>
 
             <div style={{ gridColumn: 'span 2' }}>
-              <button style={{
+              <button className="focus-outline" style={{
                 width: '100%',
                 background: 'linear-gradient(45deg, #D4AF37, #AA8A2E)',
                 color: '#000',
