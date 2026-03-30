@@ -11,6 +11,17 @@ export async function POST(request) {
     const windowMs = 15 * 60 * 1000; // 15 minutes
     const limit = 5;
 
+    if (rateLimitMap.size >= 10000) {
+      for (const [key, val] of rateLimitMap.entries()) {
+        if (now - val.startTime > windowMs) {
+          rateLimitMap.delete(key);
+        }
+      }
+      if (rateLimitMap.size >= 10000) {
+        rateLimitMap.clear();
+      }
+    }
+
     const rateLimitInfo = rateLimitMap.get(ip) || { count: 0, startTime: now };
 
     if (now - rateLimitInfo.startTime > windowMs) {

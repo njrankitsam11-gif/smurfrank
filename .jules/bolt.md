@@ -3,3 +3,9 @@
 **Learning:** Unbounded database queries (e.g., `findMany` without `take`/`limit`) cause significant performance degradation as the dataset grows. They force the database to scan, serialize, and transmit potentially millions of rows, and force the Node.js application to allocate massive amounts of memory for the resulting objects, leading to increased garbage collection pauses and potential OOM crashes. Bounding the query using `take` and `skip` ensures O(1) memory usage in the application and drastically reduces network I/O, independent of the total dataset size.
 
 **Action:** Always apply pagination controls (`take` and `skip` in Prisma, or equivalent `LIMIT`/`OFFSET` in raw SQL) to list endpoints or pages where the result set is variable and potentially large. When the total number of pages is needed for UI pagination, use a concurrent `.count()` query alongside the bounded `.findMany()` using `Promise.all` to minimize total response time.
+
+## 2024-03-29 - Bounding In-Memory Rate Limiter Maps
+
+**Learning:** Implementing in-memory rate limiting using a global `Map` without an eviction strategy leads to an unbounded memory leak. Every unique IP address that hits the endpoint adds a permanent entry to the Map, gradually exhausting the Node.js process memory and eventually causing an Out-Of-Memory (OOM) crash, especially during DDoS attacks or high traffic.
+
+**Action:** Always implement an amortized cleanup mechanism for in-memory rate limiters. When the Map size exceeds a safe threshold (e.g., 10,000 entries), iterate and delete expired entries, or clear the Map entirely as a fallback. For distributed systems, prefer external stores with built-in TTLs like Redis.
