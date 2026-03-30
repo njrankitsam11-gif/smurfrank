@@ -53,8 +53,9 @@ export default function SellPage() {
 
             {/* --- 📸 NEW: SCREENSHOT UPLOAD SECTION --- */}
             <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Account Visuals (Screenshots)</label>
-              <div style={{
+              <span id="fileUploadLabel" style={labelStyle}>Account Visuals (Screenshots)</span>
+              <label htmlFor="fileUpload" style={{
+                display: 'block',
                 border: '2px dashed #333',
                 borderRadius: '16px',
                 padding: '40px',
@@ -69,8 +70,8 @@ export default function SellPage() {
                 <div style={{ fontSize: '40px', marginBottom: '15px' }}>🖼️</div>
                 <div style={{ fontSize: '14px', fontWeight: 700, color: '#D4AF37', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
                 <div style={{ fontSize: '11px', color: '#555' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
-                <input type="file" multiple style={{ display: 'none' }} id="fileUpload" />
-                <label htmlFor="fileUpload" style={{
+                <input aria-labelledby="fileUploadLabel" type="file" multiple style={{ display: 'none' }} id="fileUpload" />
+                <span style={{
                   display: 'inline-block',
                   marginTop: '20px',
                   fontSize: '12px',
@@ -80,8 +81,8 @@ export default function SellPage() {
                   padding: '8px 20px',
                   borderRadius: '4px',
                   cursor: 'pointer'
-                }}>SELECT FILES</label>
-              </div>
+                }}>SELECT FILES</span>
+              </label>
             </div>
 
             <div style={{ gridColumn: 'span 2' }}>
