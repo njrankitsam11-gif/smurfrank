@@ -57,7 +57,7 @@ export default function HomePage() {
       </section>
 
       {/* 👑 GOLD SELLER SECTION */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+      <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
         <div style={{
           background: 'linear-gradient(135deg, #1a1608 0%, #0a0a0b 100%)',
           border: '1px solid #D4AF37',
@@ -76,6 +76,46 @@ export default function HomePage() {
           >
             START SELLING NOW
           </button>
+        </div>
+      </section>
+
+      {/* ❓ FAQ SECTION */}
+      <section id="faq" style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', textAlign: 'center' }}>FREQUENTLY ASKED <span style={{ color: '#66FCF1' }}>QUESTIONS</span></h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+          {[
+            { q: "How fast is delivery?", a: "Accounts are delivered instantly to your email upon payment confirmation." },
+            { q: "Are the accounts safe?", a: "Yes, all our smurf and modded accounts are hand-leveled and 100% safe from bans." },
+            { q: "Do you offer refunds?", a: "We offer a 7-day warranty on all accounts. If an account is banned due to a defect on our end, we'll replace it or refund you." },
+            { q: "How does boosting work?", a: "After purchasing a boost, a professional Radiant/Global player will securely log into your account and rank it up to your desired level." },
+          ].map((faq, i) => (
+            <div key={i} style={{ background: '#111', padding: '25px', borderRadius: '10px', border: '1px solid #222' }}>
+              <h3 style={{ fontWeight: 700, fontSize: '18px', marginBottom: '10px', color: '#fff' }}>{faq.q}</h3>
+              <p style={{ color: '#888', fontSize: '14px', lineHeight: '1.5' }}>{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 📜 TERMS & CONDITIONS SECTION */}
+      <section id="terms" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', textAlign: 'center' }}>TERMS & <span style={{ color: '#66FCF1' }}>CONDITIONS</span></h2>
+        <div style={{ background: '#111', padding: '40px', borderRadius: '15px', border: '1px solid #222', color: '#aaa', fontSize: '14px', lineHeight: '1.6' }}>
+          <p style={{ marginBottom: '20px' }}>
+            Welcome to SmurfRank. By accessing our marketplace, purchasing accounts, or utilizing our boosting services, you agree to comply with and be bound by the following terms and conditions. Please read these carefully before completing any transaction.
+          </p>
+          <p style={{ marginBottom: '20px' }}>
+            <strong>1. Account Delivery:</strong> All account details are sent automatically to the provided email address upon successful payment. It is the buyer's responsibility to ensure the email is correct and to change the account passwords immediately after receipt.
+          </p>
+          <p style={{ marginBottom: '20px' }}>
+            <strong>2. Warranty & Refunds:</strong> SmurfRank provides a standard 7-day warranty on all accounts against original owner recalls or pre-existing bans. If an account gets banned due to the buyer's actions (e.g., toxicity, cheating), the warranty is voided. Refunds or replacements are issued at the sole discretion of the support team.
+          </p>
+          <p style={{ marginBottom: '20px' }}>
+            <strong>3. Boosting Policies:</strong> For boosting services, users must not log into the account while a booster is active. Doing so may result in the termination of the service without a refund. We ensure all boosters use VPNs and refrain from using any third-party software.
+          </p>
+          <p>
+            <strong>4. Liability:</strong> SmurfRank is not affiliated with, endorsed, or sponsored by Valve Corporation, Riot Games, or Rockstar Games. We are not liable for any actions taken against your account by game developers post-purchase, outside of the warranty period.
+          </p>
         </div>
       </section>
     </main>
