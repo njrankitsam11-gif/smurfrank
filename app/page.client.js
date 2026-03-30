@@ -88,6 +88,8 @@ export default function HomePage() {
             { q: "Are the accounts safe?", a: "Yes, all our smurf and modded accounts are hand-leveled and 100% safe from bans." },
             { q: "Do you offer refunds?", a: "We offer a 7-day warranty on all accounts. If an account is banned due to a defect on our end, we'll replace it or refund you." },
             { q: "How does boosting work?", a: "After purchasing a boost, a professional Radiant/Global player will securely log into your account and rank it up to your desired level." },
+            { q: "How do I become a verified seller?", a: "Click the 'Sell Your Account' button to submit an application. We require ID verification and proof of ownership for your first listings." },
+            { q: "How long do seller payouts take?", a: "Once an account is sold and the buyer confirms receipt (or the 7-day warranty period ends), payouts are processed within 24-48 hours via Crypto or PayPal." },
           ].map((faq, i) => (
             <div key={i} style={{ background: '#111', padding: '25px', borderRadius: '10px', border: '1px solid #222' }}>
               <h3 style={{ fontWeight: 700, fontSize: '18px', marginBottom: '10px', color: '#fff' }}>{faq.q}</h3>
@@ -113,8 +115,11 @@ export default function HomePage() {
           <p style={{ marginBottom: '20px' }}>
             <strong>3. Boosting Policies:</strong> For boosting services, users must not log into the account while a booster is active. Doing so may result in the termination of the service without a refund. We ensure all boosters use VPNs and refrain from using any third-party software.
           </p>
+          <p style={{ marginBottom: '20px' }}>
+            <strong>4. Seller Responsibilities & Payouts:</strong> Sellers must only list accounts they rightfully own. Any attempts to recall sold accounts will result in an immediate and permanent ban, and legal action if necessary. Payouts are held in escrow for a minimum of 7 days to protect the buyer before being released to the seller.
+          </p>
           <p>
-            <strong>4. Liability:</strong> SmurfRank is not affiliated with, endorsed, or sponsored by Valve Corporation, Riot Games, or Rockstar Games. We are not liable for any actions taken against your account by game developers post-purchase, outside of the warranty period.
+            <strong>5. Liability:</strong> SmurfRank is not affiliated with, endorsed, or sponsored by Valve Corporation, Riot Games, or Rockstar Games. We are not liable for any actions taken against your account by game developers post-purchase, outside of the warranty period.
           </p>
         </div>
       </section>
