@@ -86,6 +86,7 @@ export default async function SearchPage({ searchParams }) {
             name="q" 
             defaultValue={query}
             placeholder="Search by rank, game, or region..." 
+            aria-label="Search by rank, game, or region..."
             style={{flex: 1, padding: '16px', backgroundColor: '#0f0f17', border: '1px solid #1a1a1a', color: 'white', fontSize: '16px'}}
           />
           <button type="submit" style={{backgroundColor: '#FF6A00', color: 'black', border: 'none', padding: '0 30px', fontWeight: 900, cursor: 'pointer', textTransform: 'uppercase'}}>
