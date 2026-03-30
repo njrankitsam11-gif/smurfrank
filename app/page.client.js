@@ -32,7 +32,7 @@ export default function HomePage() {
               key={acc.id}
               whileHover={{ scale: 1.05, rotateX: 10, rotateY: -10, boxShadow: '0px 0px 30px rgba(102, 252, 241, 0.4)' }}
               style={{ background: '#111', borderRadius: '15px', border: '1px solid #222', perspective: '1000px', transformStyle: 'preserve-3d', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ width: '100%', height: '180px', backgroundImage: `url(${acc.img})`, backgroundSize: 'cover', backgroundPosition: 'center', borderBottom: '2px solid #66FCF1' }}></div>
+              <div style={{ width: '100%', height: '180px', backgroundImage: `url(${acc.img})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundColor: '#0a0a0b', borderBottom: '2px solid #66FCF1' }}></div>
               <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <h3 style={{ fontWeight: 900, marginBottom: '8px', fontSize: '20px' }}>{acc.title}</h3>
                 <p style={{ color: '#aaa', fontSize: '13px', marginBottom: 'auto', minHeight: '30px' }}>{acc.desc}</p>
