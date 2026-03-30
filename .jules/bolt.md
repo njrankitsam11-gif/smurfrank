@@ -3,3 +3,9 @@
 **Learning:** Unbounded database queries (e.g., `findMany` without `take`/`limit`) cause significant performance degradation as the dataset grows. They force the database to scan, serialize, and transmit potentially millions of rows, and force the Node.js application to allocate massive amounts of memory for the resulting objects, leading to increased garbage collection pauses and potential OOM crashes. Bounding the query using `take` and `skip` ensures O(1) memory usage in the application and drastically reduces network I/O, independent of the total dataset size.
 
 **Action:** Always apply pagination controls (`take` and `skip` in Prisma, or equivalent `LIMIT`/`OFFSET` in raw SQL) to list endpoints or pages where the result set is variable and potentially large. When the total number of pages is needed for UI pagination, use a concurrent `.count()` query alongside the bounded `.findMany()` using `Promise.all` to minimize total response time.
+
+## 2024-10-27 - Concurrent Database Queries
+
+**Learning:** When multiple independent database queries are needed (such as `count` for pagination alongside `findMany` for the result set), awaiting them sequentially artificially doubles the database response time, leading to slower page loads.
+
+**Action:** Use `Promise.all` to execute independent database queries concurrently to minimize total execution time, especially on list or search pages where pagination data is required.
