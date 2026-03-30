@@ -28,8 +28,8 @@ export default function Footer() {
           <h4 className={styles.heading}>Support & Trust</h4>
           <ul className={styles.list}>
             <li><Link href="/sell" className={styles.link}>Sell Your Account</Link></li>
-            <li><a href="#" className={styles.link}>FAQ / Support</a></li>
-            <li><a href="#" className={styles.link}>Terms of Service</a></li>
+            <li><Link href="/#faq" className={styles.link}>FAQ / Support</Link></li>
+            <li><Link href="/#terms" className={styles.link}>Terms of Service</Link></li>
           </ul>
         </div>
 
