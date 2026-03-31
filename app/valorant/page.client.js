@@ -24,7 +24,10 @@ export default function ValorantPage() {
   }
 
   return (
-    <main style={{ background: 'linear-gradient(rgba(10,10,11,0.85), rgba(10,10,11,0.95)), url("https://upload.wikimedia.org/wikipedia/commons/f/fd/Valorant_logo_-_pink_color_version.svg") no-repeat center center / contain', minHeight: '100vh', padding: '80px 20px', color: '#fff' }}>
+    <main style={{ background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltc825c6589efa5fd3/602f300c14ddf466bba78ebf/1_1_article_valorant.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed', minHeight: '100vh', padding: '80px 20px', color: '#fff' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>VALORANT <span style={{ color: '#FF4655' }}>ACCOUNTS</span></h1>
         <p style={{ color: '#444', marginBottom: '30px', fontWeight: 700 }}>CERTIFIED RADIANT SELLERS • 100% SECURE DELIVERY</p>
