@@ -9,3 +9,7 @@
 **Learning:** When multiple independent database queries are needed (such as `count` for pagination alongside `findMany` for the result set), awaiting them sequentially artificially doubles the database response time, leading to slower page loads.
 
 **Action:** Use `Promise.all` to execute independent database queries concurrently to minimize total execution time, especially on list or search pages where pagination data is required.
+
+## 2024-11-20 - Bounding Sitemap Generation
+**Learning:** Next.js `sitemap.js` generation routes execute server-side and, if using unbounded ORM queries (like `prisma.listing.findMany({ where: { active: true } })`), can quickly exceed Vercel/Node.js serverless function memory limits as the marketplace scales to tens of thousands of listings.
+**Action:** Even for administrative or SEO routes like sitemaps, always append a `take: [LIMIT]` (e.g., `take: 10000`) to unbounded database queries to ensure O(1) memory complexity and avoid silent OOM deployment crashes.
