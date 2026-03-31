@@ -33,7 +33,7 @@ export default function CS2Page() {
 
   return (
     <main style={{
-      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://cdn.cloudflare.steamstatic.com/steam/apps/730/ss_891147a4f009ee1b8c8d8c3dfbb016c6d2c4b8b6.jpg?t=1696437299")',
+      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://cdn.cloudflare.steamstatic.com/steam/apps/730/ss_d196d945c6170e9cadaf67a6dea675d726e4dbe8.1920x1080.jpg?t=1696437299")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
@@ -60,7 +60,7 @@ export default function CS2Page() {
                 <span style={{ fontWeight: 900, fontSize: '22px' }}>{product.price}</span>
                 <button
                   onClick={() => addToCart(product)}
-                  style={{ background: '#fff', color: '#000', border: 'none', padding: '10px 20px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', fontSize: '11px' }}
+                  style={{ background: '#fff', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', fontSize: '10px' }}
                 >
                   ADD TO CART
                 </button>

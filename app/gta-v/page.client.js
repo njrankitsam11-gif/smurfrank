@@ -25,7 +25,7 @@ export default function GTAVPageClient() {
 
   return (
     <main style={{
-      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/640/V.jpg")',
+      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/V.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
@@ -48,7 +48,7 @@ export default function GTAVPageClient() {
                 <span style={{ fontWeight: 900, fontSize: '22px' }}>{p.price}</span>
                 <button
                   onClick={() => addToCart(p)}
-                  style={{ background: '#fff', color: '#000', border: 'none', padding: '8px 14px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', fontSize: '11px' }}
+                  style={{ background: '#fff', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', fontSize: '10px' }}
                 >
                   ADD TO CART
                 </button>

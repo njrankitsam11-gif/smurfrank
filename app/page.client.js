@@ -48,7 +48,7 @@ export default function HomePage() {
       </section>
 
       {/* ⚡ HOT DEALS LIVE FEED */}
-      <HotDealsFeed />
+      <div style={{ marginBottom: '100px' }}><HotDealsFeed /></div>
 
       {/* 🟣 BOOSTING SECTION (RESTORED) */}
       <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
