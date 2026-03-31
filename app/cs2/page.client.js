@@ -32,7 +32,13 @@ export default function CS2Page() {
   }
 
   return (
-    <main style={{ background: '#0a0a0b', minHeight: '100vh', padding: '60px 20px', color: '#fff' }}>
+    <main style={{
+      background: 'linear-gradient(rgba(10,10,11,0.85), rgba(10,10,11,0.95)), url("https://cdn.cloudflare.steamstatic.com/steam/apps/730/ss_891147a4f009ee1b8c8d8c3dfbb016c6d2c4b8b6.jpg?t=1696437299") no-repeat center center / cover',
+      minHeight: '100vh',
+      padding: '60px 20px',
+      color: '#fff',
+      position: 'relative'
+    }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
