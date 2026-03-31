@@ -24,7 +24,7 @@ export default function ValorantPage() {
   }
 
   return (
-    <main style={{ background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltc825c6589efa5fd3/602f300c14ddf466bba78ebf/1_1_article_valorant.jpg")',
+    <main style={{ background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed', minHeight: '100vh', padding: '80px 20px', color: '#fff' }}>

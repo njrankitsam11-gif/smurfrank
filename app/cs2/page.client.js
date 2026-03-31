@@ -33,7 +33,7 @@ export default function CS2Page() {
 
   return (
     <main style={{
-      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://cdn.cloudflare.steamstatic.com/steam/apps/730/ss_d196d945c6170e9cadaf67a6dea675d726e4dbe8.1920x1080.jpg?t=1696437299")',
+      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://cdn.akamai.steamstatic.com/steam/apps/730/page_bg_generated_v6b.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
