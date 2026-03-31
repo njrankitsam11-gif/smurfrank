@@ -6,9 +6,14 @@ export const dynamic = 'force-dynamic';
 const getListings = unstable_cache(
   async () => {
     try {
+      // ⚡ BOLT OPTIMIZATION: Bounding Unbounded Query
+      // 💡 What: Added `take: 10000` to the sitemap query.
+      // 🎯 Why: As the marketplace scales, an unbounded `findMany` fetching all active listings simultaneously will eventually trigger OOM (Out Of Memory) crashes and extreme DB load.
+      // 📊 Impact: O(1) memory usage in Node.js instead of O(N), ensuring sitemap generation stays within memory limits regardless of marketplace size.
       return await prisma.listing.findMany({
         where: { active: true },
         select: { id: true, updatedAt: true },
+        take: 10000,
       });
     } catch (error) {
       console.warn("Could not reach DB for sitemap generation. Using empty list.", error);
