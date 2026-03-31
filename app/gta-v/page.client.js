@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import SortFilter from '../../components/SortFilter';
 
 export default function GTAVPageClient() {
   const { addToCart } = useCart();
+  const [activeSort, setActiveSort] = useState('TOP_RATED');
 
   const products = [
     { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },
@@ -12,14 +14,25 @@ export default function GTAVPageClient() {
     { id: 'g4', title: 'THE KINGPIN BUNDLE', price: '$55.00', desc: '$5B Cash • Level 8000 • Max Stats', game: 'GTA' }
   ];
 
+  let sortedProducts = [...products];
+  if (activeSort === 'LOW_HIGH') {
+    sortedProducts.sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+  } else if (activeSort === 'HIGH_LOW') {
+    sortedProducts.sort((a, b) => parseFloat(b.price.replace(/[^0-9.-]+/g,"")) - parseFloat(a.price.replace(/[^0-9.-]+/g,"")));
+  } else if (activeSort === 'BEST_SELLER') {
+    sortedProducts.reverse();
+  }
+
   return (
     <main style={{ background: '#0a0a0b', minHeight: '100vh', padding: '80px 20px', color: '#fff' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>GTA V <span style={{ color: '#66FCF1' }}>MODDED</span></h1>
-        <p style={{ color: '#444', marginBottom: '50px', fontWeight: 700 }}>INSTANT MONEY DROPS • SAFE & UNDETECTED</p>
+        <p style={{ color: '#444', marginBottom: '30px', fontWeight: 700 }}>INSTANT MONEY DROPS • SAFE & UNDETECTED</p>
+
+        <SortFilter activeSort={activeSort} onSort={setActiveSort} />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
-          {products.map((p) => (
+          {sortedProducts.map((p) => (
             <div key={p.id} style={{ background: '#111', padding: '35px', borderRadius: '18px', border: '1px solid #222' }}>
               <h3 style={{ fontWeight: 900, fontSize: '18px', marginBottom: '10px' }}>{p.title}</h3>
               <p style={{ color: '#555', fontSize: '13px', marginBottom: '25px', fontWeight: 600 }}>{p.desc}</p>
