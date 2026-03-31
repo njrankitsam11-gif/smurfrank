@@ -1,5 +1,6 @@
 import { prisma } from '../lib/prisma';
 import { unstable_cache } from 'next/cache';
+import { logger } from '../lib/logger';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,7 @@ const getListings = unstable_cache(
         take: 10000,
       });
     } catch (error) {
-      console.warn("Could not reach DB for sitemap generation. Using empty list.", error);
+      logger.warn("Could not reach DB for sitemap generation. Using empty list.", error);
       return [];
     }
   },
