@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import SortFilter from '../../components/SortFilter';
 
 export default function CS2Page() {
   const { addToCart } = useCart();
+  const [activeSort, setActiveSort] = useState('TOP_RATED');
 
   // SEO: Dynamic Title for CS2 category
   const jsonLd = {
@@ -20,25 +22,45 @@ export default function CS2Page() {
     { id: 'cs4', title: '2024 SERVICE MEDAL', price: '$25.00', desc: 'Prime • Instant Delivery', game: 'CS2' },
   ];
 
+  let sortedProducts = [...cs2Products];
+  if (activeSort === 'LOW_HIGH') {
+    sortedProducts.sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+  } else if (activeSort === 'HIGH_LOW') {
+    sortedProducts.sort((a, b) => parseFloat(b.price.replace(/[^0-9.-]+/g,"")) - parseFloat(a.price.replace(/[^0-9.-]+/g,"")));
+  } else if (activeSort === 'BEST_SELLER') {
+    sortedProducts.reverse();
+  }
+
   return (
-    <main style={{ background: '#0a0a0b', minHeight: '100vh', padding: '60px 20px', color: '#fff' }}>
+    <main style={{
+      background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/page_bg_raw.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',
+      minHeight: '100vh',
+      padding: '60px 20px',
+      color: '#fff',
+      position: 'relative'
+    }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>CS2 <span style={{ color: '#66FCF1' }}>ACCOUNTS</span></h1>
-        <p style={{ color: '#555', marginBottom: '50px', fontWeight: 600 }}>FILTER: PRIME ENABLED • INSTANT ACCESS</p>
+        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>CS2 <span style={{ color: '#F99F15' }}>ACCOUNTS</span></h1>
+        <p style={{ color: '#555', marginBottom: '30px', fontWeight: 600 }}>FILTER: PRIME ENABLED • INSTANT ACCESS</p>
+
+        <SortFilter activeSort={activeSort} onSort={setActiveSort} accentColor="#F99F15" />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
-          {cs2Products.map((product) => (
+          {sortedProducts.map((product) => (
             <div key={product.id} style={{ background: '#111', padding: '30px', borderRadius: '15px', border: '1px solid #222' }}>
-              <div style={{ fontSize: '10px', color: '#66FCF1', fontWeight: 900, marginBottom: '10px' }}>PREMIUM LISTING</div>
+              <div style={{ fontSize: '10px', color: '#F99F15', fontWeight: 900, marginBottom: '10px' }}>PREMIUM LISTING</div>
               <h3 style={{ fontWeight: 900, fontSize: '18px', marginBottom: '8px' }}>{product.title}</h3>
               <p style={{ color: '#444', fontSize: '13px', marginBottom: '25px', fontWeight: 600 }}>{product.desc}</p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontWeight: 900, fontSize: '22px' }}>{product.price}</span>
                 <button
                   onClick={() => addToCart(product)}
-                  style={{ background: '#fff', color: '#000', border: 'none', padding: '10px 20px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', fontSize: '11px' }}
+                  style={{ background: '#fff', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', fontSize: '10px' }}
                 >
                   ADD TO CART
                 </button>

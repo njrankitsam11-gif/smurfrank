@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
+import HotDealsFeed from '../components/HotDealsFeed';
 
 export default function HomePage() {
   const { addToCart } = useCart();
@@ -45,6 +46,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ⚡ HOT DEALS LIVE FEED */}
+      <div style={{ marginBottom: '100px' }}><HotDealsFeed /></div>
 
       {/* 🟣 BOOSTING SECTION (RESTORED) */}
       <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
