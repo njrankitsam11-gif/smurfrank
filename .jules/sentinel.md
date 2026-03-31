@@ -22,3 +22,8 @@
 **Vulnerability:** Unbounded JSON payload fields in authentication and registration APIs could allow type-based injection or DoS via memory exhaustion/ReDoS.
 **Learning:** Parsing JSON bodies directly without type checking or length limits leaves endpoints vulnerable to large payloads or unexpected object types (like arrays).
 **Prevention:** Always explicitly validate that user inputs are strings and enforce reasonable maximum lengths before processing.
+
+## 2026-03-31 - [Unsafe dangerouslySetInnerHTML for Styles]
+**Vulnerability:** Use of dangerouslySetInnerHTML for hardcoded CSS.
+**Learning:** Even if the input is hardcoded, using dangerouslySetInnerHTML for styles is a bad practice and can be a vector if the string becomes dynamic.
+**Prevention:** Use CSS Modules or standard CSS-in-JS solutions instead of injecting raw HTML style tags.
