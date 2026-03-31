@@ -17,6 +17,8 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
+        if (typeof credentials.email !== 'string' || credentials.email.length > 100) return null;
+        if (typeof credentials.password !== 'string' || credentials.password.length > 100) return null;
 
         const originalEmail = credentials.email;
         const rateLimitEmailKey = originalEmail.trim().toLowerCase();

@@ -17,3 +17,8 @@
 **Vulnerability:** Unbounded query parameters in the search page allowed arbitrarily long strings to be passed to the database query engine.
 **Learning:** While Prisma protects against SQL injection, extremely long search strings can still cause excessive memory usage or ReDoS-style performance degradation during database index lookups.
 **Prevention:** Always enforce reasonable maximum lengths (e.g., 100 characters) on unconstrained user input like search queries before passing them to the backend.
+
+## 2026-03-31 - [Missing Type and Length Limits on Auth APIs]
+**Vulnerability:** Unbounded JSON payload fields in authentication and registration APIs could allow type-based injection or DoS via memory exhaustion/ReDoS.
+**Learning:** Parsing JSON bodies directly without type checking or length limits leaves endpoints vulnerable to large payloads or unexpected object types (like arrays).
+**Prevention:** Always explicitly validate that user inputs are strings and enforce reasonable maximum lengths before processing.
