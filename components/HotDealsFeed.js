@@ -25,7 +25,7 @@ export default function HotDealsFeed() {
   return (
     <div ref={containerRef} style={{ width: '100%', overflow: 'hidden', background: '#0a0a0b', borderTop: '1px solid #222', borderBottom: '1px solid #222', padding: '15px 0', marginBottom: '100px', display: 'flex', alignItems: 'center' }}>
       <div style={{ padding: '0 20px', minWidth: '150px', zIndex: 10, background: '#0a0a0b', fontWeight: 900, color: '#66FCF1', borderRight: '1px solid #333' }}>
-        LIVE FEED:
+        LIVE FEED - GRAB NOW 🔥
       </div>
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
         <motion.div

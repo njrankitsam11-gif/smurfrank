@@ -47,6 +47,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ⚡ HOT DEALS LIVE FEED */}
+      <HotDealsFeed />
+
       {/* 🟣 BOOSTING SECTION (RESTORED) */}
       <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
         <div style={{ background: 'linear-gradient(45deg, #1a0b2e, #0a0a0b)', border: '1px solid #3d007a', borderRadius: '24px', padding: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '40px' }}>
@@ -82,9 +85,6 @@ export default function HomePage() {
           </button>
         </div>
       </section>
-
-      {/* ⚡ HOT DEALS LIVE FEED */}
-      <HotDealsFeed />
 
       {/* ❓ FAQ SECTION */}
       <section id="faq" style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
