@@ -131,9 +131,11 @@ export default async function ListingDetailPage({ params }) {
               ${Number(listing.price).toFixed(2)}
             </div>
             
-            <button style={{width: '100%', background: 'linear-gradient(45deg, #FF6A00, #e65c00)', color: '#000', padding: '20px', fontWeight: 900, fontSize: '16px', border: 'none', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '1px', transition: 'all 0.3s ease', boxShadow: '0 5px 15px rgba(255,106,0,0.2)'}}>
-              Proceed to Purchase
-            </button>
+            <Link href={`/checkout?listingId=${listing.id}`} style={{display: 'block', width: '100%'}}>
+              <button style={{width: '100%', background: 'linear-gradient(45deg, #FF6A00, #e65c00)', color: '#000', padding: '20px', fontWeight: 900, fontSize: '16px', border: 'none', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '1px', transition: 'all 0.3s ease', boxShadow: '0 5px 15px rgba(255,106,0,0.2)'}}>
+                Proceed to Purchase
+              </button>
+            </Link>
             
             <div style={{marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '16px'}}>
               <div style={{display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#888'}}>
