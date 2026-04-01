@@ -8,7 +8,9 @@ export default function CartDrawer() {
 
   const handleCheckout = () => {
     setIsOpen(false);
-    router.push('/checkout');
+    // Force a full page navigation bypassing client router if necessary,
+    // as Next.js client router sometimes swallows events on complex absolute wrappers
+    window.location.assign('/checkout');
   };
 
   if (!isOpen) return null;
