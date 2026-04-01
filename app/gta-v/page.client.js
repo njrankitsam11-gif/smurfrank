@@ -34,10 +34,10 @@ export default function GTAVPageClient() {
       color: '#fff'
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>GTA V <span style={{ color: '#66FCF1' }}>MODDED</span></h1>
+        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>GTA V <span style={{ color: '#54B72D' }}>MODDED</span></h1>
         <p style={{ color: '#444', marginBottom: '30px', fontWeight: 700 }}>INSTANT MONEY DROPS • SAFE & UNDETECTED</p>
 
-        <SortFilter activeSort={activeSort} onSort={setActiveSort} />
+        <SortFilter activeSort={activeSort} onSort={setActiveSort} themeColor="#54B72D" />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
           {sortedProducts.map((p) => (
