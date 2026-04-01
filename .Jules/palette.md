@@ -13,3 +13,7 @@
 ## 2026-03-30 - Keyboard Focus on Hidden File Inputs
 **Learning:** Hiding file inputs using `display: 'none'` completely removes them from the document tab order, making custom drag-and-drop upload zones completely inaccessible to keyboard users. Using `:has()` selectors enables applying focus outlines to the parent container when the hidden input receives focus.
 **Action:** Always replace `display: 'none'` on file inputs with visually hidden styles (e.g., `opacity: 0, width: '1px', position: 'absolute'`) so they remain focusable, and apply the focus outline to the visible dropzone container using the `:has(:focus-visible)` selector.
+
+## 2026-03-31 - Identify Input Purpose (WCAG 1.3.5)
+**Learning:** Relying purely on the 'type' attribute (e.g., type="email") isn't sufficient for the best user experience or for meeting WCAG 1.3.5, as password managers and browsers often rely on the 'autocomplete' attribute for robust autofill capabilities.
+**Action:** Always add appropriate 'autocomplete' attributes (e.g., 'email', 'current-password', 'new-password') to login and registration forms to ensure users can effortlessly use their password managers.
