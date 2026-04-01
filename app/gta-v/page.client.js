@@ -3,22 +3,31 @@ import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
 
+const products = [
+  { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },
+  { id: 'g2', title: 'MODDED CARS GARAGE', price: '$35.00', desc: '60+ Modded Vehicles • Rare Liveries', game: 'GTA' },
+  { id: 'g3', title: 'FRESH MODDED START', price: '$15.00', desc: '$500M Cash • Level 120 • All Outfits', game: 'GTA' },
+  { id: 'g4', title: 'THE KINGPIN BUNDLE', price: '$55.00', desc: '$5B Cash • Level 8000 • Max Stats', game: 'GTA' }
+];
+
+// ⚡ BOLT OPTIMIZATION: Pre-calculate sorting keys and extract static arrays
+// 💡 What: Moved the static array outside the component and pre-parsed the price into numericPrice.
+// 🎯 Why: Prevents recreating the array on every render and changes the sort comparator from O(expensive * N log N) to O(1) comparison, reducing CPU overhead during sorting.
+// 📊 Impact: O(1) sort comparator complexity. Eliminates unnecessary array allocations per render.
+const parsedProducts = products.map(p => ({
+  ...p,
+  numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
+}));
+
 export default function GTAVPageClient() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  const products = [
-    { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },
-    { id: 'g2', title: 'MODDED CARS GARAGE', price: '$35.00', desc: '60+ Modded Vehicles • Rare Liveries', game: 'GTA' },
-    { id: 'g3', title: 'FRESH MODDED START', price: '$15.00', desc: '$500M Cash • Level 120 • All Outfits', game: 'GTA' },
-    { id: 'g4', title: 'THE KINGPIN BUNDLE', price: '$55.00', desc: '$5B Cash • Level 8000 • Max Stats', game: 'GTA' }
-  ];
-
-  let sortedProducts = [...products];
+  let sortedProducts = [...parsedProducts];
   if (activeSort === 'LOW_HIGH') {
-    sortedProducts.sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+    sortedProducts.sort((a, b) => a.numericPrice - b.numericPrice);
   } else if (activeSort === 'HIGH_LOW') {
-    sortedProducts.sort((a, b) => parseFloat(b.price.replace(/[^0-9.-]+/g,"")) - parseFloat(a.price.replace(/[^0-9.-]+/g,"")));
+    sortedProducts.sort((a, b) => b.numericPrice - a.numericPrice);
   } else if (activeSort === 'BEST_SELLER') {
     sortedProducts.reverse();
   }

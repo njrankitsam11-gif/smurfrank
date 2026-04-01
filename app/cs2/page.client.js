@@ -3,30 +3,39 @@ import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
 
+// SEO: Dynamic Title for CS2 category
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "CS2 Prime Accounts Marketplace",
+  "description": "Buy high-tier CS2 Prime accounts, Global Elite, and Service Medal accounts."
+};
+
+const cs2Products = [
+  { id: 'cs1', title: 'GLOBAL ELITE PRIME', price: '$45.00', desc: '10 Year Coin • Full Access', game: 'CS2' },
+  { id: 'cs2', title: 'SUPREME MASTER FIRST CLASS', price: '$35.00', desc: 'Prime Enabled • High Trust', game: 'CS2' },
+  { id: 'cs3', title: 'FACEIT LEVEL 10 READY', price: '$65.00', desc: 'Low Matches • High Elo', game: 'CS2' },
+  { id: 'cs4', title: '2024 SERVICE MEDAL', price: '$25.00', desc: 'Prime • Instant Delivery', game: 'CS2' },
+];
+
+// ⚡ BOLT OPTIMIZATION: Pre-calculate sorting keys and extract static arrays
+// 💡 What: Moved the static array outside the component and pre-parsed the price into numericPrice.
+// 🎯 Why: Prevents recreating the array on every render and changes the sort comparator from O(expensive * N log N) to O(1) comparison, reducing CPU overhead during sorting.
+// 📊 Impact: O(1) sort comparator complexity. Eliminates unnecessary array allocations per render.
+const parsedCs2Products = cs2Products.map(p => ({
+  ...p,
+  numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
+}));
+
 export default function CS2Page() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  // SEO: Dynamic Title for CS2 category
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "CS2 Prime Accounts Marketplace",
-    "description": "Buy high-tier CS2 Prime accounts, Global Elite, and Service Medal accounts."
-  };
-
-  const cs2Products = [
-    { id: 'cs1', title: 'GLOBAL ELITE PRIME', price: '$45.00', desc: '10 Year Coin • Full Access', game: 'CS2' },
-    { id: 'cs2', title: 'SUPREME MASTER FIRST CLASS', price: '$35.00', desc: 'Prime Enabled • High Trust', game: 'CS2' },
-    { id: 'cs3', title: 'FACEIT LEVEL 10 READY', price: '$65.00', desc: 'Low Matches • High Elo', game: 'CS2' },
-    { id: 'cs4', title: '2024 SERVICE MEDAL', price: '$25.00', desc: 'Prime • Instant Delivery', game: 'CS2' },
-  ];
-
-  let sortedProducts = [...cs2Products];
+  let sortedProducts = [...parsedCs2Products];
   if (activeSort === 'LOW_HIGH') {
-    sortedProducts.sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+    sortedProducts.sort((a, b) => a.numericPrice - b.numericPrice);
   } else if (activeSort === 'HIGH_LOW') {
-    sortedProducts.sort((a, b) => parseFloat(b.price.replace(/[^0-9.-]+/g,"")) - parseFloat(a.price.replace(/[^0-9.-]+/g,"")));
+    sortedProducts.sort((a, b) => b.numericPrice - a.numericPrice);
   } else if (activeSort === 'BEST_SELLER') {
     sortedProducts.reverse();
   }

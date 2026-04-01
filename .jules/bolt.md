@@ -17,3 +17,7 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+
+## 2026-04-01 - Pre-calculating Expensive Values Before Sorting Arrays
+**Learning:** Performing expensive operations inside array `.sort()` callbacks leads to performance issues because the callback is executed `O(N log N)` times on average. Re-evaluating or re-parsing the same data repeatedly wastes CPU cycles.
+**Action:** Use a Schwartzian Transform (or similar approach): pre-calculate the expensive sorting keys (e.g., parsing strings into numeric prices) for each array element into a temporary property by mapping over the array. Then sort using the pre-calculated keys, making the sort comparator simple and extremely fast (`O(1)`).

@@ -3,21 +3,25 @@ import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
 
+const products = [
+  { id: 'v1', title: 'RADIANT PEAK ACCOUNT', price: '$125.00', desc: 'All Agents • Exclusive Skins • High Elo Guaranteed', game: 'VAL' },
+  { id: 'v2', title: 'IMMORTAL 3 SMURF', price: '$85.00', desc: 'Ready for Ranked • Clean History • Instant Delivery', game: 'VAL' },
+  { id: 'v3', title: 'ASCENDANT 1 FRESH', price: '$45.00', desc: 'Original Email Access • Instant Login • Secure', game: 'VAL' },
+  { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
+];
+
+// ⚡ BOLT OPTIMIZATION: Pre-calculate sorting keys and extract static arrays
+// 💡 What: Moved the static array outside the component and pre-parsed the price into numericPrice.
+// 🎯 Why: Prevents recreating the array on every render and changes the sort comparator from O(expensive * N log N) to O(1) comparison, reducing CPU overhead during sorting.
+// 📊 Impact: O(1) sort comparator complexity. Eliminates unnecessary array allocations per render.
+const parsedProducts = products.map(p => ({
+  ...p,
+  numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
+}));
+
 export default function ValorantPage() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
-
-  const products = [
-    { id: 'v1', title: 'RADIANT PEAK ACCOUNT', price: '$125.00', desc: 'All Agents • Exclusive Skins • High Elo Guaranteed', game: 'VAL' },
-    { id: 'v2', title: 'IMMORTAL 3 SMURF', price: '$85.00', desc: 'Ready for Ranked • Clean History • Instant Delivery', game: 'VAL' },
-    { id: 'v3', title: 'ASCENDANT 1 FRESH', price: '$45.00', desc: 'Original Email Access • Instant Login • Secure', game: 'VAL' },
-    { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
-  ];
-
-  const parsedProducts = products.map(p => ({
-    ...p,
-    numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
-  }));
 
   let sortedProducts = [...parsedProducts];
   if (activeSort === 'LOW_HIGH') {
