@@ -7,6 +7,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState('credit-card');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [redirectingGateway, setRedirectingGateway] = useState(null);
 
   // Mock order data
   const orderDetails = {
@@ -29,11 +30,40 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsProcessing(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      router.push('/checkout/success');
-    }, 1500);
+    const method = paymentMethods.find(m => m.id === selectedMethod);
+
+    // Simulate redirection to external gateway
+    if (selectedMethod !== 'credit-card') {
+      setRedirectingGateway(method.name);
+      setTimeout(() => {
+        router.push('/checkout/success');
+      }, 2500);
+    } else {
+      // Simulate direct API call for credit card
+      setTimeout(() => {
+        router.push('/checkout/success');
+      }, 1500);
+    }
   };
+
+  if (redirectingGateway) {
+    return (
+      <main style={{ backgroundColor: '#050507', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', color: 'white' }}>
+        <div style={{ textAlign: 'center', maxWidth: '500px', padding: '40px', background: '#0f0f17', border: '1px solid #1a1a1a', borderRadius: '8px' }}>
+          <div style={{ fontSize: '48px', marginBottom: '20px', animation: 'spin 2s linear infinite' }}>🔄</div>
+          <h1 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '16px' }}>Redirecting to {redirectingGateway}...</h1>
+          <p style={{ color: '#888', lineHeight: 1.6, marginBottom: '20px' }}>
+            Please wait while we transfer you to the secure payment gateway to complete your transaction.
+          </p>
+          <div style={{ fontSize: '12px', color: '#555' }}>Do not close this window.</div>
+
+          <style dangerouslySetInnerHTML={{__html: `
+            @keyframes spin { 100% { transform: rotate(360deg); } }
+          `}} />
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main style={{ backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white', padding: '40px 20px' }}>
