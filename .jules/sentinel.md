@@ -27,3 +27,8 @@
 **Vulnerability:** Use of dangerouslySetInnerHTML for hardcoded CSS.
 **Learning:** Even if the input is hardcoded, using dangerouslySetInnerHTML for styles is a bad practice and can be a vector if the string becomes dynamic.
 **Prevention:** Use CSS Modules or standard CSS-in-JS solutions instead of injecting raw HTML style tags.
+
+## 2026-03-31 - [Unsafe dangerouslySetInnerHTML for Styles (Fixed)]
+**Vulnerability:** Use of `dangerouslySetInnerHTML` for injecting hardcoded CSS in `app/register/page.js` and `app/login/page.js`.
+**Learning:** Even if the input is currently hardcoded and not exploitable, using `dangerouslySetInnerHTML` is an anti-pattern and a potential vector for XSS if the string becomes dynamic or user-controlled in the future.
+**Prevention:** Always use standard React style definitions (like inline `<style>{'...'}</style>`) or CSS Modules instead of bypassing React's built-in protections with `dangerouslySetInnerHTML`.
