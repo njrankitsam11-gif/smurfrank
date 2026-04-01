@@ -45,10 +45,10 @@ export default function CS2Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>CS2 <span style={{ color: '#66FCF1' }}>ACCOUNTS</span></h1>
+        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>CS2 <span style={{ color: '#F99F15' }}>ACCOUNTS</span></h1>
         <p style={{ color: '#555', marginBottom: '30px', fontWeight: 600 }}>FILTER: PRIME ENABLED • INSTANT ACCESS</p>
 
-        <SortFilter activeSort={activeSort} onSort={setActiveSort} />
+        <SortFilter activeSort={activeSort} onSort={setActiveSort} themeColor="#F99F15" />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
           {sortedProducts.map((product) => (

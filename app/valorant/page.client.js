@@ -34,10 +34,10 @@ export default function ValorantPage() {
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed', minHeight: '100vh', padding: '80px 20px', color: '#fff' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>VALORANT <span style={{ color: '#66FCF1' }}>ACCOUNTS</span></h1>
+        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>VALORANT <span style={{ color: '#FF4655' }}>ACCOUNTS</span></h1>
         <p style={{ color: '#444', marginBottom: '30px', fontWeight: 700 }}>CERTIFIED RADIANT SELLERS • 100% SECURE DELIVERY</p>
 
-        <SortFilter activeSort={activeSort} onSort={setActiveSort} />
+        <SortFilter activeSort={activeSort} onSort={setActiveSort} themeColor="#FF4655" />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
           {sortedProducts.map((p) => (
