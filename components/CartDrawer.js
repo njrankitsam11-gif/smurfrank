@@ -63,7 +63,7 @@ export default function CartDrawer() {
             <span style={{ fontWeight: 800, color: '#444' }}>SUBTOTAL</span>
             <span style={{ fontWeight: 900, fontSize: '22px' }}>${total.toFixed(2)}</span>
           </div>
-          <button onClick={handleCheckout} style={{ width: '100%', padding: '20px', background: '#fff', color: '#000', fontWeight: 900, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>PROCEED TO CHECKOUT</button>
+          <a href="/checkout" onClick={() => setIsOpen(false)} style={{ display: 'block', width: '100%', padding: '20px', background: '#fff', color: '#000', fontWeight: 900, borderRadius: '4px', border: 'none', cursor: 'pointer', textAlign: 'center', textDecoration: 'none' }}>PROCEED TO CHECKOUT</a>
         </div>
       </div>
     </div>
