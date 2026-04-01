@@ -131,7 +131,7 @@ export default async function ListingDetailPage({ params }) {
               ${Number(listing.price).toFixed(2)}
             </div>
             
-            <Link
+            <a
               href={`/checkout?listingId=${listing.id}`}
               style={{
                 display: 'block',
@@ -152,7 +152,7 @@ export default async function ListingDetailPage({ params }) {
               }}
             >
               Proceed to Purchase
-            </Link>
+            </a>
             
             <div style={{marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '16px'}}>
               <div style={{display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#888'}}>
