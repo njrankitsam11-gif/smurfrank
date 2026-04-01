@@ -148,7 +148,9 @@ export default async function ListingDetailPage({ params }) {
                 transition: 'all 0.3s ease',
                 boxShadow: '0 5px 15px rgba(255,106,0,0.2)',
                 textAlign: 'center',
-                textDecoration: 'none'
+                textDecoration: 'none',
+                position: 'relative',
+                zIndex: 9999
               }}
             >
               Proceed to Purchase
