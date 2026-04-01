@@ -43,6 +43,14 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
+    if (
+      typeof email !== 'string' || email.length > 100 ||
+      typeof password !== 'string' || password.length > 100 ||
+      (name && (typeof name !== 'string' || name.length > 50))
+    ) {
+      return NextResponse.json({ error: 'Invalid input length or type' }, { status: 400 });
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-export default function SortFilter({ activeSort, onSort, accentColor = '#66FCF1' }) {
+export default function SortFilter({ activeSort, onSort }) {
   const options = [
     { id: 'TOP_RATED', label: 'Top Rated' },
     { id: 'LOW_HIGH', label: 'Low to High' },
@@ -16,9 +16,9 @@ export default function SortFilter({ activeSort, onSort, accentColor = '#66FCF1'
           key={opt.id}
           onClick={() => onSort(opt.id)}
           style={{
-            background: activeSort === opt.id ? accentColor : '#111',
+            background: activeSort === opt.id ? '#66FCF1' : '#111',
             color: activeSort === opt.id ? '#000' : '#fff',
-            border: activeSort === opt.id ? `1px solid ${accentColor}` : '1px solid #333',
+            border: activeSort === opt.id ? '1px solid #66FCF1' : '1px solid #333',
             padding: '8px 20px',
             borderRadius: '50px',
             fontSize: '13px',

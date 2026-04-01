@@ -13,3 +13,7 @@
 ## 2024-11-20 - Bounding Sitemap Generation
 **Learning:** Next.js `sitemap.js` generation routes execute server-side and, if using unbounded ORM queries (like `prisma.listing.findMany({ where: { active: true } })`), can quickly exceed Vercel/Node.js serverless function memory limits as the marketplace scales to tens of thousands of listings.
 **Action:** Even for administrative or SEO routes like sitemaps, always append a `take: [LIMIT]` (e.g., `take: 10000`) to unbounded database queries to ensure O(1) memory complexity and avoid silent OOM deployment crashes.
+
+## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
+**Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
+**Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.

@@ -14,11 +14,16 @@ export default function ValorantPage() {
     { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
   ];
 
-  let sortedProducts = [...products];
+  const parsedProducts = products.map(p => ({
+    ...p,
+    numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
+  }));
+
+  let sortedProducts = [...parsedProducts];
   if (activeSort === 'LOW_HIGH') {
-    sortedProducts.sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+    sortedProducts.sort((a, b) => a.numericPrice - b.numericPrice);
   } else if (activeSort === 'HIGH_LOW') {
-    sortedProducts.sort((a, b) => parseFloat(b.price.replace(/[^0-9.-]+/g,"")) - parseFloat(a.price.replace(/[^0-9.-]+/g,"")));
+    sortedProducts.sort((a, b) => b.numericPrice - a.numericPrice);
   } else if (activeSort === 'BEST_SELLER') {
     sortedProducts.reverse();
   }
@@ -29,10 +34,10 @@ export default function ValorantPage() {
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed', minHeight: '100vh', padding: '80px 20px', color: '#fff' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>VALORANT <span style={{ color: '#FF4655' }}>ACCOUNTS</span></h1>
+        <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>VALORANT <span style={{ color: '#66FCF1' }}>ACCOUNTS</span></h1>
         <p style={{ color: '#444', marginBottom: '30px', fontWeight: 700 }}>CERTIFIED RADIANT SELLERS • 100% SECURE DELIVERY</p>
 
-        <SortFilter activeSort={activeSort} onSort={setActiveSort} accentColor="#FF4655" />
+        <SortFilter activeSort={activeSort} onSort={setActiveSort} />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
           {sortedProducts.map((p) => (
