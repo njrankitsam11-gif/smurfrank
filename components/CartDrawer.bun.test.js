@@ -8,6 +8,12 @@ mock.module("../context/CartContext", () => {
     };
 });
 
+mock.module("next/navigation", () => {
+    return {
+        useRouter: () => ({ push: mock() })
+    };
+});
+
 const { useCart } = await import("../context/CartContext");
 
 describe("CartDrawer Component", () => {

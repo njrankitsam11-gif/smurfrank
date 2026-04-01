@@ -1,8 +1,15 @@
 'use client';
 import { useCart } from '../context/CartContext';
+import { useRouter } from 'next/navigation';
 
 export default function CartDrawer() {
   const { cart, isOpen, setIsOpen, total, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    setIsOpen(false);
+    router.push('/checkout');
+  };
 
   if (!isOpen) return null;
 
@@ -54,7 +61,7 @@ export default function CartDrawer() {
             <span style={{ fontWeight: 800, color: '#444' }}>SUBTOTAL</span>
             <span style={{ fontWeight: 900, fontSize: '22px' }}>${total.toFixed(2)}</span>
           </div>
-          <button style={{ width: '100%', padding: '20px', background: '#fff', color: '#000', fontWeight: 900, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>PROCEED TO CHECKOUT</button>
+          <button onClick={handleCheckout} style={{ width: '100%', padding: '20px', background: '#fff', color: '#000', fontWeight: 900, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>PROCEED TO CHECKOUT</button>
         </div>
       </div>
     </div>
