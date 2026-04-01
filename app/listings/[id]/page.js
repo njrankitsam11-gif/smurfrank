@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { prisma } from '../../../lib/prisma';
 import { notFound } from 'next/navigation';
+import CheckoutButton from '../../../components/CheckoutButton';
 
 // ⚡ BOLT OPTIMIZATION: Wrap Prisma call in React.cache()
 // 💡 What: Deduplicate direct database queries across generateMetadata and the Server Component.
@@ -131,30 +132,7 @@ export default async function ListingDetailPage({ params }) {
               ${Number(listing.price).toFixed(2)}
             </div>
             
-            <a
-              href={`/checkout?listingId=${listing.id}`}
-              style={{
-                display: 'block',
-                width: '100%',
-                background: 'linear-gradient(45deg, #FF6A00, #e65c00)',
-                color: '#000',
-                padding: '20px',
-                fontWeight: 900,
-                fontSize: '16px',
-                border: 'none',
-                cursor: 'pointer',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 5px 15px rgba(255,106,0,0.2)',
-                textAlign: 'center',
-                textDecoration: 'none',
-                position: 'relative',
-                zIndex: 9999
-              }}
-            >
-              Proceed to Purchase
-            </a>
+            <CheckoutButton listingId={listing.id} />
             
             <div style={{marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '16px'}}>
               <div style={{display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#888'}}>

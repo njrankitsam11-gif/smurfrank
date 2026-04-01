@@ -10,6 +10,7 @@ mock.module("react/jsx-dev-runtime", () => ({
 // Mock next/navigation
 mock.module("next/navigation", () => ({
   notFound: mock(),
+  useRouter: mock(),
 }));
 
 // Mock next/link
