@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 
-export default function HotDealsFeed() {
+const HotDealsFeed = React.memo(function HotDealsFeed() {
   const containerRef = useRef(null);
 
   // Example hot deals data
@@ -43,4 +43,10 @@ export default function HotDealsFeed() {
       </div>
     </div>
   );
-}
+});
+
+// ⚡ BOLT OPTIMIZATION: Memoize static HotDealsFeed component
+// 💡 What: Wrapped the HotDealsFeed component with React.memo()
+// 🎯 Why: This component renders a static list of animated text and has no props. Without memoization, it re-renders every time its parent (HomePage) re-renders, causing unnecessary DOM diffing and animation restarts.
+// 📊 Impact: Prevents expensive re-rendering of this animated component on unrelated state changes in the parent, improving UI responsiveness.
+export default HotDealsFeed;
