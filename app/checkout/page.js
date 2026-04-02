@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useCart } from '../../context/CartContext';
 
 const PAYMENT_METHODS = [
@@ -42,6 +43,12 @@ export default function CheckoutPage() {
 
   return (
     <main style={s.page}>
+      <style>{`
+        .focus-outline:focus-visible {
+          outline: 2px solid #FF6A00;
+          outline-offset: 2px;
+        }
+      `}</style>
       {/* ── HEADER ── */}
       <div style={{ textAlign:'center', marginBottom:48 }}>
         <p style={{ color:'#66FCF1', fontSize:11, fontWeight:900, letterSpacing:4, margin:'0 0 8px' }}>SECURE CHECKOUT</p>
@@ -70,6 +77,7 @@ export default function CheckoutPage() {
                   transition:'all 0.2s',
                 }}>
                   <input
+                    className="focus-outline"
                     type="radio" name="payment_method" value={m.id}
                     checked={selectedMethod===m.id}
                     onChange={() => setSelectedMethod(m.id)}
@@ -116,21 +124,21 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <Field label="Cardholder Name">
-                  <input style={s.input} placeholder="John Doe" value={nameOnCard}
+                <Field id="cc-name" label="Cardholder Name" required>
+                  <input id="cc-name" required aria-required="true" autoComplete="cc-name" className="focus-outline" style={s.input} placeholder="John Doe" value={nameOnCard}
                     onChange={e=>setNameOnCard(e.target.value)} />
                 </Field>
-                <Field label="Card Number">
-                  <input style={s.input} placeholder="1234 5678 9012 3456" value={cardNum}
+                <Field id="cc-number" label="Card Number" required>
+                  <input id="cc-number" required aria-required="true" autoComplete="cc-number" className="focus-outline" style={s.input} placeholder="1234 5678 9012 3456" value={cardNum}
                     onChange={e=>setCardNum(formatCard(e.target.value))} inputMode="numeric" />
                 </Field>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
-                  <Field label="Expiry">
-                    <input style={s.input} placeholder="MM/YY" value={expiry}
+                  <Field id="cc-exp" label="Expiry" required>
+                    <input id="cc-exp" required aria-required="true" autoComplete="cc-exp" className="focus-outline" style={s.input} placeholder="MM/YY" value={expiry}
                       onChange={e=>setExpiry(formatExpiry(e.target.value))} inputMode="numeric" />
                   </Field>
-                  <Field label="CVC">
-                    <input style={s.input} placeholder="•••" value={cvc}
+                  <Field id="cc-csc" label="CVC" required>
+                    <input id="cc-csc" required aria-required="true" autoComplete="cc-csc" className="focus-outline" style={s.input} placeholder="•••" value={cvc}
                       onChange={e=>setCvc(e.target.value.replace(/\D/g,'').slice(0,4))} inputMode="numeric" />
                   </Field>
                 </div>
@@ -162,8 +170,8 @@ export default function CheckoutPage() {
             {/* CRYPTO */}
             {selectedMethod === 'crypto' && (
               <form onSubmit={handlePayment} style={{ display:'flex', flexDirection:'column', gap:16 }}>
-                <Field label="Select Coin">
-                  <select style={{ ...s.input, cursor:'pointer' }} value={cryptoCoin}
+                <Field id="crypto-coin" label="Select Coin">
+                  <select id="crypto-coin" className="focus-outline" style={{ ...s.input, cursor:'pointer' }} value={cryptoCoin}
                     onChange={e=>setCryptoCoin(e.target.value)}>
                     {CRYPTO_COINS.map(c => <option key={c}>{c}</option>)}
                   </select>
@@ -199,7 +207,7 @@ export default function CheckoutPage() {
               {cart.length === 0 ? (
                 <div style={{ textAlign:'center', padding:'30px 0' }}>
                   <p style={{ color:'#444', marginBottom:16 }}>Your cart is empty.</p>
-                  <a href="/" style={{ color:'#66FCF1', fontSize:13, fontWeight:800 }}>← Browse Listings</a>
+                  <Link href="/" style={{ color:'#66FCF1', fontSize:13, fontWeight:800 }}>← Browse Listings</Link>
                 </div>
               ) : (
                 cart.map((item, i) => {
@@ -266,10 +274,13 @@ function Label({ children }) {
   return <p style={{ margin:0, fontSize:10, fontWeight:900, letterSpacing:3, color:'#555', textTransform:'uppercase' }}>{children}</p>;
 }
 
-function Field({ label, children }) {
+function Field({ id, label, required, children }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
-      <label style={{ fontSize:10, fontWeight:800, letterSpacing:2, color:'#555' }}>{label.toUpperCase()}</label>
+      <label htmlFor={id} style={{ fontSize:10, fontWeight:800, letterSpacing:2, color:'#555' }}>
+        {label.toUpperCase()}
+        {required && <span aria-hidden="true" style={{ color: '#FF6A00', marginLeft: '4px' }}>*</span>}
+      </label>
       {children}
     </div>
   );
@@ -286,7 +297,7 @@ function PriceLine({ label, val, dim, bold, color }) {
 
 function PayBtn({ isProcessing, total, label, color='#FF6A00', textColor='#000' }) {
   return (
-    <button type="submit" disabled={isProcessing} style={{
+    <button type="submit" disabled={isProcessing} className="focus-outline" style={{
       width:'100%', padding:'16px',
       background: isProcessing ? '#222' : color,
       color: isProcessing ? '#555' : textColor,
