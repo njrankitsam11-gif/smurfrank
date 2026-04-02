@@ -55,3 +55,9 @@ a {
 body {
   overflow-x: hidden;
 }
+
+@media (max-width: 900px) {
+  .checkout-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

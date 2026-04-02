@@ -51,7 +51,7 @@ export default function CheckoutPage() {
         <p style={{ color:'#555', fontSize:12, marginTop:10 }}>🔒 256-bit SSL encrypted · Escrow protected · Instant delivery</p>
       </div>
 
-      <div style={s.grid}>
+      <div style={s.grid} className="checkout-grid">
 
         {/* ══ LEFT: PAYMENT ══ */}
         <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
@@ -202,15 +202,20 @@ export default function CheckoutPage() {
                   <a href="/" style={{ color:'#66FCF1', fontSize:13, fontWeight:800 }}>← Browse Listings</a>
                 </div>
               ) : (
-                cart.map((item, i) => (
-                  <div key={i} style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', padding:'14px 0', borderBottom:'1px solid #111' }}>
-                    <div>
-                      <p style={{ margin:0, fontWeight:800, fontSize:13, color:'#ccc' }}>{item.title}</p>
-                      {item.game && <p style={{ margin:'4px 0 0', fontSize:10, color:'#555', fontWeight:700, letterSpacing:1 }}>{item.game}</p>}
+                cart.map((item, i) => {
+                  const qty = item.quantity || 1;
+                  const itemTotal = (parseFloat(String(item.price).replace('$', '')) * qty).toFixed(2);
+                  return (
+                    <div key={i} style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', padding:'14px 0', borderBottom:'1px solid #111' }}>
+                      <div style={{ flex: 1, paddingRight: '15px' }}>
+                        <p style={{ margin:0, fontWeight:800, fontSize:13, color:'#ccc' }}>{item.title}</p>
+                        {item.game && <p style={{ margin:'4px 0 0', fontSize:10, color:'#555', fontWeight:700, letterSpacing:1 }}>{item.game} {qty > 1 && <span style={{ color: '#66FCF1', fontWeight: 900, marginLeft: 6 }}>x {qty}</span>}</p>}
+                        {!item.game && qty > 1 && <p style={{ margin:'4px 0 0', fontSize:10, color:'#66FCF1', fontWeight:900, letterSpacing:1 }}>x {qty}</p>}
+                      </div>
+                      <span style={{ fontWeight:900, color:'#FF6A00', whiteSpace:'nowrap', marginLeft:12 }}>${itemTotal}</span>
                     </div>
-                    <span style={{ fontWeight:900, color:'#FF6A00', whiteSpace:'nowrap', marginLeft:12 }}>{item.price}</span>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 

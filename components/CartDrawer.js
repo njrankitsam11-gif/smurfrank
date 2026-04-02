@@ -1,5 +1,6 @@
 'use client';
 import { useCart } from '../context/CartContext';
+import Link from 'next/link';
 
 export default function CartDrawer() {
   const { cart, isOpen, setIsOpen, total, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
@@ -54,7 +55,7 @@ export default function CartDrawer() {
             <span style={{ fontWeight: 800, color: '#444' }}>SUBTOTAL</span>
             <span style={{ fontWeight: 900, fontSize: '22px' }}>${total.toFixed(2)}</span>
           </div>
-          <a href="/checkout" onClick={() => setIsOpen(false)} style={{ display: 'block', width: '100%', padding: '20px', background: '#FF6A00', color: '#000', fontWeight: 900, borderRadius: '4px', border: 'none', cursor: 'pointer', textAlign: 'center', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px' }}>PROCEED TO CHECKOUT →</a>
+          <Link href="/checkout" onClick={() => setIsOpen(false)} style={{ display: 'block', width: '100%', padding: '20px', background: '#FF6A00', color: '#000', fontWeight: 900, borderRadius: '4px', border: 'none', cursor: 'pointer', textAlign: 'center', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px' }}>PROCEED TO CHECKOUT →</Link>
         </div>
       </div>
     </div>
