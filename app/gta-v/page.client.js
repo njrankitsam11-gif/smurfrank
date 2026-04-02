@@ -22,17 +22,22 @@ export default function GTAVPageClient() {
     if (activeSort === 'BEST_SELLER') {
       return [...products].reverse();
     }
-
     if (activeSort === 'LOW_HIGH' || activeSort === 'HIGH_LOW') {
       const parsedProducts = products.map(p => ({
         ...p,
         numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
       }));
+      parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
+      return parsedProducts;
+    }
+
+=======
 
       parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
       return parsedProducts;
     }
 
+>>>>>>> Stashed changes
     return [...products];
   }, [activeSort]);
 

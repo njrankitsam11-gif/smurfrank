@@ -30,17 +30,22 @@ export default function CS2Page() {
     if (activeSort === 'BEST_SELLER') {
       return [...cs2Products].reverse();
     }
-
     if (activeSort === 'LOW_HIGH' || activeSort === 'HIGH_LOW') {
       const parsedProducts = cs2Products.map(p => ({
         ...p,
         numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
       }));
+      parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
+      return parsedProducts;
+    }
+
+=======
 
       parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
       return parsedProducts;
     }
 
+>>>>>>> Stashed changes
     return [...cs2Products];
   }, [activeSort]);
 

@@ -32,3 +32,8 @@
 **Vulnerability:** Use of `dangerouslySetInnerHTML` for injecting hardcoded CSS in `app/register/page.js` and `app/login/page.js`.
 **Learning:** Even if the input is currently hardcoded and not exploitable, using `dangerouslySetInnerHTML` is an anti-pattern and a potential vector for XSS if the string becomes dynamic or user-controlled in the future.
 **Prevention:** Always use standard React style definitions (like inline `<style>{'...'}</style>`) or CSS Modules instead of bypassing React's built-in protections with `dangerouslySetInnerHTML`.
+
+## 2026-03-31 - [Unlogged Authentication/Registration Errors]
+**Vulnerability:** Unlogged 500 errors in `app/api/register/route.js`. When a registration fails, the error details (like database disconnections or constraint failures) were silently dropped and only a generic 500 message was returned to the user, making security auditing and debugging impossible.
+**Learning:** Returning a generic error to the user is a good security practice (prevents info leakage), but failing to log the actual error internally creates a blind spot for security incident response and troubleshooting.
+**Prevention:** Always log exceptions securely using the application's internal logger (`logger.error`) before returning a generic HTTP 500 error to the client.
