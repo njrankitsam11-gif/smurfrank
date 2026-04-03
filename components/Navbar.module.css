@@ -2,11 +2,11 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: #050505;
+  background: #FFFFFF;
 }
 .liveFeedContainer {
-  background: #66FCF1;
-  color: #000;
+  background: #90EE90;
+  color: #1D3631;
   padding: 8px 0;
   font-size: 10px;
   font-weight: 900;
@@ -19,16 +19,16 @@
   justify-content: space-between;
   padding: 0 5vw;
   height: 80px;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid #D1E8D1;
 }
 .logo {
   font-size: 20px;
   font-weight: 900;
-  color: #fff;
+  color: #1D3631;
   text-decoration: none;
 }
 .logoHighlight {
-  color: #66FCF1;
+  color: #5A9B90;
 }
 .navLinks {
   display: flex;
@@ -36,10 +36,14 @@
   align-items: center;
 }
 .link {
-  color: #888;
+  color: #43766D;
   text-decoration: none;
   font-size: 11px;
   font-weight: 800;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: #1D3631;
 }
 .linkBoosting {
   color: #9D00FF;
@@ -56,22 +60,31 @@
 .divider {
   width: 1px;
   height: 20px;
-  background: #222;
+  background: #D1E8D1;
   margin: 0 10px;
 }
 .linkSignIn {
-  color: #fff;
+  color: #43766D;
   text-decoration: none;
   font-size: 11px;
   font-weight: 800;
+  transition: color 0.2s;
+}
+.linkSignIn:hover {
+  color: #1D3631;
 }
 .cartButton {
-  background: rgba(102, 252, 241, 0.1);
-  border: 1px solid #66FCF1;
-  color: #66FCF1;
+  background: #F0FFF0;
+  border: 1px solid #7AC0B4;
+  color: #1D3631;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 900;
   font-size: 11px;
+  transition: background 0.2s, color 0.2s;
+}
+.cartButton:hover {
+  background: #E0FFE0;
+  color: #1D3631;
 }
