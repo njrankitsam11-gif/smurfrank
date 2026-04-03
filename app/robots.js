@@ -3,7 +3,7 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/checkout/', '/dashboard/'],
+      disallow: ['/api/', '/checkout/'],
     },
     sitemap: 'https://smurfrank.vercel.app/sitemap.xml',
   }

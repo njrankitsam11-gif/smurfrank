@@ -16,10 +16,9 @@ export default function SuccessPage() {
           The account credentials have been sent to your registered email address.
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <Link href="/dashboard" style={{ background: '#FF6A00', color: '#000', padding: '14px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase' }}>
-            Go to Dashboard
+          <Link href="/" style={{ background: '#FF6A00', color: '#000', padding: '14px', fontWeight: 900, textDecoration: 'none', textTransform: 'uppercase' }}>
+            Back to Home
           </Link>
-          <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: '13px' }}>Back to Home</Link>
         </div>
       </div>
     </main>
