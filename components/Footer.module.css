@@ -1,6 +1,6 @@
 .footer {
-  background-color: #0a0a0a;
-  border-top: 1px solid #222;
+  background-color: #FFFFFF;
+  border-top: 1px solid #D1E8D1;
   padding: 4rem 2rem;
   margin-top: auto;
 }
@@ -17,21 +17,21 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #fff;
+  color: #1D3631;
 }
 
 .highlight {
-  color: #00ff88;
+  color: #5A9B90;
 }
 
 .description {
-  color: #888;
+  color: #43766D;
   line-height: 1.5;
   font-size: 0.9rem;
 }
 
 .heading {
-  color: #fff;
+  color: #2F544D;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -46,27 +46,32 @@
 }
 
 .link {
-  color: #888;
+  color: #43766D;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .link:hover {
-  color: #fff;
+  color: #1D3631;
 }
 
 .instagramLink {
-  color: #00ff88;
+  color: #5A9B90;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.2s;
+}
+
+.instagramLink:hover {
+  color: #1D3631;
 }
 
 .copyright {
   max-width: 1200px;
   margin: 3rem auto 0;
   padding-top: 1.5rem;
-  border-top: 1px solid #222;
+  border-top: 1px solid #D1E8D1;
   text-align: center;
-  color: #666;
+  color: #43766D;
   font-size: 0.8rem;
 }

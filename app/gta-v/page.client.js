@@ -3,25 +3,38 @@ import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
 
+const products = [
+  { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },
+  { id: 'g2', title: 'MODDED CARS GARAGE', price: '$35.00', desc: '60+ Modded Vehicles • Rare Liveries', game: 'GTA' },
+  { id: 'g3', title: 'FRESH MODDED START', price: '$15.00', desc: '$500M Cash • Level 120 • All Outfits', game: 'GTA' },
+  { id: 'g4', title: 'THE KINGPIN BUNDLE', price: '$55.00', desc: '$5B Cash • Level 8000 • Max Stats', game: 'GTA' }
+];
+
 export default function GTAVPageClient() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  const products = [
-    { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },
-    { id: 'g2', title: 'MODDED CARS GARAGE', price: '$35.00', desc: '60+ Modded Vehicles • Rare Liveries', game: 'GTA' },
-    { id: 'g3', title: 'FRESH MODDED START', price: '$15.00', desc: '$500M Cash • Level 120 • All Outfits', game: 'GTA' },
-    { id: 'g4', title: 'THE KINGPIN BUNDLE', price: '$55.00', desc: '$5B Cash • Level 8000 • Max Stats', game: 'GTA' }
-  ];
+  // ⚡ BOLT OPTIMIZATION: Pre-parse sorting keys (Schwartzian Transform)
+  // 💡 What: Mapped `price` strings to `numericPrice` numbers once before sorting, wrapped in useMemo.
+  // 🎯 Why: Parsing floats and running regex inside a sort comparator creates an O(N log N) overhead.
+  // 📊 Impact: Reduces expensive regex string manipulation from O(N log N) to O(N), and prevents parsing on unrelated renders, significantly improving execution time for large lists.
+  const sortedProducts = React.useMemo(() => {
+    if (activeSort === 'BEST_SELLER') {
+      return [...products].reverse();
+    }
 
-  let sortedProducts = [...products];
-  if (activeSort === 'LOW_HIGH') {
-    sortedProducts.sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
-  } else if (activeSort === 'HIGH_LOW') {
-    sortedProducts.sort((a, b) => parseFloat(b.price.replace(/[^0-9.-]+/g,"")) - parseFloat(a.price.replace(/[^0-9.-]+/g,"")));
-  } else if (activeSort === 'BEST_SELLER') {
-    sortedProducts.reverse();
-  }
+    if (activeSort === 'LOW_HIGH' || activeSort === 'HIGH_LOW') {
+      const parsedProducts = products.map(p => ({
+        ...p,
+        numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
+      }));
+
+      parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
+      return parsedProducts;
+    }
+
+    return [...products];
+  }, [activeSort]);
 
   return (
     <main style={{

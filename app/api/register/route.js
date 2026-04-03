@@ -1,6 +1,7 @@
 import { prisma } from '../../../lib/prisma';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
+const { logger } = require('../../../lib/logger');
 
 const rateLimitMap = new Map();
 
@@ -75,6 +76,7 @@ export async function POST(request) {
     return NextResponse.json({ message: 'Account created successfully', userId: user.id }, { status: 201 });
 
   } catch (error) {
+    logger.error('Registration failed', error);
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }
 }

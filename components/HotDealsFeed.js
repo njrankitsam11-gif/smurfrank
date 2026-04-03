@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 export default function HotDealsFeed() {
   const containerRef = useRef(null);
 
-  // Example hot deals data
   const feedItems = [
     { text: "CS2 GLOBAL ELITE PRIME - JUST SOLD", price: "$45" },
     { text: "VALORANT RADIANT PEAK - 🔥 HOT", price: "$125" },
@@ -23,8 +22,8 @@ export default function HotDealsFeed() {
   ];
 
   return (
-    <div ref={containerRef} style={{ width: '100%', overflow: 'hidden', background: '#0a0a0b', borderTop: '1px solid #222', borderBottom: '1px solid #222', padding: '15px 0', marginBottom: '100px', display: 'flex', alignItems: 'center' }}>
-      <div style={{ padding: '0 20px', minWidth: '150px', zIndex: 10, background: '#0a0a0b', fontWeight: 900, color: '#66FCF1', borderRight: '1px solid #333' }}>
+    <div ref={containerRef} style={{ width: '100%', overflow: 'hidden', background: '#F0FFF0', borderTop: '1px solid #D1E8D1', borderBottom: '1px solid #D1E8D1', padding: '15px 0', marginBottom: '100px', display: 'flex', alignItems: 'center' }}>
+      <div style={{ padding: '0 20px', minWidth: '150px', zIndex: 10, background: '#F0FFF0', fontWeight: 900, color: '#5A9B90', borderRight: '1px solid #D1E8D1' }}>
         LIVE FEED:
       </div>
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
@@ -35,8 +34,8 @@ export default function HotDealsFeed() {
         >
           {feedItems.map((item, idx) => (
             <div key={idx} style={{ display: 'flex', gap: '10px', alignItems: 'center', fontWeight: 700, fontSize: '14px', whiteSpace: 'nowrap' }}>
-              <span style={{ color: '#fff' }}>{item.text}</span>
-              <span style={{ color: '#66FCF1' }}>{item.price}</span>
+              <span style={{ color: '#1D3631' }}>{item.text}</span>
+              <span style={{ color: '#5A9B90', fontWeight: 900 }}>{item.price}</span>
             </div>
           ))}
         </motion.div>
