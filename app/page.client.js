@@ -86,8 +86,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ⚡ HOT DEALS LIVE FEED */}
-      <HotDealsFeed />
+
 
       {/* ❓ FAQ SECTION */}
       <section id="faq" style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
