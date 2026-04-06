@@ -37,3 +37,8 @@
 **Vulnerability:** Unlogged 500 errors in `app/api/register/route.js`. When a registration fails, the error details (like database disconnections or constraint failures) were silently dropped and only a generic 500 message was returned to the user, making security auditing and debugging impossible.
 **Learning:** Returning a generic error to the user is a good security practice (prevents info leakage), but failing to log the actual error internally creates a blind spot for security incident response and troubleshooting.
 **Prevention:** Always log exceptions securely using the application's internal logger (`logger.error`) before returning a generic HTTP 500 error to the client.
+
+## 2026-04-06 - [Missing Content-Security-Policy Header]
+**Vulnerability:** Missing Content-Security-Policy header in `next.config.mjs`. This left the application vulnerable to Cross-Site Scripting (XSS) and data injection attacks by not restricting the sources of executable scripts, stylesheets, and images.
+**Learning:** Content-Security-Policy is a critical layer of defense-in-depth against XSS. While Next.js provides some built-in protections, explicitly defining a CSP restricts what the browser is allowed to load.
+**Prevention:** Always define a robust Content-Security-Policy header in `next.config.mjs` for all routes (`/(.*)`), restricting sources using `default-src`, `script-src`, `style-src`, `img-src`, etc.
