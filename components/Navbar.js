@@ -52,7 +52,7 @@ export default function Navbar() {
           
           <Link href="/login" className={styles.linkSignIn}>SIGN IN</Link>
           
-          <button onClick={() => setIsOpen(true)} className={styles.cartButton}>
+          <button aria-label={`Open cart with ${cart.length} items`} onClick={() => setIsOpen(true)} className={styles.cartButton}>
             CART ({cart.length})
           </button>
         </div>
