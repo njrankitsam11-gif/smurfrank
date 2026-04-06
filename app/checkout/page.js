@@ -183,7 +183,7 @@ export default function CheckoutPage() {
                     <code style={{ color: '#1D3631', fontSize: 12, wordBreak: 'break-all', flex: 1 }}>
                       WALLET_ADDRESS_PENDING_SETUP
                     </code>
-                    <button type="button" style={s.ghostBtn}
+                    <button type="button" aria-label="Copy wallet address" style={s.ghostBtn}
                       onClick={() => navigator.clipboard?.writeText('WALLET_ADDRESS_PENDING_SETUP')}>
                       COPY
                     </button>
