@@ -1,9 +1,13 @@
+import { rateLimitMap } from "./route.js";
 import { describe, expect, it, mock, afterEach } from "bun:test";
 import { POST } from "./route.js";
 
 class MockRequest {
   constructor(url, init) {
     this.url = url;
+    this.headers = {
+      get: (key) => this.init?.headers?.[key] || null
+    };
     this.init = init;
   }
   async json() {
@@ -33,6 +37,8 @@ mock.module('../../../lib/prisma', () => ({
 }));
 
 let mockHash = async () => 'hashed';
+    rateLimitMap.clear();
+
 
 mock.module('bcryptjs', () => ({
   default: {
@@ -46,6 +52,8 @@ describe("Register API Error Handling", () => {
     mockFindUnique = async () => null;
     mockCreate = async () => { throw new Error('Database connection failed'); };
     mockHash = async () => 'hashed';
+    rateLimitMap.clear();
+
   });
 
   it("should return a 500 error if an unexpected error occurs during user creation", async () => {
@@ -88,6 +96,7 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if parsing request body fails", async () => {
     const req = {
+      headers: { get: () => null },
       json: async () => { throw new SyntaxError("Unexpected token"); }
     };
     const res = await POST(req);
