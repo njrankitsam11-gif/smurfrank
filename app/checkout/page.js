@@ -278,7 +278,7 @@ function Label({ children }) {
 function Field({ id, label, required, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#43766D' }}>{label.toUpperCase()}</label>
+      <label htmlFor={id} style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#43766D' }}>{label.toUpperCase()}</label>
       {children}
     </div>
   );
