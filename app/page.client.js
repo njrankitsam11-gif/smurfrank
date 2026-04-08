@@ -39,7 +39,7 @@ export default function HomePage() {
                 <p style={{ color: '#43766D', fontSize: '13px', marginBottom: 'auto', minHeight: '30px' }}>{acc.desc}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
                   <span style={{ fontWeight: 900, fontSize: '22px', color: '#5A9B90' }}>{acc.price}</span>
-                  <button onClick={() => addToCart(acc)} style={{ background: '#5A9B90', color: '#FFFFFF', border: 'none', padding: '10px 18px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 10px rgba(90,155,144,0.3)' }}>ADD TO CART</button>
+                  <button aria-label={`Add ${acc.title} to cart`} onClick={() => addToCart(acc)} style={{ background: '#5A9B90', color: '#FFFFFF', border: 'none', padding: '10px 18px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 10px rgba(90,155,144,0.3)' }}>ADD TO CART</button>
                 </div>
               </div>
             </motion.div>

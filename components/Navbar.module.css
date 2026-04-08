@@ -88,3 +88,7 @@
   background: #E0FFE0;
   color: #1D3631;
 }
+.cartButton:focus-visible {
+  outline: 2px solid #5A9B90;
+  outline-offset: 2px;
+}

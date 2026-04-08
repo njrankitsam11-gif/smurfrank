@@ -21,3 +21,7 @@
 ## 2026-04-01 - Required Form Fields (WCAG 3.3.2)
 **Learning:** Using a custom or visually hidden required marker (like a styled asterisk `*` or `<span aria-hidden="true">*</span>`) inside a `<label>` does not communicate to screen readers that the associated input is required. While the native `required` attribute often provides semantic meaning, explicitly coupling it with `aria-required="true"` ensures the requirement is unambiguously announced across all screen reader and browser combinations.
 **Action:** Always ensure that any `<input>` associated with a custom required marker includes both `required` and `aria-required="true"` to explicitly announce the requirement to screen readers.
+
+## 2026-04-08 - Icon-Only Action Buttons Accessibility
+**Learning:** Icon-only action buttons and context-heavy action buttons lacking text descriptions or 'aria-label' attributes are completely inaccessible to screen reader users, who will just hear "button".
+**Action:** Always verify buttons include clear text, and if using icons or contextual information for functionality (e.g. "Add to Cart", "View cart"), add a descriptive `aria-label` attribute.
