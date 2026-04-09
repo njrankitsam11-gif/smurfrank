@@ -6,7 +6,7 @@ class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
-    this.headers = {
+    this.headers = { get: () => Math.random().toString(),
       get: (key) => key === 'x-forwarded-for' ? 'test-ip-' + (++reqCounter) : (init.headers?.[key] || null)
     };
   }
@@ -27,7 +27,7 @@ mock.module('next/server', () => ({
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async () => null,
+      findFirst: async () => null,
       create: async () => ({ id: 'mock-id' })
     }
   }
