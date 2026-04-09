@@ -22,10 +22,10 @@ export default function CS2Page() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  // ⚡ BOLT OPTIMIZATION: Pre-parse sorting keys (Schwartzian Transform)
-  // 💡 What: Mapped `price` strings to `numericPrice` numbers once before sorting, wrapped in useMemo.
-  // 🎯 Why: Parsing floats and running regex inside a sort comparator creates an O(N log N) overhead.
-  // 📊 Impact: Reduces expensive regex string manipulation from O(N log N) to O(N), and prevents parsing on unrelated renders, significantly improving execution time for large lists.
+  // ⚡ BOLT OPTIMIZATION: Memoize static array sorting & parsing
+  // 💡 What: Moved `products` array outside component so reference doesn't change, and wrapped sorting/parsing logic in `useMemo`.
+  // 🎯 Why: Re-creating the products array and re-evaluating map/sort on every render causes unnecessary computation, especially when activeSort hasn't changed.
+  // 📊 Impact: Prevents recreation of references, and stops re-evaluation of sorting / parsing on unrelated re-renders.
   const sortedProducts = React.useMemo(() => {
     if (activeSort === 'BEST_SELLER') {
       return [...cs2Products].reverse();

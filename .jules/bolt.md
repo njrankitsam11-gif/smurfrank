@@ -20,3 +20,6 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+## 2024-04-02 - Memoizing Sort Transforms
+**Learning:** Parsing strings inside a sort comparator creates an O(N log N) overhead, which can be mitigated by mapping the keys once before sorting (Schwartzian Transform) and wrapping it in `useMemo`.
+**Action:** When sorting lists based on derived values (e.g. parsing currency strings), always pre-calculate the values and memoize the sorted array based on the active sort state.
