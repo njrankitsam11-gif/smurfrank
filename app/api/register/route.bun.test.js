@@ -5,7 +5,7 @@ class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
-    this.headers = {
+    this.headers = { get: () => Math.random().toString(),
       get: (key) => this.init?.headers?.[key] || null
     };
   }
@@ -23,13 +23,13 @@ mock.module('next/server', () => ({
   }
 }));
 
-let mockFindUnique = async () => null;
+let mockFindFirst = async () => null;
 let mockCreate = async (args) => ({ id: 'mock-id' });
 
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async (args) => mockFindUnique(args),
+      findFirst: async (args) => mockFindFirst(args),
       create: async (args) => mockCreate(args)
     }
   }
@@ -43,7 +43,7 @@ mock.module('bcryptjs', () => ({
 
 describe("Register API Main Route", () => {
   beforeEach(() => {
-    mockFindUnique = async () => null;
+    mockFindFirst = async () => null;
     mockCreate = async (args) => ({ id: 'mock-id' });
   });
 
@@ -72,7 +72,7 @@ describe("Register API Main Route", () => {
   });
 
   it("should return 400 if email is already registered", async () => {
-    mockFindUnique = async () => ({ id: "existing-id", email: "test@example.com" });
+    mockFindFirst = async () => ({ id: "existing-id", email: "test@example.com" });
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
