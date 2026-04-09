@@ -1,6 +1,11 @@
 import { cache } from 'react';
 import { prisma } from '../../../lib/prisma';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
+
+const getListing = cache(async (id) => {
+  return prisma.listing.findUnique({ where: { id } });
+});
 
 // ⚡ BOLT OPTIMIZATION: Wrap Prisma call in React.cache()
 // 💡 What: Deduplicate direct database queries across generateMetadata and the Server Component.
