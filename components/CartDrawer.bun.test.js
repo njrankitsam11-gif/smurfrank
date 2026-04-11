@@ -10,6 +10,20 @@ mock.module("../context/CartContext", () => {
 
 const { useCart } = await import("../context/CartContext");
 
+
+function safeStringify(obj) {
+    const cache = new Set();
+    return JSON.stringify(obj, (key, value) => {
+        if (typeof value === 'object' && value !== null) {
+            if (cache.has(value)) {
+                return '[Circular]';
+            }
+            cache.add(value);
+        }
+        return value;
+    });
+}
+
 describe("CartDrawer Component", () => {
     beforeEach(() => {
         useCart.mockReset();
@@ -41,7 +55,7 @@ describe("CartDrawer Component", () => {
         expect(result).not.toBeNull();
         expect(result.type).toBe('div');
 
-        const treeStr = JSON.stringify(result);
+        const treeStr = safeStringify(result);
         expect(treeStr).toContain("YOUR ");
         expect(treeStr).toContain("CART");
         expect(treeStr).toContain("Empty.");
@@ -64,7 +78,7 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        const treeStr = JSON.stringify(result);
+        const treeStr = safeStringify(result);
 
         expect(treeStr).toContain("Test Product");
         expect(treeStr).toContain("10.00"); // formatted item price 10.00 * 1
