@@ -21,3 +21,7 @@
 ## 2026-04-01 - Required Form Fields (WCAG 3.3.2)
 **Learning:** Using a custom or visually hidden required marker (like a styled asterisk `*` or `<span aria-hidden="true">*</span>`) inside a `<label>` does not communicate to screen readers that the associated input is required. While the native `required` attribute often provides semantic meaning, explicitly coupling it with `aria-required="true"` ensures the requirement is unambiguously announced across all screen reader and browser combinations.
 **Action:** Always ensure that any `<input>` associated with a custom required marker includes both `required` and `aria-required="true"` to explicitly announce the requirement to screen readers.
+
+## 2026-04-12 - Search Form Accessibility
+**Learning:** Generic text inputs and standard forms lack semantic meaning for screen readers and mobile devices. Using `type="search"` provides correct mobile keyboard layouts, and adding `role="search"` to the `<form>` ensures it is exposed as a search landmark in the accessibility tree.
+**Action:** Always use `type="search"` for search inputs and `role="search"` on search forms.
