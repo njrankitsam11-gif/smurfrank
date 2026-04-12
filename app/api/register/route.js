@@ -38,7 +38,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Too many registration attempts from this IP, please try again after 15 minutes' }, { status: 429 });
     }
 
-    const { name, email, password } = await request.json();
+    let { name, email, password } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
@@ -52,6 +52,8 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Invalid input length or type' }, { status: 400 });
     }
 
+    email = email.trim().toLowerCase();
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
@@ -62,7 +64,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Password must be at least 8 characters long, and include uppercase, lowercase, a digit, and a special character' }, { status: 400 });
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const existingUser = await prisma.user.findFirst({ where: { email: { equals: email, mode: 'insensitive' } } });
     if (existingUser) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
     }
