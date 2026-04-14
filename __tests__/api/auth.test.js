@@ -6,7 +6,7 @@ jest.mock('next-auth', () => jest.fn());
 jest.mock('next-auth/providers/credentials', () => jest.fn((options) => options));
 jest.mock('../../lib/prisma', () => ({
   prisma: {
-    user: { findUnique: jest.fn() }
+    user: { findFirst: jest.fn() }
   }
 }));
 jest.mock('bcryptjs', () => ({
@@ -49,17 +49,18 @@ describe('NextAuth Configuration', () => {
     });
 
     it('returns null if user is not found', async () => {
-      prisma.user.findUnique.mockResolvedValueOnce(null);
+      prisma.user.findFirst.mockResolvedValueOnce(null);
       const result = await authorize({ email: 'test@example.com', password: 'password123' });
       expect(result).toBeNull();
-      expect(prisma.user.findUnique).toHaveBeenCalledWith({
-        where: { email: 'test@example.com' }
+      expect(prisma.user.findFirst).toHaveBeenCalledWith({
+        where: { email: 'test@example.com' },
+        mode: 'insensitive'
       });
     });
 
     it('returns null if password does not match', async () => {
       const mockUser = { id: 1, email: 'test@example.com', password: 'hashedPassword', name: 'Test User', role: 'USER' };
-      prisma.user.findUnique.mockResolvedValueOnce(mockUser);
+      prisma.user.findFirst.mockResolvedValueOnce(mockUser);
       bcrypt.compare.mockResolvedValueOnce(false);
 
       const result = await authorize({ email: 'test@example.com', password: 'wrongpassword' });
@@ -69,7 +70,7 @@ describe('NextAuth Configuration', () => {
 
     it('returns user object if authorization is successful', async () => {
       const mockUser = { id: 1, email: 'test@example.com', password: 'hashedPassword', name: 'Test User', role: 'USER' };
-      prisma.user.findUnique.mockResolvedValueOnce(mockUser);
+      prisma.user.findFirst.mockResolvedValueOnce(mockUser);
       bcrypt.compare.mockResolvedValueOnce(true);
 
       const result = await authorize({ email: 'test@example.com', password: 'password123' });
