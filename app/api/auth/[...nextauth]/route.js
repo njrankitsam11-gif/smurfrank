@@ -29,8 +29,9 @@ const handler = NextAuth({
           throw new Error('Too many failed login attempts. Please try again later.');
         }
 
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
           where: { email: originalEmail },
+          mode: 'insensitive',
         });
 
         const recordFailure = () => {
