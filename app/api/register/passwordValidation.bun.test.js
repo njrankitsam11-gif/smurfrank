@@ -27,7 +27,7 @@ mock.module('next/server', () => ({
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async () => null,
+      findFirst: async () => null,
       create: async () => ({ id: 'mock-id' })
     }
   }
