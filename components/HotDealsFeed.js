@@ -2,24 +2,28 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 
-export default function HotDealsFeed() {
-  const containerRef = useRef(null);
+const feedItems = [
+  { text: "CS2 GLOBAL ELITE PRIME - JUST SOLD", price: "$45" },
+  { text: "VALORANT RADIANT PEAK - 🔥 HOT", price: "$125" },
+  { text: "GTA V 2B CASH - INSTANT DELIVERY", price: "$29" },
+  { text: "VALORANT IMMORTAL 3 SMURF - PRICE DROP", price: "$75" },
+  { text: "CS2 FACEIT LVL 10 - JUST LISTED", price: "$65" },
+  { text: "GTA V KINGPIN BUNDLE - BEST SELLER", price: "$55" },
+  // Duplicate to ensure seamless scroll
+  { text: "CS2 GLOBAL ELITE PRIME - JUST SOLD", price: "$45" },
+  { text: "VALORANT RADIANT PEAK - 🔥 HOT", price: "$125" },
+  { text: "GTA V 2B CASH - INSTANT DELIVERY", price: "$29" },
+  { text: "VALORANT IMMORTAL 3 SMURF - PRICE DROP", price: "$75" },
+  { text: "CS2 FACEIT LVL 10 - JUST LISTED", price: "$65" },
+  { text: "GTA V KINGPIN BUNDLE - BEST SELLER", price: "$55" },
+];
 
-  const feedItems = [
-    { text: "CS2 GLOBAL ELITE PRIME - JUST SOLD", price: "$45" },
-    { text: "VALORANT RADIANT PEAK - 🔥 HOT", price: "$125" },
-    { text: "GTA V 2B CASH - INSTANT DELIVERY", price: "$29" },
-    { text: "VALORANT IMMORTAL 3 SMURF - PRICE DROP", price: "$75" },
-    { text: "CS2 FACEIT LVL 10 - JUST LISTED", price: "$65" },
-    { text: "GTA V KINGPIN BUNDLE - BEST SELLER", price: "$55" },
-    // Duplicate to ensure seamless scroll
-    { text: "CS2 GLOBAL ELITE PRIME - JUST SOLD", price: "$45" },
-    { text: "VALORANT RADIANT PEAK - 🔥 HOT", price: "$125" },
-    { text: "GTA V 2B CASH - INSTANT DELIVERY", price: "$29" },
-    { text: "VALORANT IMMORTAL 3 SMURF - PRICE DROP", price: "$75" },
-    { text: "CS2 FACEIT LVL 10 - JUST LISTED", price: "$65" },
-    { text: "GTA V KINGPIN BUNDLE - BEST SELLER", price: "$55" },
-  ];
+// ⚡ BOLT OPTIMIZATION: Memoize static animated component
+// 💡 What: Wrapped HotDealsFeed with React.memo() and moved static array outside.
+// 🎯 Why: Prevent unnecessary DOM diffing and animation restarts when parent components re-render.
+// 📊 Impact: Eliminates redundant re-renders of the continuous Framer Motion ticker.
+const HotDealsFeed = React.memo(function HotDealsFeed() {
+  const containerRef = useRef(null);
 
   return (
     <div ref={containerRef} style={{ width: '100%', overflow: 'hidden', background: '#F0FFF0', borderTop: '1px solid #D1E8D1', borderBottom: '1px solid #D1E8D1', padding: '15px 0', marginBottom: '100px', display: 'flex', alignItems: 'center' }}>
@@ -42,4 +46,6 @@ export default function HotDealsFeed() {
       </div>
     </div>
   );
-}
+});
+
+export default HotDealsFeed;
