@@ -21,3 +21,6 @@
 ## 2026-04-01 - Required Form Fields (WCAG 3.3.2)
 **Learning:** Using a custom or visually hidden required marker (like a styled asterisk `*` or `<span aria-hidden="true">*</span>`) inside a `<label>` does not communicate to screen readers that the associated input is required. While the native `required` attribute often provides semantic meaning, explicitly coupling it with `aria-required="true"` ensures the requirement is unambiguously announced across all screen reader and browser combinations.
 **Action:** Always ensure that any `<input>` associated with a custom required marker includes both `required` and `aria-required="true"` to explicitly announce the requirement to screen readers.
+## 2024-04-19 - Enhance Empty Cart State
+**Learning:** Empty states represent a major UX opportunity. A bare "Empty." text creates a dead end and feels unpolished. Replacing it with an icon, descriptive text, and an explicit Call To Action (like "Browse Listings") transforms a dead end into a conversion path.
+**Action:** When designing or refactoring components that display empty lists or states, always provide a visual indicator (icon), clear explanatory text, and an actionable next step to keep the user engaged.

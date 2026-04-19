@@ -20,7 +20,16 @@ export default function CartDrawer() {
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto' }}>
-          {cart.length === 0 ? <p style={{ color: '#43766D', textAlign: 'center', marginTop: '50px' }}>Empty.</p> : 
+          {cart.length === 0 ? (
+            <div style={{ textAlign: 'center', marginTop: '60px', padding: '0 20px' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px', opacity: 0.8 }}>🛒</div>
+              <p style={{ color: '#1D3631', fontWeight: 900, fontSize: '18px', marginBottom: '8px' }}>Your Cart is Empty</p>
+              <p style={{ color: '#43766D', fontSize: '13px', lineHeight: '1.5', marginBottom: '24px' }}>Looks like you haven't added any premium accounts yet.</p>
+              <Link href="/" onClick={() => setIsOpen(false)} style={{ display: 'inline-block', background: '#F0FFF0', color: '#5A9B90', border: '2px solid #5A9B90', padding: '10px 20px', borderRadius: '6px', textDecoration: 'none', fontWeight: 800, fontSize: '12px', textTransform: 'uppercase' }}>
+                Browse Listings
+              </Link>
+            </div>
+          ) :
             cart.map((item, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 0', borderBottom: '1px solid #E0FFE0' }}>
                 <div style={{ flex: 1 }}>
