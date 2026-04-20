@@ -4,6 +4,19 @@ import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import HotDealsFeed from '../components/HotDealsFeed';
 
+const hotDeals = [
+  { id: 'h1', title: 'CS2 GLOBAL ELITE', price: '$45.00', desc: 'Prime • Instant', img: 'https://cdn.akamai.steamstatic.com/steam/apps/730/capsule_616x353.jpg' },
+  { id: 'h2', title: 'VALORANT RADIANT', price: '$125.00', desc: 'Skins • Peak Rank', img: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg' },
+  { id: 'h3', title: 'GTA V MODDED 2BN', price: '$29.00', desc: 'Level 500 • Unlocks', img: 'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/640/V.jpg' }
+];
+
+const faqs = [
+  { q: "How fast is delivery?", a: "Accounts are delivered instantly to your email upon payment confirmation." },
+  { q: "Are the accounts safe?", a: "Yes, all our smurf and modded accounts are hand-leveled and 100% safe from bans." },
+  { q: "Do you offer refunds?", a: "We offer a 7-day warranty on all accounts. If an account is banned due to a defect on our end, we'll replace it or refund you." },
+  { q: "How does boosting work?", a: "After purchasing a boost, a professional Radiant/Global player will securely log into your account and rank it up to your desired level." },
+];
+
 export default function HomePage() {
   const { addToCart } = useCart();
 
@@ -24,11 +37,7 @@ export default function HomePage() {
       <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
         <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', color: '#1D3631' }}>HOT <span style={{ color: '#5A9B90' }}>DEALS</span></h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-          {[
-            { id: 'h1', title: 'CS2 GLOBAL ELITE', price: '$45.00', desc: 'Prime • Instant', img: 'https://cdn.akamai.steamstatic.com/steam/apps/730/capsule_616x353.jpg' },
-            { id: 'h2', title: 'VALORANT RADIANT', price: '$125.00', desc: 'Skins • Peak Rank', img: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg' },
-            { id: 'h3', title: 'GTA V MODDED 2BN', price: '$29.00', desc: 'Level 500 • Unlocks', img: 'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/640/V.jpg' }
-          ].map((acc) => (
+          {hotDeals.map((acc) => (
             <motion.div
               key={acc.id}
               whileHover={{ scale: 1.05, rotateX: 10, rotateY: -10, boxShadow: '0px 10px 30px rgba(90, 155, 144, 0.2)' }}
@@ -92,12 +101,7 @@ export default function HomePage() {
       <section id="faq" style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
         <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', textAlign: 'center', color: '#1D3631' }}>FREQUENTLY ASKED <span style={{ color: '#5A9B90' }}>QUESTIONS</span></h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          {[
-            { q: "How fast is delivery?", a: "Accounts are delivered instantly to your email upon payment confirmation." },
-            { q: "Are the accounts safe?", a: "Yes, all our smurf and modded accounts are hand-leveled and 100% safe from bans." },
-            { q: "Do you offer refunds?", a: "We offer a 7-day warranty on all accounts. If an account is banned due to a defect on our end, we'll replace it or refund you." },
-            { q: "How does boosting work?", a: "After purchasing a boost, a professional Radiant/Global player will securely log into your account and rank it up to your desired level." },
-          ].map((faq, i) => (
+          {faqs.map((faq, i) => (
             <div key={i} style={{ background: '#FFFFFF', padding: '25px', borderRadius: '10px', border: '1px solid #D1E8D1' }}>
               <h3 style={{ fontWeight: 700, fontSize: '18px', marginBottom: '10px', color: '#1D3631' }}>{faq.q}</h3>
               <p style={{ color: '#43766D', fontSize: '14px', lineHeight: '1.5' }}>{faq.a}</p>
