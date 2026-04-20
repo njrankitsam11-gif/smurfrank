@@ -20,3 +20,6 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+## 2025-02-12 - Prevent Re-renders with Static Arrays
+**Learning:** Re-creating arrays inside a React functional component causes unnecessary re-renders of child components that depend on them.
+**Action:** Extract static arrays (like `hotDeals`, `faqs`, `feedItems`) outside of the component body to maintain a stable reference across renders, and wrap pure components (like `HotDealsFeed`) in `React.memo()`.
