@@ -5,6 +5,13 @@ class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
+    this.ip = '127.0.0.1';
+    this.headers = {
+        get: (name) => {
+            if (name === 'x-forwarded-for') return '127.0.0.1-' + Math.random();
+            return null;
+        }
+    };
   }
   async json() {
     return JSON.parse(this.init.body);
@@ -88,6 +95,8 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if parsing request body fails", async () => {
     const req = {
+      ip: '127.0.0.1-' + Math.random(),
+      headers: { get: () => null },
       json: async () => { throw new SyntaxError("Unexpected token"); }
     };
     const res = await POST(req);

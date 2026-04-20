@@ -7,7 +7,7 @@ const rateLimitMap = new Map();
 
 export async function POST(request) {
   try {
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
     const now = Date.now();
     const windowMs = 15 * 60 * 1000; // 15 minutes
     const limit = 5;
