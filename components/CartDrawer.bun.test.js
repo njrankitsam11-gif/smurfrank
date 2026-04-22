@@ -41,7 +41,16 @@ describe("CartDrawer Component", () => {
         expect(result).not.toBeNull();
         expect(result.type).toBe('div');
 
-        const treeStr = JSON.stringify(result);
+        // Circular references workaround
+        const seen = new Set();
+        const treeStr = JSON.stringify(result, (key, val) => {
+            if (val != null && typeof val == "object") {
+                if (seen.has(val)) return;
+                seen.add(val);
+            }
+            return val;
+        });
+
         expect(treeStr).toContain("YOUR ");
         expect(treeStr).toContain("CART");
         expect(treeStr).toContain("Empty.");
@@ -64,7 +73,16 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        const treeStr = JSON.stringify(result);
+
+        // Circular references workaround
+        const seen = new Set();
+        const treeStr = JSON.stringify(result, (key, val) => {
+            if (val != null && typeof val == "object") {
+                if (seen.has(val)) return;
+                seen.add(val);
+            }
+            return val;
+        });
 
         expect(treeStr).toContain("Test Product");
         expect(treeStr).toContain("10.00"); // formatted item price 10.00 * 1
