@@ -20,3 +20,7 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+
+## 2025-05-14 - Stable array references for React.useMemo
+**Learning:** When using `React.useMemo` to memoize an expensive operation (like array sorting), static data arrays must be declared outside the component body. If they are declared inside, they are recreated on every render with a new reference. Including them in the `useMemo` dependency array will cause the memoization to fail and recalculate on every render.
+**Action:** Always hoist static arrays and objects outside of functional components to ensure a stable reference and effective memoization.
