@@ -20,3 +20,7 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+
+## 2026-04-25 - Optimize Valorant product sorting
+**Learning:** Parsing float strings in render runs unconditionally, creating O(N) operations every render. Doing regex and parsing in a sorting comparison is even worse (O(N log N)).
+**Action:** Pre-parse strings and memoize the sort with `useMemo` and move static data out of the render function.
