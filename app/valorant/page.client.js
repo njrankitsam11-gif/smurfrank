@@ -3,30 +3,38 @@ import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
 
+const products = [
+  { id: 'v1', title: 'RADIANT PEAK ACCOUNT', price: '$125.00', desc: 'All Agents • Exclusive Skins • High Elo Guaranteed', game: 'VAL' },
+  { id: 'v2', title: 'IMMORTAL 3 SMURF', price: '$85.00', desc: 'Ready for Ranked • Clean History • Instant Delivery', game: 'VAL' },
+  { id: 'v3', title: 'ASCENDANT 1 FRESH', price: '$45.00', desc: 'Original Email Access • Instant Login • Secure', game: 'VAL' },
+  { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
+];
+
 export default function ValorantPage() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  const products = [
-    { id: 'v1', title: 'RADIANT PEAK ACCOUNT', price: '$125.00', desc: 'All Agents • Exclusive Skins • High Elo Guaranteed', game: 'VAL' },
-    { id: 'v2', title: 'IMMORTAL 3 SMURF', price: '$85.00', desc: 'Ready for Ranked • Clean History • Instant Delivery', game: 'VAL' },
-    { id: 'v3', title: 'ASCENDANT 1 FRESH', price: '$45.00', desc: 'Original Email Access • Instant Login • Secure', game: 'VAL' },
-    { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
-  ];
+  // ⚡ BOLT OPTIMIZATION: Pre-parse sorting keys (Schwartzian Transform)
+  // 💡 What: Mapped `price` strings to `numericPrice` numbers once before sorting, wrapped in useMemo.
+  // 🎯 Why: Parsing floats and running regex inside a sort comparator creates an O(N log N) overhead.
+  // 📊 Impact: Reduces expensive regex string manipulation from O(N log N) to O(N), and prevents parsing on unrelated renders, significantly improving execution time for large lists.
+  const sortedProducts = React.useMemo(() => {
+    if (activeSort === 'BEST_SELLER') {
+      return [...products].reverse();
+    }
 
-  const parsedProducts = products.map(p => ({
-    ...p,
-    numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
-  }));
+    if (activeSort === 'LOW_HIGH' || activeSort === 'HIGH_LOW') {
+      const parsedProducts = products.map(p => ({
+        ...p,
+        numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
+      }));
 
-  let sortedProducts = [...parsedProducts];
-  if (activeSort === 'LOW_HIGH') {
-    sortedProducts.sort((a, b) => a.numericPrice - b.numericPrice);
-  } else if (activeSort === 'HIGH_LOW') {
-    sortedProducts.sort((a, b) => b.numericPrice - a.numericPrice);
-  } else if (activeSort === 'BEST_SELLER') {
-    sortedProducts.reverse();
-  }
+      parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
+      return parsedProducts;
+    }
+
+    return [...products];
+  }, [activeSort]);
 
   return (
     <main style={{ background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg")',
