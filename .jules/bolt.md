@@ -20,3 +20,7 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+
+## 2025-05-15 - Hoisting Static Arrays for Memoization Stability
+**Learning:** Declaring static arrays or objects inside a functional component body causes them to be recreated on every render. If these are used in `useMemo` or `useCallback` dependency arrays, they trigger unnecessary recalculations. It also increases garbage collection overhead.
+**Action:** Always hoist static data arrays and objects outside the component body to maintain a stable reference across renders.
