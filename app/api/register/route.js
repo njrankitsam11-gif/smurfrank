@@ -13,13 +13,19 @@ export async function POST(request) {
     const limit = 5;
 
     if (rateLimitMap.size >= 10000) {
+      let scanned = 0;
       for (const [key, val] of rateLimitMap.entries()) {
         if (now - val.startTime > windowMs) {
           rateLimitMap.delete(key);
         }
+        if (++scanned >= 1000) break;
       }
       if (rateLimitMap.size >= 10000) {
-        rateLimitMap.clear();
+        let deleted = 0;
+        for (const key of rateLimitMap.keys()) {
+          rateLimitMap.delete(key);
+          if (++deleted >= 100) break;
+        }
       }
     }
 
