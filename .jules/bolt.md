@@ -20,3 +20,7 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+
+## 2025-05-14 - Bounded Map Cleanup for In-Memory Caching
+**Learning:** Implementing in-memory rate limiting using a global Map requires a bounded cleanup strategy to prevent both memory leaks and event loop blocking. Avoid full-map iterations which block the Node.js event loop.
+**Action:** Perform a 'bounded scan' (e.g., checking the first 1,000 entries) and evict a small batch (e.g., 100 entries) if the map size still exceeds the limit. This maintains performance and preserves state better than map.clear().
