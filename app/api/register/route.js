@@ -7,7 +7,7 @@ const rateLimitMap = new Map();
 
 export async function POST(request) {
   try {
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = request.ip || (request.headers && typeof request.headers.get === 'function' ? request.headers.get('x-forwarded-for') : null) || 'unknown';
     const now = Date.now();
     const windowMs = 15 * 60 * 1000; // 15 minutes
     const limit = 5;
@@ -62,7 +62,8 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Password must be at least 8 characters long, and include uppercase, lowercase, a digit, and a special character' }, { status: 400 });
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = await prisma.user.findFirst({ where: { email: { equals: normalizedEmail, mode: 'insensitive' } } });
     if (existingUser) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
     }
@@ -70,7 +71,7 @@ export async function POST(request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
-      data: { name, email, password: hashedPassword },
+      data: { name, email: normalizedEmail, password: hashedPassword },
     });
 
     return NextResponse.json({ message: 'Account created successfully', userId: user.id }, { status: 201 });

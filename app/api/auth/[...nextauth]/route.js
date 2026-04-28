@@ -21,7 +21,8 @@ const handler = NextAuth({
         if (typeof credentials.password !== 'string' || credentials.password.length > 100) return null;
 
         const originalEmail = credentials.email;
-        const rateLimitEmailKey = originalEmail.trim().toLowerCase();
+        const normalizedEmail = originalEmail.trim().toLowerCase();
+        const rateLimitEmailKey = normalizedEmail;
         const now = Date.now();
 
         const record = rateLimitMap.get(rateLimitEmailKey);
@@ -29,8 +30,8 @@ const handler = NextAuth({
           throw new Error('Too many failed login attempts. Please try again later.');
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: originalEmail },
+        const user = await prisma.user.findFirst({
+          where: { email: { equals: normalizedEmail, mode: 'insensitive' } },
         });
 
         const recordFailure = () => {

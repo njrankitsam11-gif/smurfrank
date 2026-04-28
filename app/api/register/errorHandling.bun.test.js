@@ -1,6 +1,7 @@
 import { describe, expect, it, mock, afterEach } from "bun:test";
 import { POST } from "./route.js";
 
+let reqCounter = 0;
 class MockRequest {
   constructor(url, init) {
     this.url = url;
@@ -20,13 +21,13 @@ mock.module('next/server', () => ({
   }
 }));
 
-let mockFindUnique = async () => null;
+let mockFindFirst = async () => null;
 let mockCreate = async () => { throw new Error('Database connection failed'); };
 
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async (...args) => mockFindUnique(...args),
+      findFirst: async (...args) => mockFindFirst(...args),
       create: async (...args) => mockCreate(...args)
     }
   }
@@ -43,13 +44,13 @@ mock.module('bcryptjs', () => ({
 describe("Register API Error Handling", () => {
   afterEach(() => {
     // Reset mocks to default behavior between tests
-    mockFindUnique = async () => null;
+    mockFindFirst = async () => null;
     mockCreate = async () => { throw new Error('Database connection failed'); };
     mockHash = async () => 'hashed';
   });
 
   it("should return a 500 error if an unexpected error occurs during user creation", async () => {
-    const req = new MockRequest("http://localhost/api/register", {
+    const req = new MockRequest("http://localhost/api/register", { headers: { get: () => "test-ip-" + Math.random() },
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
       headers: { "Content-Type": "application/json" }
@@ -61,8 +62,8 @@ describe("Register API Error Handling", () => {
   });
 
   it("should return a 500 error if finding unique user fails", async () => {
-    mockFindUnique = async () => { throw new Error('Database error during find'); };
-    const req = new MockRequest("http://localhost/api/register", {
+    mockFindFirst = async () => { throw new Error('Database error during find'); };
+    const req = new MockRequest("http://localhost/api/register", { headers: { get: () => "test-ip-" + Math.random() },
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
       headers: { "Content-Type": "application/json" }
@@ -75,7 +76,7 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if password hashing fails", async () => {
     mockHash = async () => { throw new Error('Hashing error'); };
-    const req = new MockRequest("http://localhost/api/register", {
+    const req = new MockRequest("http://localhost/api/register", { headers: { get: () => "test-ip-" + Math.random() },
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
       headers: { "Content-Type": "application/json" }
@@ -88,7 +89,7 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if parsing request body fails", async () => {
     const req = {
-      json: async () => { throw new SyntaxError("Unexpected token"); }
+      headers: { get: () => 'test-ip-' + (++reqCounter) }, json: async () => { throw new SyntaxError('Unexpected token'); }
     };
     const res = await POST(req);
     expect(res.status).toBe(500);
@@ -102,7 +103,7 @@ describe("Register API Error Handling", () => {
       error.code = 'P2002';
       throw error;
     };
-    const req = new MockRequest("http://localhost/api/register", {
+    const req = new MockRequest("http://localhost/api/register", { headers: { get: () => "test-ip-" + Math.random() },
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
       headers: { "Content-Type": "application/json" }
