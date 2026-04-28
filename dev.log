@@ -1,5 +1,5 @@
 
-> rankvault@0.1.0 dev
+> rankvault@0.1.0 dev /app
 > next dev
 
 ▲ Next.js 16.1.6 (Turbopack)
@@ -7,6 +7,41 @@
 - Network:       http://192.168.0.2:3000
 
 ✓ Starting...
-✓ Ready in 772ms
-○ Compiling / ...
- GET / 200 in 6.9s (compile: 6.2s, render: 727ms)
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+✓ Ready in 795ms
+○ Compiling /search ...
+⨯ Error [PrismaClientInitializationError]:
+Invalid `{imported module ./lib/prisma.js}["prisma"].listing.count()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__35f2636b._.js:125:137
+
+  122 // 🎯 Why: Awaiting count and findMany sequentially doubles the database response time.
+  123 // 📊 Impact: Reduces total query duration by ~50% for the search results page.
+  124 const [totalItems, results] = await Promise.all([
+→ 125     {imported module ./lib/prisma.js}["prisma"].listing.count(
+error: Environment variable not found: DATABASE_URL.
+  -->  schema.prisma:7
+   |
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   |
+
+Validation Error Count: 1
+    at <unknown> (app/search/page.js:47:20)
+    at <unknown> (-->  schema.prisma:7)
+    at async SearchPage (app/search/page.js:46:33)
+  45 |   // 📊 Impact: Reduces total query duration by ~50% for the search results page.
+  46 |   const [totalItems, results] = await Promise.all([
+> 47 |     prisma.listing.count({ where: whereClause }),
+     |                    ^
+  48 |     prisma.listing.findMany({
+  49 |       where: whereClause,
+  50 |       orderBy: { createdAt: 'desc' }, {
+  clientVersion: '5.22.0',
+  errorCode: undefined,
+  digest: '235335555'
+}
+ GET /search 500 in 6.3s (compile: 5.6s, render: 763ms)
