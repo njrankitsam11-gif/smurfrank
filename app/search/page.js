@@ -83,6 +83,7 @@ export default async function SearchPage({ searchParams }) {
         {/* The Search Bar (allowing users to search again) */}
         <form action="/search" method="GET" style={{marginBottom: '60px', display: 'flex', gap: '10px'}}>
           <input 
+            type="search"
             name="q" 
             defaultValue={query}
             placeholder="Search by rank, game, or region..." 
