@@ -1,5 +1,5 @@
 
-> rankvault@0.1.0 dev
+> rankvault@0.1.0 dev /app
 > next dev
 
 ▲ Next.js 16.1.6 (Turbopack)
@@ -7,6 +7,12 @@
 - Network:       http://192.168.0.2:3000
 
 ✓ Starting...
-✓ Ready in 772ms
-○ Compiling / ...
- GET / 200 in 6.9s (compile: 6.2s, render: 727ms)
+✓ Ready in 819ms
+○ Compiling /checkout ...
+ GET /checkout 200 in 6.1s (compile: 5.5s, render: 628ms)
+ GET /gta-v 200 in 1197ms (compile: 963ms, render: 233ms)
+ GET /checkout 200 in 168ms (compile: 11ms, render: 157ms)
+ GET /gta-v 200 in 128ms (compile: 9ms, render: 119ms)
+ GET /checkout 200 in 250ms (compile: 7ms, render: 243ms)
+ GET /gta-v 200 in 72ms (compile: 4ms, render: 68ms)
+ GET /checkout 200 in 73ms (compile: 3ms, render: 70ms)
