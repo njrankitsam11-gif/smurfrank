@@ -20,3 +20,7 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+
+## 2024-05-03 - Hoisting Static Data & Schwartzian Transform
+**Learning:** React components that parse strings inside the render body for sorting incur an O(N log N) overhead on every render, and static arrays defined inside components break useMemo dependencies.
+**Action:** Always hoist static data arrays outside the component body and use React.useMemo coupled with a Schwartzian Transform to parse string keys once and avoid unnecessary recalculations.
