@@ -52,8 +52,8 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
     });
+    req.headers = { get: () => '127.0.0.1' };
     const res = await POST(req);
     expect(res.status).toBe(500);
     const data = await res.json();
@@ -65,8 +65,8 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
     });
+    req.headers = { get: () => '127.0.0.2' };
     const res = await POST(req);
     expect(res.status).toBe(500);
     const data = await res.json();
@@ -78,8 +78,8 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
     });
+    req.headers = { get: () => '127.0.0.3' };
     const res = await POST(req);
     expect(res.status).toBe(500);
     const data = await res.json();
@@ -88,6 +88,7 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if parsing request body fails", async () => {
     const req = {
+      headers: { get: () => '127.0.0.4' },
       json: async () => { throw new SyntaxError("Unexpected token"); }
     };
     const res = await POST(req);
@@ -105,8 +106,8 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
     });
+    req.headers = { get: () => '127.0.0.5' };
     const res = await POST(req);
     expect(res.status).toBe(500);
     const data = await res.json();
