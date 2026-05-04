@@ -51,7 +51,7 @@ describe("Register API Main Route", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(400);
@@ -63,7 +63,7 @@ describe("Register API Main Route", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(400);
@@ -76,7 +76,7 @@ describe("Register API Main Route", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(400);
@@ -88,7 +88,7 @@ describe("Register API Main Route", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(201);
@@ -107,7 +107,7 @@ describe("Register API Main Route", () => {
       const req = new MockRequest("http://localhost/api/register", {
         method: "POST",
         body: JSON.stringify({ name: "TestName", email: "test@example.com", password: "Password123!" }),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
       });
       await POST(req);
 

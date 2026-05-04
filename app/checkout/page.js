@@ -208,7 +208,7 @@ export default function CheckoutPage() {
               {cart.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '30px 0' }}>
                   <p style={{ color: '#43766D', marginBottom: 16 }}>Your cart is empty.</p>
-                  <a href="/" style={{ color: '#5A9B90', fontSize: 13, fontWeight: 800 }}>← Browse Listings</a>
+                  <Link href="/" style={{ color: '#5A9B90', fontSize: 13, fontWeight: 800 }}>← Browse Listings</Link>
                 </div>
               ) : (
                 cart.map((item, i) => {
