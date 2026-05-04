@@ -52,7 +52,7 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(500);
@@ -65,7 +65,7 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(500);
@@ -78,7 +78,7 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(500);
@@ -87,7 +87,7 @@ describe("Register API Error Handling", () => {
   });
 
   it("should return a 500 error if parsing request body fails", async () => {
-    const req = {
+    const req = { ip: '127.0.0.' + (1),
       json: async () => { throw new SyntaxError("Unexpected token"); }
     };
     const res = await POST(req);
@@ -105,7 +105,7 @@ describe("Register API Error Handling", () => {
     const req = new MockRequest("http://localhost/api/register", {
       method: "POST",
       body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "x-forwarded-for": '10.0.0.' + (Math.random()) }
     });
     const res = await POST(req);
     expect(res.status).toBe(500);
