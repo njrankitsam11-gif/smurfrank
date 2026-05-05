@@ -37,3 +37,8 @@
 **Vulnerability:** Unlogged 500 errors in `app/api/register/route.js`. When a registration fails, the error details (like database disconnections or constraint failures) were silently dropped and only a generic 500 message was returned to the user, making security auditing and debugging impossible.
 **Learning:** Returning a generic error to the user is a good security practice (prevents info leakage), but failing to log the actual error internally creates a blind spot for security incident response and troubleshooting.
 **Prevention:** Always log exceptions securely using the application's internal logger (`logger.error`) before returning a generic HTTP 500 error to the client.
+
+## 2026-05-05 - [Unsafe dangerouslySetInnerHTML in JSON-LD]
+**Vulnerability:** XSS vulnerability when embedding JSON-LD in `<script type="application/ld+json">` tags using `dangerouslySetInnerHTML` without escaping `<` and `>`.
+**Learning:** Even structured JSON can contain `<script>` or `</script>` which attackers can use to break out of the script block and execute arbitrary code.
+**Prevention:** Always sanitize JSON strings by replacing `<` with `\u003c` and `>` with `\u003e` when injecting them into `<script>` tags.
