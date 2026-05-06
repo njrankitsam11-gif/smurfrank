@@ -55,7 +55,7 @@ export default function CS2Page() {
       color: '#fff',
       position: 'relative'
     }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '10px' }}>CS2 <span style={{ color: '#F99F15' }}>ACCOUNTS</span></h1>
