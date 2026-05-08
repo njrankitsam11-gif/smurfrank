@@ -183,7 +183,7 @@ export default function CheckoutPage() {
                     <code style={{ color: '#1D3631', fontSize: 12, wordBreak: 'break-all', flex: 1 }}>
                       WALLET_ADDRESS_PENDING_SETUP
                     </code>
-                    <button type="button" style={s.ghostBtn}
+                    <button type="button" aria-label="Copy wallet address" style={s.ghostBtn}
                       onClick={() => navigator.clipboard?.writeText('WALLET_ADDRESS_PENDING_SETUP')}>
                       COPY
                     </button>
@@ -278,7 +278,10 @@ function Label({ children }) {
 function Field({ id, label, required, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#43766D' }}>{label.toUpperCase()}</label>
+      <label htmlFor={id} style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#43766D' }}>
+        {label.toUpperCase()}
+        {required && <span aria-hidden="true" style={{ color: '#e05555', marginLeft: 4 }}>*</span>}
+      </label>
       {children}
     </div>
   );
