@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
+import { useProductSort } from '../../hooks/useProductSort';
 
 export default function ValorantPage() {
   const { addToCart } = useCart();
@@ -14,19 +15,7 @@ export default function ValorantPage() {
     { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
   ];
 
-  const parsedProducts = products.map(p => ({
-    ...p,
-    numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
-  }));
-
-  let sortedProducts = [...parsedProducts];
-  if (activeSort === 'LOW_HIGH') {
-    sortedProducts.sort((a, b) => a.numericPrice - b.numericPrice);
-  } else if (activeSort === 'HIGH_LOW') {
-    sortedProducts.sort((a, b) => b.numericPrice - a.numericPrice);
-  } else if (activeSort === 'BEST_SELLER') {
-    sortedProducts.reverse();
-  }
+  const sortedProducts = useProductSort(products, activeSort);
 
   return (
     <main style={{ background: 'linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.95)), url("https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg")',
