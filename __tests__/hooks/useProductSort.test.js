@@ -1,5 +1,9 @@
-import { renderHook } from '@testing-library/react';
-import { useProductSort } from '../../hooks/useProductSort';
+/**
+ * @jest-environment jsdom
+ */
+
+const { renderHook } = require('@testing-library/react');
+const { useProductSort } = require('../../hooks/useProductSort');
 import React from 'react';
 
 // Simple mock for React.useMemo since we are in a node environment for Jest
