@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import SortFilter from '../../components/SortFilter';
+import { useProductSort } from '../../hooks/useProductSort';
 
 const products = [
   { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },
@@ -14,27 +15,7 @@ export default function GTAVPageClient() {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  // ⚡ BOLT OPTIMIZATION: Pre-parse sorting keys (Schwartzian Transform)
-  // 💡 What: Mapped `price` strings to `numericPrice` numbers once before sorting, wrapped in useMemo.
-  // 🎯 Why: Parsing floats and running regex inside a sort comparator creates an O(N log N) overhead.
-  // 📊 Impact: Reduces expensive regex string manipulation from O(N log N) to O(N), and prevents parsing on unrelated renders, significantly improving execution time for large lists.
-  const sortedProducts = React.useMemo(() => {
-    if (activeSort === 'BEST_SELLER') {
-      return [...products].reverse();
-    }
-
-    if (activeSort === 'LOW_HIGH' || activeSort === 'HIGH_LOW') {
-      const parsedProducts = products.map(p => ({
-        ...p,
-        numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
-      }));
-
-      parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
-      return parsedProducts;
-    }
-
-    return [...products];
-  }, [activeSort]);
+  const sortedProducts = useProductSort(products, activeSort);
 
   return (
     <main style={{
