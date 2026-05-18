@@ -5,6 +5,7 @@ class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
+    this.headers = new Map([['x-forwarded-for', '127.0.0.1']]);
   }
   async json() {
     return JSON.parse(this.init.body);
@@ -26,7 +27,7 @@ let mockCreate = async () => { throw new Error('Database connection failed'); };
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async (...args) => mockFindUnique(...args),
+      findFirst: async (...args) => mockFindUnique(...args),
       create: async (...args) => mockCreate(...args)
     }
   }
@@ -88,6 +89,7 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if parsing request body fails", async () => {
     const req = {
+      headers: new Map([['x-forwarded-for', '127.0.0.1']]),
       json: async () => { throw new SyntaxError("Unexpected token"); }
     };
     const res = await POST(req);
