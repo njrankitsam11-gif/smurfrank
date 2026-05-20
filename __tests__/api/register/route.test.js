@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 jest.mock('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: jest.fn(),
+      findFirst: jest.fn(),
       create: jest.fn(),
     },
   },
@@ -91,25 +91,25 @@ describe('POST /api/register', () => {
   });
 
   it('should return 400 if email is already registered', async () => {
-    prisma.user.findUnique.mockResolvedValueOnce({ id: '1', email: 'test@example.com' });
+    prisma.user.findFirst.mockResolvedValueOnce({ id: '1', email: 'test@example.com' });
 
     const response = await POST(mockRequest);
     const data = await response.json();
 
-    expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email: 'test@example.com' } });
+    expect(prisma.user.findFirst).toHaveBeenCalledWith({ where: { email: { equals: 'test@example.com', mode: 'insensitive' } } });
     expect(response.status).toBe(400);
     expect(data.error).toBe('Email already registered');
   });
 
   it('should return 201 and create user successfully', async () => {
-    prisma.user.findUnique.mockResolvedValueOnce(null);
+    prisma.user.findFirst.mockResolvedValueOnce(null);
     bcrypt.hash.mockResolvedValueOnce('hashed_password');
     prisma.user.create.mockResolvedValueOnce({ id: 'new_user_id', name: 'Test User', email: 'test@example.com' });
 
     const response = await POST(mockRequest);
     const data = await response.json();
 
-    expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email: 'test@example.com' } });
+    expect(prisma.user.findFirst).toHaveBeenCalledWith({ where: { email: { equals: 'test@example.com', mode: 'insensitive' } } });
     expect(bcrypt.hash).toHaveBeenCalledWith('Password123!', 10);
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: { name: 'Test User', email: 'test@example.com', password: 'hashed_password' },
@@ -120,7 +120,7 @@ describe('POST /api/register', () => {
   });
 
   it('should return 500 if an error occurs during processing', async () => {
-    prisma.user.findUnique.mockRejectedValueOnce(new Error('Database error'));
+    prisma.user.findFirst.mockRejectedValueOnce(new Error('Database error'));
 
     const response = await POST(mockRequest);
     const data = await response.json();
@@ -130,7 +130,7 @@ describe('POST /api/register', () => {
   });
 
   it('should return 500 if an error occurs during user creation', async () => {
-    prisma.user.findUnique.mockResolvedValueOnce(null);
+    prisma.user.findFirst.mockResolvedValueOnce(null);
     bcrypt.hash.mockResolvedValueOnce('hashed_password');
     prisma.user.create.mockRejectedValueOnce(new Error('Database error during creation'));
 
