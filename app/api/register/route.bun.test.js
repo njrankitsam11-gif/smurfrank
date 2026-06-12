@@ -29,7 +29,7 @@ let mockCreate = async (args) => ({ id: 'mock-id' });
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async (args) => mockFindUnique(args),
+      findFirst: async (args) => mockFindUnique(args),
       create: async (args) => mockCreate(args)
     }
   }
