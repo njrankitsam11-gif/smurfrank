@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 
-export default function HotDealsFeed() {
+const HotDealsFeed = React.memo(function HotDealsFeed() {
   const containerRef = useRef(null);
 
   const feedItems = [
@@ -21,6 +21,10 @@ export default function HotDealsFeed() {
     { text: "GTA V KINGPIN BUNDLE - BEST SELLER", price: "$55" },
   ];
 
+  // ⚡ BOLT OPTIMIZATION: Memoized static feed component
+  // 💡 What: Wrapped the purely static HotDealsFeed component in React.memo().
+  // 🎯 Why: This component sits inside HomePageClient which uses CartContext. Without memo, it unnecessarily re-renders and restarts its Framer Motion animations every time an item is added to the cart.
+  // 📊 Impact: Prevents expensive re-renders and animation resets, keeping the UI smooth when the user interacts with the cart on the homepage.
   return (
     <div ref={containerRef} style={{ width: '100%', overflow: 'hidden', background: '#F0FFF0', borderTop: '1px solid #D1E8D1', borderBottom: '1px solid #D1E8D1', padding: '15px 0', marginBottom: '100px', display: 'flex', alignItems: 'center' }}>
       <div style={{ padding: '0 20px', minWidth: '150px', zIndex: 10, background: '#F0FFF0', fontWeight: 900, color: '#5A9B90', borderRight: '1px solid #D1E8D1' }}>
@@ -42,4 +46,6 @@ export default function HotDealsFeed() {
       </div>
     </div>
   );
-}
+});
+
+export default HotDealsFeed;
