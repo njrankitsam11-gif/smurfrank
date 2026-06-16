@@ -20,3 +20,6 @@
 ## 2025-05-14 - Pre-parsing sorting keys to optimize sort performance
 **Learning:** Performing expensive operations like regex matching and string parsing inside a sort comparator function results in O(N log N) overhead, which can be significant for larger datasets. Pre-calculating these values once (O(N)) before sorting reduces the comparator to simple numeric subtraction.
 **Action:** Always pre-calculate or memoize complex sort keys before invoking .sort() to ensure the comparator remains O(1) and the overall sort operation stays efficient.
+## 2025-05-14 - Memoizing static animated components
+**Learning:** Animated components that do not rely on props (like Framer Motion continuous feeds or tickers) and exist purely for visual appeal can suffer from significant performance degradation if they are re-rendered due to parent component state changes. React will re-render the child, unnecessarily recreating the animation and performing DOM diffs, which can cause stutters or excessive CPU overhead.
+**Action:** Always wrap completely static or prop-less animated React components with `React.memo()` and move static datasets (like items for a ticker) outside the component body. This prevents the animation from restarting on parent renders, optimizing performance and reducing unnecessary re-renders.
