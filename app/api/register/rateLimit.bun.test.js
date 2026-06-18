@@ -46,7 +46,7 @@ describe("Registration Rate Limiting", () => {
         body: JSON.stringify({ name: "Test", email: "test@example.com", password: "Password123!" }),
         headers: {
           "Content-Type": "application/json",
-          "x-forwarded-for": "192.168.1.1"
+          "x-forwarded-for": "192.168.1.99"
         }
       });
       return await POST(req);
