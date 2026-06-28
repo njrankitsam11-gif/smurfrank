@@ -68,7 +68,7 @@ export default function CheckoutPage() {
             <Label>1. Select Payment Method</Label>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
               {PAYMENT_METHODS.map(m => (
-                <label key={m.id} style={{
+                <label key={m.id} htmlFor={m.id} style={{
                   display: 'flex', alignItems: 'center', gap: 16,
                   padding: '14px 18px',
                   border: `1px solid ${selectedMethod === m.id ? '#5A9B90' : '#D1E8D1'}`,
@@ -78,6 +78,7 @@ export default function CheckoutPage() {
                   transition: 'all 0.2s',
                 }}>
                   <input
+                    id={m.id}
                     className="focus-outline"
                     type="radio" name="payment_method" value={m.id}
                     checked={selectedMethod === m.id}
@@ -208,7 +209,7 @@ export default function CheckoutPage() {
               {cart.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '30px 0' }}>
                   <p style={{ color: '#43766D', marginBottom: 16 }}>Your cart is empty.</p>
-                  <a href="/" style={{ color: '#5A9B90', fontSize: 13, fontWeight: 800 }}>← Browse Listings</a>
+                  <Link href="/" style={{ color: '#5A9B90', fontSize: 13, fontWeight: 800 }}>← Browse Listings</Link>
                 </div>
               ) : (
                 cart.map((item, i) => {
@@ -278,7 +279,7 @@ function Label({ children }) {
 function Field({ id, label, required, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#43766D' }}>{label.toUpperCase()}</label>
+      <label htmlFor={id} style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#43766D' }}>{label.toUpperCase()}</label>
       {children}
     </div>
   );
