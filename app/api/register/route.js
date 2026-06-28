@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 const { logger } = require('../../../lib/logger');
 
-const rateLimitMap = new Map();
+export const rateLimitMap = new Map();
 
 export async function POST(request) {
   try {
