@@ -21,3 +21,6 @@
 ## 2026-04-01 - Required Form Fields (WCAG 3.3.2)
 **Learning:** Using a custom or visually hidden required marker (like a styled asterisk `*` or `<span aria-hidden="true">*</span>`) inside a `<label>` does not communicate to screen readers that the associated input is required. While the native `required` attribute often provides semantic meaning, explicitly coupling it with `aria-required="true"` ensures the requirement is unambiguously announced across all screen reader and browser combinations.
 **Action:** Always ensure that any `<input>` associated with a custom required marker includes both `required` and `aria-required="true"` to explicitly announce the requirement to screen readers.
+## 2026-04-17 - Semantic Search Landmarks
+**Learning:** Forms serving as search functionalities often lack semantic markup.
+**Action:** Always ensure search forms use `role="search"` as an ARIA landmark and their inputs use `type="search"` to trigger proper mobile keyboards.
