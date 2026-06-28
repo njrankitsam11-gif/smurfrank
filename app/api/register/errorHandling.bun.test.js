@@ -5,6 +5,8 @@ class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
+    this.ip = '127.0.0.1';
+    this.headers = new Headers(init.headers);
   }
   async json() {
     return JSON.parse(this.init.body);

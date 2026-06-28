@@ -37,3 +37,8 @@
 **Vulnerability:** Unlogged 500 errors in `app/api/register/route.js`. When a registration fails, the error details (like database disconnections or constraint failures) were silently dropped and only a generic 500 message was returned to the user, making security auditing and debugging impossible.
 **Learning:** Returning a generic error to the user is a good security practice (prevents info leakage), but failing to log the actual error internally creates a blind spot for security incident response and troubleshooting.
 **Prevention:** Always log exceptions securely using the application's internal logger (`logger.error`) before returning a generic HTTP 500 error to the client.
+
+## 2026-04-27 - [IP Spoofing Vulnerability in Rate Limiting]
+**Vulnerability:** The registration rate limiting relied solely on the raw X-Forwarded-For header, allowing attackers to spoof their IP address and bypass the limit.
+**Learning:** Raw headers can be manipulated by clients. Framework-provided properties like request.ip are populated by trusted proxies and are more reliable.
+**Prevention:** Always prioritize request.ip for client identification in Next.js API routes before falling back to raw headers.
