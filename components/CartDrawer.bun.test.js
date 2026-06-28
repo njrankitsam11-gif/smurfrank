@@ -2,7 +2,15 @@ import { expect, test, describe, mock, beforeEach } from "bun:test";
 import CartDrawer from "./CartDrawer";
 
 // Mock the dependency before importing component
+
+mock.module("next/link", () => {
+    return {
+        default: (props) => ({ type: 'a', props: { ...props, children: props.children } })
+    };
+});
+
 mock.module("../context/CartContext", () => {
+
     return {
         useCart: mock()
     };
@@ -41,7 +49,21 @@ describe("CartDrawer Component", () => {
         expect(result).not.toBeNull();
         expect(result.type).toBe('div');
 
-        const treeStr = JSON.stringify(result);
+
+        const replacer = () => {
+            const seen = new WeakSet();
+            return (key, value) => {
+                if (typeof value === "object" && value !== null) {
+                    if (seen.has(value)) {
+                        return;
+                    }
+                    seen.add(value);
+                }
+                return value;
+            };
+        };
+        const treeStr = JSON.stringify(result, replacer());
+
         expect(treeStr).toContain("YOUR ");
         expect(treeStr).toContain("CART");
         expect(treeStr).toContain("Empty.");
@@ -64,7 +86,21 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        const treeStr = JSON.stringify(result);
+
+        const replacer = () => {
+            const seen = new WeakSet();
+            return (key, value) => {
+                if (typeof value === "object" && value !== null) {
+                    if (seen.has(value)) {
+                        return;
+                    }
+                    seen.add(value);
+                }
+                return value;
+            };
+        };
+        const treeStr = JSON.stringify(result, replacer());
+
 
         expect(treeStr).toContain("Test Product");
         expect(treeStr).toContain("10.00"); // formatted item price 10.00 * 1
