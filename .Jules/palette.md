@@ -21,3 +21,7 @@
 ## 2026-04-01 - Required Form Fields (WCAG 3.3.2)
 **Learning:** Using a custom or visually hidden required marker (like a styled asterisk `*` or `<span aria-hidden="true">*</span>`) inside a `<label>` does not communicate to screen readers that the associated input is required. While the native `required` attribute often provides semantic meaning, explicitly coupling it with `aria-required="true"` ensures the requirement is unambiguously announced across all screen reader and browser combinations.
 **Action:** Always ensure that any `<input>` associated with a custom required marker includes both `required` and `aria-required="true"` to explicitly announce the requirement to screen readers.
+
+## 2026-04-02 - Form Accessibility in Helper Components
+**Learning:** Helper components generating form labels can often omit the 'htmlFor'/'id' binding because it requires explicitly passing the 'id' prop from the parent component.
+**Action:** Always verify that custom helper components generating form labels consistently forward the 'id' prop to the 'htmlFor' attribute of the generated '<label>' to ensure proper accessibility coupling.
