@@ -81,7 +81,7 @@ export default async function SearchPage({ searchParams }) {
         </p>
 
         {/* The Search Bar (allowing users to search again) */}
-        <form action="/search" method="GET" style={{marginBottom: '60px', display: 'flex', gap: '10px'}}>
+        <form role="search" action="/search" method="GET" style={{marginBottom: '60px', display: 'flex', gap: '10px'}}>
           <input 
             name="q" 
             defaultValue={query}
