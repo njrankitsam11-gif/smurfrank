@@ -41,7 +41,19 @@ describe("CartDrawer Component", () => {
         expect(result).not.toBeNull();
         expect(result.type).toBe('div');
 
-        const treeStr = JSON.stringify(result);
+
+        const seen = new WeakSet();
+        const treeStr = JSON.stringify(result, (key, value) => {
+            if (typeof value === "object" && value !== null) {
+                if (seen.has(value)) {
+                    return;
+                }
+                seen.add(value);
+            }
+            if (key === '_owner' || key === '_store' || key === 'ref' || key === 'type' && typeof value === 'function') return undefined;
+            return value;
+        });
+
         expect(treeStr).toContain("YOUR ");
         expect(treeStr).toContain("CART");
         expect(treeStr).toContain("Empty.");
@@ -64,7 +76,19 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        const treeStr = JSON.stringify(result);
+
+        const seen = new WeakSet();
+        const treeStr = JSON.stringify(result, (key, value) => {
+            if (typeof value === "object" && value !== null) {
+                if (seen.has(value)) {
+                    return;
+                }
+                seen.add(value);
+            }
+            if (key === '_owner' || key === '_store' || key === 'ref' || key === 'type' && typeof value === 'function') return undefined;
+            return value;
+        });
+
 
         expect(treeStr).toContain("Test Product");
         expect(treeStr).toContain("10.00"); // formatted item price 10.00 * 1

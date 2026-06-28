@@ -37,3 +37,8 @@
 **Vulnerability:** Unlogged 500 errors in `app/api/register/route.js`. When a registration fails, the error details (like database disconnections or constraint failures) were silently dropped and only a generic 500 message was returned to the user, making security auditing and debugging impossible.
 **Learning:** Returning a generic error to the user is a good security practice (prevents info leakage), but failing to log the actual error internally creates a blind spot for security incident response and troubleshooting.
 **Prevention:** Always log exceptions securely using the application's internal logger (`logger.error`) before returning a generic HTTP 500 error to the client.
+
+## 2026-04-17 - [Case-Sensitive Email Verification Vulnerability]
+**Vulnerability:** Prisma `findUnique` does not support `mode: 'insensitive'`, making email uniqueness checks bypassable by registering existing emails with varying case (e.g., `Test@example.com` vs `test@example.com`).
+**Learning:** Using `findUnique` for email queries allows attackers to register duplicate accounts or bypass rate limits that rely on case-sensitive keys if the input is not strictly normalized.
+**Prevention:** Always normalize email inputs (`trim().toLowerCase()`) and use Prisma's `findFirst` instead of `findUnique` with the proper mode object: `{ where: { email: { equals: normalizedEmail, mode: 'insensitive' } } }`.

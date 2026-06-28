@@ -62,7 +62,17 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Password must be at least 8 characters long, and include uppercase, lowercase, a digit, and a special character' }, { status: 400 });
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: normalizedEmail,
+          mode: 'insensitive'
+        }
+      }
+    });
+
     if (existingUser) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
     }
