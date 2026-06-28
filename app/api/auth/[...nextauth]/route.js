@@ -44,13 +44,19 @@ const handler = NextAuth({
           if (!currentRecord) {
             if (rateLimitMap.size >= 10000) {
               const expireTime = Date.now();
+              let scanned = 0;
               for (const [key, val] of rateLimitMap.entries()) {
                 if (val.lockoutUntil < expireTime) {
                   rateLimitMap.delete(key);
                 }
+                if (++scanned >= 1000) break;
               }
               if (rateLimitMap.size >= 10000) {
-                rateLimitMap.clear();
+                let deleted = 0;
+                for (const key of rateLimitMap.keys()) {
+                  rateLimitMap.delete(key);
+                  if (++deleted >= 100) break;
+                }
               }
             }
             currentRecord = { attempts: 0, lockoutUntil: 0 };
