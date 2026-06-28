@@ -54,34 +54,17 @@ function CartProviderLogic(useState, useMemo) {
 }
 
 describe("CartContext Logic", () => {
-  test("full cart lifecycle with quantities", () => {
-    const states = [];
-    let stateIndex = 0;
+  test("full cart lifecycle with quantities", async () => {
+    const { CartProvider } = await import("./CartContext.js");
 
-    let memoizedDeps = null;
-    let memoizedVal = null;
-
-    const mockUseState = (initial) => {
-      const i = stateIndex++;
-      if (states[i] === undefined) states[i] = initial;
-      const setVal = (newVal) => {
-        if (typeof newVal === 'function') states[i] = newVal(states[i]);
-        else states[i] = newVal;
-      };
-      return [states[i], setVal];
-    };
-
-    const mockUseMemo = (factory, deps) => {
-      if (!memoizedDeps || deps.some((dep, i) => dep !== memoizedDeps[i])) {
-          memoizedVal = factory();
-          memoizedDeps = deps;
-      }
-      return memoizedVal;
-    };
+    states = [];
+    stateIndex = 0;
+    memoizedDeps = null;
+    memoizedVal = null;
 
     const render = () => {
       stateIndex = 0;
-      return CartProviderLogic(mockUseState, mockUseMemo);
+      return CartProvider({children: null}).props.value;
     };
 
     let contextValue = render();
