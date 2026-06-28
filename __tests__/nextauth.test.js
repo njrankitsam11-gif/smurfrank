@@ -6,7 +6,7 @@ jest.mock('next-auth/providers/credentials', () => {
 jest.mock('../lib/prisma', () => ({
     prisma: {
         user: {
-            findUnique: jest.fn(),
+            findFirst: jest.fn(),
         }
     }
 }));
@@ -30,7 +30,7 @@ describe('NextAuth Configuration', () => {
     });
 
     it('enforces rate limiting after 5 failed attempts (case-insensitive)', async () => {
-        prisma.user.findUnique.mockResolvedValue(null);
+        prisma.user.findFirst.mockResolvedValue(null);
 
         const credentials1 = { email: ' Test@example.com ', password: 'password123' };
         const credentials2 = { email: 'test@example.com', password: 'password123' };
@@ -50,18 +50,18 @@ describe('NextAuth Configuration', () => {
     it('resets rate limit on successful login', async () => {
         const credentials = { email: 'success@example.com', password: 'password123' };
 
-        prisma.user.findUnique.mockResolvedValue(null);
+        prisma.user.findFirst.mockResolvedValue(null);
         for (let i = 0; i < 4; i++) {
             await authorize(credentials);
         }
 
-        prisma.user.findUnique.mockResolvedValue({ id: 1, email: 'success@example.com', password: 'hashedpassword', name: 'Test', role: 'buyer' });
+        prisma.user.findFirst.mockResolvedValue({ id: 1, email: 'success@example.com', password: 'hashedpassword', name: 'Test', role: 'buyer' });
         bcrypt.compare.mockResolvedValue(true);
 
         const result = await authorize(credentials);
         expect(result).toEqual({ id: 1, email: 'success@example.com', name: 'Test', role: 'buyer' });
 
-        prisma.user.findUnique.mockResolvedValue(null);
+        prisma.user.findFirst.mockResolvedValue(null);
         const result2 = await authorize(credentials);
         expect(result2).toBeNull();
     });
