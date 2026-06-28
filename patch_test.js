@@ -1,7 +1,19 @@
 const fs = require('fs');
-const file = 'context/CartContext.bun.test.js';
-let content = fs.readFileSync(file, 'utf8');
-const search = `  const removeFromCart = (index) => {\n    setCart((prev) => prev.filter((_, i) => i !== index));\n  };\n\n  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')), 0), [cart]);\n\n  return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };`;
-const replace = `  const removeFromCart = (index) => {\n    setCart((prev) => prev.filter((_, i) => i !== index));\n  };\n\n  const increaseQuantity = (index) => {\n    setCart((prev) => {\n      const newCart = [...prev];\n      newCart[index].quantity += 1;\n      return newCart;\n    });\n  };\n\n  const decreaseQuantity = (index) => {\n    setCart((prev) => {\n      const newCart = [...prev];\n      if (newCart[index].quantity > 1) {\n        newCart[index].quantity -= 1;\n        return newCart;\n      } else {\n        return newCart.filter((_, i) => i !== index);\n      }\n    });\n  };\n\n  const total = useMemo(() => cart.reduce((sum, item) => sum + parseFloat(item.price.replace('$', '')) * (item.quantity || 1), 0), [cart]);\n\n  return { cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, isOpen, setIsOpen, total };`;
-content = content.replace(search, replace);
-fs.writeFileSync(file, content);
+
+let content = fs.readFileSync('components/CartDrawer.bun.test.js', 'utf8');
+
+const replacerString = `
+        const seen = new Set();
+        const treeStr = JSON.stringify(result, (key, value) => {
+            if (typeof value === "object" && value !== null) {
+                if (seen.has(value)) {
+                    return;
+                }
+                seen.add(value);
+            }
+            return value;
+        });
+`;
+
+content = content.replace(/const treeStr = JSON\.stringify\(result\);/g, replacerString.trim());
+fs.writeFileSync('components/CartDrawer.bun.test.js', content);
