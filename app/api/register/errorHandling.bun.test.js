@@ -26,7 +26,7 @@ let mockCreate = async () => { throw new Error('Database connection failed'); };
 mock.module('../../../lib/prisma', () => ({
   prisma: {
     user: {
-      findUnique: async (...args) => mockFindUnique(...args),
+      findFirst: async (...args) => mockFindUnique(...args),
       create: async (...args) => mockCreate(...args)
     }
   }
