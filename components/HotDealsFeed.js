@@ -2,7 +2,12 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 
-export default function HotDealsFeed() {
+// ⚡ BOLT OPTIMIZATION: Memoize static HotDealsFeed
+// 💡 What: Wrapped HotDealsFeed with React.memo()
+// 🎯 Why: This component is purely presentational, animated continuously by framer-motion, and doesn't accept props.
+//         Without memo(), it re-renders unnecessarily whenever its parent (like HomePage, which has dynamic cart state) updates, wasting CPU cycles and causing animation stutter.
+// 📊 Impact: Prevents unnecessary React renders and reconciliation for this component on parent state changes, freeing main thread time.
+const HotDealsFeed = React.memo(function HotDealsFeed() {
   const containerRef = useRef(null);
 
   const feedItems = [
@@ -42,4 +47,6 @@ export default function HotDealsFeed() {
       </div>
     </div>
   );
-}
+});
+
+export default HotDealsFeed;
