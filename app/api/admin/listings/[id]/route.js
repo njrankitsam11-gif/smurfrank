@@ -18,6 +18,9 @@ export async function PATCH(request, { params }) {
   if (body.instant !== undefined) data.instant = Boolean(body.instant);
   if (body.active !== undefined) data.active = Boolean(body.active);
   if (body.includes !== undefined) data.includes = Array.isArray(body.includes) ? body.includes : [];
+  if (body.status !== undefined && ['pending', 'active', 'rejected'].includes(body.status)) {
+    data.status = body.status;
+  }
 
   try {
     const listing = await prisma.listing.update({ where: { id }, data });

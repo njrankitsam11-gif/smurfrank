@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 const seo = {
@@ -7,7 +8,44 @@ const seo = {
   description: "Securely upload your account details and screenshots. Reach thousands of buyers with our premium gold-tier seller dashboard."
 };
 
+const emptyForm = { title: '', game: 'Valorant', price: '', description: '' };
+
 export default function SellPage() {
+  const router = useRouter();
+  const [form, setForm] = useState(emptyForm);
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+    setSubmitting(true);
+
+    try {
+      const res = await fetch('/api/listings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (res.status === 401) {
+        router.push('/login?callbackUrl=/sell');
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+
+      setSubmitted(true);
+      setForm(emptyForm);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <main style={{ minHeight: '100vh', background: '#050505', color: '#fff', paddingBottom: '100px' }}>
       {/* 1. HEADER */}
@@ -30,86 +68,150 @@ export default function SellPage() {
           boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
         }}>
 
-          <form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
-
-            {/* --- TEXT DETAILS --- */}
-            <div style={{ gridColumn: 'span 2' }}>
-              <label htmlFor="listingTitle" style={labelStyle}>Listing Title</label>
-              <input className={styles.focusOutline} id="listingTitle" type="text" placeholder="e.g. Stacked Valorant Account - All Battlepasses" style={inputStyle} />
-            </div>
-
-            <div>
-              <label htmlFor="gameTier" style={labelStyle}>Game Tier</label>
-              <select className={styles.focusOutline} id="gameTier" style={inputStyle}>
-                <option>Valorant</option>
-                <option>CS2</option>
-                <option>GTA V</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="askingPrice" style={labelStyle}>Asking Price ($)</label>
-              <input className={styles.focusOutline} id="askingPrice" type="number" placeholder="0.00" style={inputStyle} />
-            </div>
-
-            {/* --- 📸 NEW: SCREENSHOT UPLOAD SECTION --- */}
-            <div style={{ gridColumn: 'span 2' }}>
-              <span id="fileUploadLabel" style={labelStyle}>Account Visuals (Screenshots)</span>
-              <label htmlFor="fileUpload" className={styles.fileDropzone} style={{
-                display: 'block',
-                border: '2px dashed #333',
-                borderRadius: '16px',
-                padding: '40px',
-                textAlign: 'center',
-                background: 'rgba(212, 175, 55, 0.02)',
-                transition: 'border 0.3s ease',
-                cursor: 'pointer'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.borderColor = '#D4AF37'}
-              onMouseOut={(e) => e.currentTarget.style.borderColor = '#333'}
+          {submitted ? (
+            <div style={{ textAlign: 'center', padding: '40px 0' }}>
+              <div style={{ fontSize: '48px', marginBottom: '20px' }}>✅</div>
+              <div style={{ fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '10px' }}>
+                Listing submitted for review
+              </div>
+              <p style={{ color: '#999', fontSize: '14px', maxWidth: '500px', margin: '0 auto' }}>
+                Our team will review your account details and activate the listing once approved.
+              </p>
+              <button
+                onClick={() => setSubmitted(false)}
+                style={{ marginTop: '30px', background: 'transparent', border: '1px solid #D4AF37', color: '#D4AF37', padding: '12px 24px', borderRadius: '8px', cursor: 'pointer', textTransform: 'uppercase', fontSize: '12px', fontWeight: 700 }}
               >
-                <div style={{ fontSize: '40px', marginBottom: '15px' }}>🖼️</div>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#D4AF37', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
-                <div style={{ fontSize: '11px', color: '#555' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
-                <input aria-labelledby="fileUploadLabel" className={styles.focusOutline} type="file" multiple style={{ opacity: 0, width: '1px', height: '1px', position: 'absolute' }} id="fileUpload" />
-                <span style={{
-                  display: 'inline-block',
-                  marginTop: '20px',
-                  fontSize: '12px',
-                  fontWeight: 900,
-                  color: '#000',
-                  background: '#D4AF37',
-                  padding: '8px 20px',
-                  borderRadius: '4px',
-                  cursor: 'pointer'
-                }}>SELECT FILES</span>
-              </label>
-            </div>
-
-            <div style={{ gridColumn: 'span 2' }}>
-              <label htmlFor="detailedDescription" style={labelStyle}>Detailed description</label>
-              <textarea className={styles.focusOutline} id="detailedDescription" placeholder="List all rare skins, peak ranks, and region info..." style={{...inputStyle, height: '120px', resize: 'none'}} />
-            </div>
-
-            <div style={{ gridColumn: 'span 2' }}>
-              <button className={styles.focusOutline} style={{
-                width: '100%',
-                background: 'linear-gradient(45deg, #D4AF37, #AA8A2E)',
-                color: '#000',
-                padding: '20px',
-                borderRadius: '12px',
-                fontWeight: 900,
-                fontSize: '16px',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 10px 20px rgba(212, 175, 55, 0.2)',
-                textTransform: 'uppercase'
-              }}>
-                Deploy Listing
+                Submit Another Listing
               </button>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
 
-          </form>
+              {error && (
+                <div role="alert" style={{ gridColumn: 'span 2', background: '#3a1010', border: '1px solid #a33', color: '#f88', padding: '12px 16px', borderRadius: '8px', fontSize: '13px' }}>
+                  {error}
+                </div>
+              )}
+
+              {/* --- TEXT DETAILS --- */}
+              <div style={{ gridColumn: 'span 2' }}>
+                <label htmlFor="listingTitle" style={labelStyle}>Listing Title</label>
+                <input
+                  className={styles.focusOutline}
+                  id="listingTitle"
+                  type="text"
+                  required
+                  placeholder="e.g. Stacked Valorant Account - All Battlepasses"
+                  style={inputStyle}
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="gameTier" style={labelStyle}>Game Tier</label>
+                <select
+                  className={styles.focusOutline}
+                  id="gameTier"
+                  style={inputStyle}
+                  value={form.game}
+                  onChange={(e) => setForm({ ...form, game: e.target.value })}
+                >
+                  <option>Valorant</option>
+                  <option>CS2</option>
+                  <option>GTA V</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="askingPrice" style={labelStyle}>Asking Price ($)</label>
+                <input
+                  className={styles.focusOutline}
+                  id="askingPrice"
+                  type="number"
+                  required
+                  min="0.01"
+                  step="0.01"
+                  placeholder="0.00"
+                  style={inputStyle}
+                  value={form.price}
+                  onChange={(e) => setForm({ ...form, price: e.target.value })}
+                />
+              </div>
+
+              {/* --- 📸 SCREENSHOT UPLOAD SECTION (visual only, not stored yet) --- */}
+              <div style={{ gridColumn: 'span 2' }}>
+                <span id="fileUploadLabel" style={labelStyle}>Account Visuals (Screenshots)</span>
+                <label htmlFor="fileUpload" className={styles.fileDropzone} style={{
+                  display: 'block',
+                  border: '2px dashed #333',
+                  borderRadius: '16px',
+                  padding: '40px',
+                  textAlign: 'center',
+                  background: 'rgba(212, 175, 55, 0.02)',
+                  transition: 'border 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.borderColor = '#D4AF37'}
+                onMouseOut={(e) => e.currentTarget.style.borderColor = '#333'}
+                >
+                  <div style={{ fontSize: '40px', marginBottom: '15px' }}>🖼️</div>
+                  <div style={{ fontSize: '14px', fontWeight: 700, color: '#D4AF37', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
+                  <div style={{ fontSize: '11px', color: '#555' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
+                  <input aria-labelledby="fileUploadLabel" className={styles.focusOutline} type="file" multiple style={{ opacity: 0, width: '1px', height: '1px', position: 'absolute' }} id="fileUpload" />
+                  <span style={{
+                    display: 'inline-block',
+                    marginTop: '20px',
+                    fontSize: '12px',
+                    fontWeight: 900,
+                    color: '#000',
+                    background: '#D4AF37',
+                    padding: '8px 20px',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}>SELECT FILES</span>
+                </label>
+              </div>
+
+              <div style={{ gridColumn: 'span 2' }}>
+                <label htmlFor="detailedDescription" style={labelStyle}>Detailed description</label>
+                <textarea
+                  className={styles.focusOutline}
+                  id="detailedDescription"
+                  required
+                  placeholder="List all rare skins, peak ranks, and region info..."
+                  style={{...inputStyle, height: '120px', resize: 'none'}}
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                />
+              </div>
+
+              <div style={{ gridColumn: 'span 2' }}>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className={styles.focusOutline}
+                  style={{
+                    width: '100%',
+                    background: 'linear-gradient(45deg, #D4AF37, #AA8A2E)',
+                    color: '#000',
+                    padding: '20px',
+                    borderRadius: '12px',
+                    fontWeight: 900,
+                    fontSize: '16px',
+                    border: 'none',
+                    cursor: submitting ? 'default' : 'pointer',
+                    boxShadow: '0 10px 20px rgba(212, 175, 55, 0.2)',
+                    textTransform: 'uppercase',
+                    opacity: submitting ? 0.7 : 1,
+                  }}
+                >
+                  {submitting ? 'Deploying...' : 'Deploy Listing'}
+                </button>
+              </div>
+
+            </form>
+          )}
         </div>
       </section>
     </main>
