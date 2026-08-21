@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const inputStyle = {
   width: '100%',
@@ -18,6 +19,17 @@ const emptyForm = {
 };
 
 export default function AdminListingsPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdminListingsPageInner />
+    </Suspense>
+  );
+}
+
+function AdminListingsPageInner() {
+  const searchParams = useSearchParams();
+  const sellerFilter = searchParams.get('seller') || '';
+
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -29,7 +41,8 @@ export default function AdminListingsPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/admin/listings');
+      const url = sellerFilter ? `/api/admin/listings?seller=${encodeURIComponent(sellerFilter)}` : '/api/admin/listings';
+      const res = await fetch(url);
       if (!res.ok) throw new Error('Failed to load listings');
       const data = await res.json();
       setListings(data.listings);
@@ -40,7 +53,7 @@ export default function AdminListingsPage() {
     }
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [sellerFilter]);
 
   function startEdit(listing) {
     setEditingId(listing.id);
@@ -153,6 +166,13 @@ export default function AdminListingsPage() {
       <h1 style={{ fontSize: '28px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '20px' }}>
         Listings
       </h1>
+
+      {sellerFilter && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', fontSize: '13px', color: '#ccc' }}>
+          Showing listings from <strong style={{ color: '#D4AF37' }}>{sellerFilter}</strong>
+          <a href="/admin/listings" style={{ color: '#D4AF37' }}>Clear filter</a>
+        </div>
+      )}
 
       {error && (
         <div style={{ background: '#3a1010', border: '1px solid #a33', color: '#f88', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px', fontSize: '13px' }}>

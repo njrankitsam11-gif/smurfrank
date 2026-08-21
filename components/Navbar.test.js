@@ -4,9 +4,15 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Navbar from './Navbar';
 import { useCart } from '../context/CartContext';
+import { useSession } from 'next-auth/react';
 
 jest.mock('../context/CartContext', () => ({
   useCart: jest.fn(),
+}));
+
+jest.mock('next-auth/react', () => ({
+  useSession: jest.fn(),
+  signOut: jest.fn(),
 }));
 
 jest.mock('next/link', () => ({
@@ -25,6 +31,11 @@ describe('Navbar Component', () => {
     useCart.mockReturnValue({
       cart: [],
       setIsOpen: mockSetIsOpen,
+    });
+
+    useSession.mockReturnValue({
+      data: null,
+      status: 'unauthenticated',
     });
   });
 
@@ -80,5 +91,18 @@ describe('Navbar Component', () => {
 
     const liveText = await screen.findByText(/LIVE: USER_\d+ PURCHASED/);
     expect(liveText).toBeInTheDocument();
+  });
+
+  it('shows sign out and hides sign in when authenticated', () => {
+    useSession.mockReturnValue({
+      data: { user: { email: 'gamer@example.com' } },
+      status: 'authenticated',
+    });
+
+    render(<Navbar />);
+
+    expect(screen.getByText('gamer@example.com')).toBeInTheDocument();
+    expect(screen.getByText('Sign Out')).toBeInTheDocument();
+    expect(screen.queryByText('Sign In')).not.toBeInTheDocument();
   });
 });

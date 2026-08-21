@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession, signOut } from 'next-auth/react';
 import { GAME_LIST } from '../lib/gameTheme';
 
 const NAV_LINKS = [
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const { cart, setIsOpen } = useCart();
+  const { data: session, status } = useSession();
   const [mounted, setMounted] = useState(false);
   const [users, setUsers] = useState([0, 0, 0]);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -74,9 +76,25 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="h-5 w-px bg-ink-600" />
-          <Link href="/login" className="focus-ring text-xs font-bold uppercase tracking-wide text-ink-200 hover:text-ink-50">
-            Sign In
-          </Link>
+
+          {status === 'authenticated' ? (
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-bold uppercase tracking-wide text-ink-200">
+                {session.user.name || session.user.email}
+              </span>
+              <button
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="focus-ring text-xs font-bold uppercase tracking-wide text-ink-200 hover:text-ink-50"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" className="focus-ring text-xs font-bold uppercase tracking-wide text-ink-200 hover:text-ink-50">
+              Sign In
+            </Link>
+          )}
+
           <button
             onClick={() => setIsOpen(true)}
             className="focus-ring relative rounded-lg border border-ink-500 px-4 py-2 text-xs font-bold uppercase tracking-wide text-ink-50 transition-colors hover:border-gold-400"
@@ -145,13 +163,25 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/login"
-                onClick={() => setMobileOpen(false)}
-                className="focus-ring rounded-lg px-3 py-3 text-sm font-bold uppercase tracking-wide text-ink-200 hover:bg-ink-800 hover:text-ink-50"
-              >
-                Sign In
-              </Link>
+              {status === 'authenticated' ? (
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    signOut({ callbackUrl: '/' });
+                  }}
+                  className="focus-ring rounded-lg px-3 py-3 text-left text-sm font-bold uppercase tracking-wide text-ink-200 hover:bg-ink-800 hover:text-ink-50"
+                >
+                  Sign Out ({session.user.name || session.user.email})
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="focus-ring rounded-lg px-3 py-3 text-sm font-bold uppercase tracking-wide text-ink-200 hover:bg-ink-800 hover:text-ink-50"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
