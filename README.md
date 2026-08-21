@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in the values:
+
+```bash
+cp .env.example .env
+```
+
+- `DATABASE_URL` — PostgreSQL connection string used by Prisma (`prisma/schema.prisma`)
+- `NEXTAUTH_SECRET` — secret used to sign NextAuth JWTs, generate with `openssl rand -base64 32`
+
+Then apply the schema and seed sample listings:
+
+```bash
+npx prisma db push
+npx prisma db seed
+```
+
 ## Getting Started
 
 First, run the development server:
