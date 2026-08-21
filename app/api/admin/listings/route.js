@@ -2,11 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 import { requireAdminSession } from '../../../../lib/requireAdmin';
 
-export async function GET() {
+export async function GET(request) {
   const session = await requireAdminSession();
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const listings = await prisma.listing.findMany({ orderBy: { createdAt: 'desc' } });
+  const sellerEmail = new URL(request.url).searchParams.get('seller');
+  const where = sellerEmail ? { sellerEmail } : {};
+
+  const listings = await prisma.listing.findMany({ where, orderBy: { createdAt: 'desc' } });
   return NextResponse.json({ listings });
 }
 
