@@ -33,7 +33,7 @@ mock.module("../../../lib/prisma", () => ({
 }));
 
 // Now import the code to test
-const { generateMetadata } = await import("../../../app/listings/[id]/page");
+const { generateMetadata } = await import("../../../app/(site)/listings/[id]/page");
 
 describe("Listing Detail generateMetadata", () => {
 

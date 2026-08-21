@@ -27,10 +27,12 @@ model Listing {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  role      String   @default("buyer")
-  createdAt DateTime @default(now())
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  password            String
+  name                String?
+  role                String    @default("buyer")
+  createdAt           DateTime  @default(now())
+  resetToken          String?   @unique
+  resetTokenExpiresAt DateTime?
 }
