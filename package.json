@@ -11,6 +11,9 @@
     "test:bun": "bun test bun.test",
     "test": "npm run test:jest && npm run test:bun"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "@reduxjs/toolkit": "^2.11.2",

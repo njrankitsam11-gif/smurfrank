@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma';
+import { logger } from '../lib/logger';
 
 export default async function sitemap() {
   const baseUrl = 'https://smurfrank.vercel.app';
@@ -23,7 +24,7 @@ export default async function sitemap() {
   try {
     // Dynamic listings
     const listings = await prisma.listing.findMany({
-      where: { status: 'ACTIVE' },
+      where: { active: true },
       select: { id: true, updatedAt: true },
       take: 10000,
     });
@@ -37,7 +38,7 @@ export default async function sitemap() {
 
     return [...staticPages, ...listingUrls];
   } catch (error) {
-    console.error('Failed to fetch listings for sitemap:', error);
+    logger.error('Failed to fetch listings for sitemap:', error);
     return [...staticPages];
   }
 }
