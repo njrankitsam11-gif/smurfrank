@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useCart } from '../context/CartContext';
-import HotDealsFeed from '../components/HotDealsFeed';
+import { useCart } from '../../context/CartContext';
+import HotDealsFeed from '../../components/HotDealsFeed';
 
 export default function HomePage() {
   const { addToCart } = useCart();

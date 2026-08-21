@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { useCart } from '../../context/CartContext';
-import SortFilter from '../../components/SortFilter';
-import { useProductSort } from '../../hooks/useProductSort';
+import { useCart } from '../../../context/CartContext';
+import SortFilter from '../../../components/SortFilter';
+import { useProductSort } from '../../../hooks/useProductSort';
 
 export default function ValorantPage() {
   const { addToCart } = useCart();

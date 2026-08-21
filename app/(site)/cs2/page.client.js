@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { useCart } from '../../context/CartContext';
-import SortFilter from '../../components/SortFilter';
-import { useProductSort } from '../../hooks/useProductSort';
+import { useCart } from '../../../context/CartContext';
+import SortFilter from '../../../components/SortFilter';
+import { useProductSort } from '../../../hooks/useProductSort';
 
 // SEO: Dynamic Title for CS2 category
 const jsonLd = {

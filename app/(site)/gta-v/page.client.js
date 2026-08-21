@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { useCart } from '../../context/CartContext';
-import SortFilter from '../../components/SortFilter';
-import { useProductSort } from '../../hooks/useProductSort';
+import { useCart } from '../../../context/CartContext';
+import SortFilter from '../../../components/SortFilter';
+import { useProductSort } from '../../../hooks/useProductSort';
 
 const products = [
   { id: 'g1', title: 'GTA V 2 BILLION CASH', price: '$29.00', desc: 'Level 500 • All Heist Unlocks • PC/Console', game: 'GTA' },

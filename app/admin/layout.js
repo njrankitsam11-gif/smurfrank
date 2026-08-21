@@ -9,7 +9,7 @@ export const metadata = {
 export default async function AdminLayout({ children }) {
   const session = await requireAdminSession();
   if (!session) {
-    redirect('/login?callbackUrl=/admin');
+    redirect('/admin-login');
   }
 
   return (

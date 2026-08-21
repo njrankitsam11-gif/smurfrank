@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../../context/CartContext';
 
 const PAYMENT_METHODS = [
   { id: 'credit-card', name: 'Credit Card', icon: '💳' },
