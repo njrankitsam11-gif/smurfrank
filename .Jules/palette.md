@@ -21,3 +21,7 @@
 ## 2026-04-01 - Required Form Fields (WCAG 3.3.2)
 **Learning:** Using a custom or visually hidden required marker (like a styled asterisk `*` or `<span aria-hidden="true">*</span>`) inside a `<label>` does not communicate to screen readers that the associated input is required. While the native `required` attribute often provides semantic meaning, explicitly coupling it with `aria-required="true"` ensures the requirement is unambiguously announced across all screen reader and browser combinations.
 **Action:** Always ensure that any `<input>` associated with a custom required marker includes both `required` and `aria-required="true"` to explicitly announce the requirement to screen readers.
+
+## 2026-03-26 - Cart Accessibility
+**Learning:** Dynamic list items with 'Remove' buttons lack context for screen readers when they don't reference the item name. The '✕' icon-only close button also lacked an ARIA label.
+**Action:** Always add aria-labels with dynamic content context (e.g., `Remove ${item.title}`) in repeating list elements, and ensure icon-only buttons have descriptive labels.
