@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { prisma } from '../../lib/prisma';
 
 const cardStyle = {
@@ -8,16 +9,20 @@ const cardStyle = {
 };
 
 export default async function AdminDashboardPage() {
-  const [listingCount, activeListingCount, userCount, adminCount] = await Promise.all([
+  const [listingCount, activeListingCount, pendingListingCount, userCount, adminCount, openOrderCount] = await Promise.all([
     prisma.listing.count(),
     prisma.listing.count({ where: { active: true } }),
+    prisma.listing.count({ where: { status: 'pending' } }),
     prisma.user.count(),
     prisma.user.count({ where: { role: 'admin' } }),
+    prisma.order.count({ where: { status: { in: ['paid', 'delivered'] } } }),
   ]);
 
   const stats = [
     { label: 'Total Listings', value: listingCount },
     { label: 'Active Listings', value: activeListingCount },
+    { label: 'Pending Approval', value: pendingListingCount, href: '/admin/listings' },
+    { label: 'Open Orders', value: openOrderCount, href: '/admin/pipeline' },
     { label: 'Total Users', value: userCount },
     { label: 'Admins', value: adminCount },
   ];
@@ -28,16 +33,25 @@ export default async function AdminDashboardPage() {
         Dashboard
       </h1>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
-        {stats.map((stat) => (
-          <div key={stat.label} style={cardStyle}>
-            <div style={{ fontSize: '13px', color: '#999', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>
-              {stat.label}
-            </div>
-            <div style={{ fontSize: '36px', fontWeight: 900, color: '#D4AF37' }}>
-              {stat.value}
-            </div>
-          </div>
-        ))}
+        {stats.map((stat) => {
+          const content = (
+            <>
+              <div style={{ fontSize: '13px', color: '#999', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>
+                {stat.label}
+              </div>
+              <div style={{ fontSize: '36px', fontWeight: 900, color: '#D4AF37' }}>
+                {stat.value}
+              </div>
+            </>
+          );
+          return stat.href ? (
+            <Link key={stat.label} href={stat.href} style={{ ...cardStyle, textDecoration: 'none', display: 'block' }}>
+              {content}
+            </Link>
+          ) : (
+            <div key={stat.label} style={cardStyle}>{content}</div>
+          );
+        })}
       </div>
     </div>
   );

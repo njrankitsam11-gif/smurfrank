@@ -17,10 +17,11 @@ const CRYPTO_COINS = ['Bitcoin (BTC)', 'Ethereum (ETH)', 'USDT (TRC-20)', 'Litec
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart, total } = useCart();
+  const { cart, total, clearCart } = useCart();
 
   const [selectedMethod, setSelectedMethod] = useState('credit-card');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentError, setPaymentError] = useState('');
 
   // Card form state
   const [cardNum, setCardNum] = useState('');
@@ -35,10 +36,35 @@ export default function CheckoutPage() {
   const formatCard = v => v.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
   const formatExpiry = v => { const d = v.replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + '/' + d.slice(2) : d; };
 
-  const handlePayment = (e) => {
+  const handlePayment = async (e) => {
     e.preventDefault();
+    setPaymentError('');
     setIsProcessing(true);
-    setTimeout(() => router.push('/checkout/success'), 1800);
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map((item) => ({
+            title: item.title,
+            price: item.price,
+            quantity: item.quantity || 1,
+          })),
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Payment could not be completed.');
+      }
+
+      clearCart();
+      router.push('/checkout/success');
+    } catch (err) {
+      setPaymentError(err.message);
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -62,6 +88,11 @@ export default function CheckoutPage() {
 
         {/* ══ LEFT: PAYMENT ══ */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {paymentError && (
+            <div role="alert" style={{ background: '#fdecec', border: '1px solid #e08b8b', color: '#a33', padding: '12px 16px', borderRadius: 8, fontSize: 13 }}>
+              {paymentError}
+            </div>
+          )}
 
           {/* METHOD SELECTOR */}
           <div style={s.card}>

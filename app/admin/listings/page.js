@@ -102,6 +102,36 @@ export default function AdminListingsPage() {
     }
   }
 
+  async function approveListing(listing) {
+    setError('');
+    try {
+      const res = await fetch(`/api/admin/listings/${listing.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'active', active: true }),
+      });
+      if (!res.ok) throw new Error('Failed to approve listing');
+      await load();
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  async function rejectListing(listing) {
+    setError('');
+    try {
+      const res = await fetch(`/api/admin/listings/${listing.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'rejected', active: false }),
+      });
+      if (!res.ok) throw new Error('Failed to reject listing');
+      await load();
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   async function deleteListing(id) {
     if (!confirm('Delete this listing? This cannot be undone.')) return;
     setError('');
@@ -115,6 +145,8 @@ export default function AdminListingsPage() {
     }
   }
 
+  const pendingListings = listings.filter((l) => l.status === 'pending');
+
   return (
     <div>
       <h1 style={{ fontSize: '28px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '20px' }}>
@@ -124,6 +156,49 @@ export default function AdminListingsPage() {
       {error && (
         <div style={{ background: '#3a1010', border: '1px solid #a33', color: '#f88', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px', fontSize: '13px' }}>
           {error}
+        </div>
+      )}
+
+      {pendingListings.length > 0 && (
+        <div style={{
+          background: 'linear-gradient(145deg, #1a1400, #110d00)',
+          border: '1px solid #D4AF37',
+          borderRadius: '16px',
+          padding: '20px 24px',
+          marginBottom: '30px',
+        }}>
+          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '14px' }}>
+            Pending Seller Submissions ({pendingListings.length})
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {pendingListings.map((listing) => (
+              <div key={listing.id} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                background: '#0a0a0a', border: '1px solid #222', borderRadius: '10px', padding: '12px 16px',
+              }}>
+                <div>
+                  <div style={{ fontSize: '14px', fontWeight: 600 }}>{listing.title}</div>
+                  <div style={{ fontSize: '12px', color: '#999' }}>
+                    {listing.game} · ${listing.price.toFixed(2)} · submitted by {listing.sellerEmail || 'unknown'}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button onClick={() => approveListing(listing)} style={{
+                    background: '#D4AF37', color: '#050505', fontWeight: 700, border: 'none',
+                    borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '12px',
+                  }}>
+                    Approve
+                  </button>
+                  <button onClick={() => rejectListing(listing)} style={{
+                    background: 'transparent', color: '#f66', border: '1px solid #a33',
+                    borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '12px',
+                  }}>
+                    Reject
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -246,8 +321,8 @@ export default function AdminListingsPage() {
                   <td style={{ padding: '10px' }}>{listing.rank}</td>
                   <td style={{ padding: '10px' }}>${listing.price.toFixed(2)}</td>
                   <td style={{ padding: '10px' }}>
-                    <span style={{ color: listing.active ? '#5f5' : '#f55' }}>
-                      {listing.active ? 'Active' : 'Inactive'}
+                    <span style={{ color: listing.status === 'pending' ? '#D4AF37' : listing.status === 'rejected' ? '#f55' : listing.active ? '#5f5' : '#999' }}>
+                      {listing.status === 'pending' ? 'Pending' : listing.status === 'rejected' ? 'Rejected' : listing.active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
                   <td style={{ padding: '10px', display: 'flex', gap: '8px' }}>
