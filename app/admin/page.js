@@ -9,13 +9,14 @@ const cardStyle = {
 };
 
 export default async function AdminDashboardPage() {
-  const [listingCount, activeListingCount, pendingListingCount, userCount, adminCount, openOrderCount] = await Promise.all([
+  const [listingCount, activeListingCount, pendingListingCount, userCount, adminCount, openOrderCount, boostingCount] = await Promise.all([
     prisma.listing.count(),
     prisma.listing.count({ where: { active: true } }),
     prisma.listing.count({ where: { status: 'pending' } }),
     prisma.user.count(),
     prisma.user.count({ where: { role: 'admin' } }),
     prisma.order.count({ where: { status: { in: ['paid', 'delivered'] } } }),
+    prisma.boostingService.count({ where: { active: true } }),
   ]);
 
   const stats = [
@@ -23,6 +24,7 @@ export default async function AdminDashboardPage() {
     { label: 'Active Listings', value: activeListingCount },
     { label: 'Pending Approval', value: pendingListingCount, href: '/admin/listings' },
     { label: 'Open Orders', value: openOrderCount, href: '/admin/pipeline' },
+    { label: 'Active Boosting Services', value: boostingCount, href: '/admin/boosting' },
     { label: 'Total Users', value: userCount },
     { label: 'Admins', value: adminCount },
   ];
