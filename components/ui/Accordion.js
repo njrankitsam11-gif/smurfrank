@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/cn';
 
@@ -8,11 +8,13 @@ import { cn } from '../../lib/cn';
 // property here, kept short and only on user-initiated expand/collapse).
 export function AccordionItem({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
+  const panelId = useId();
   return (
     <div className="border-b border-ink-600 last:border-b-0">
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
+        aria-controls={panelId}
         className="focus-ring flex w-full items-center justify-between gap-4 py-5 text-left"
       >
         <span className="text-sm font-bold text-ink-50">{title}</span>
@@ -27,6 +29,7 @@ export function AccordionItem({ title, children, defaultOpen = false }) {
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
+            id={panelId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

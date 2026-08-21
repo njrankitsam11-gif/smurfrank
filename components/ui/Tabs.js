@@ -4,14 +4,16 @@ import { cn } from '../../lib/cn';
 
 // Trigger: onClick. Feel: the active pill glides via layoutId (spring).
 // Perf: layout animation is limited to this small pill, transform-only.
-export default function Tabs({ options, value, onChange, className }) {
+export default function Tabs({ options, value, onChange, className, label }) {
   return (
-    <div className={cn('inline-flex flex-wrap gap-1 rounded-xl border border-ink-600 bg-ink-800/60 p-1', className)}>
+    <div role="tablist" aria-label={label} className={cn('inline-flex flex-wrap gap-1 rounded-xl border border-ink-600 bg-ink-800/60 p-1', className)}>
       {options.map((opt) => {
         const active = opt.value === value;
         return (
           <button
             key={opt.value}
+            role="tab"
+            aria-selected={active}
             onClick={() => onChange(opt.value)}
             className={cn(
               'focus-ring relative rounded-lg px-4 py-2 text-xs font-bold uppercase tracking-wide transition-colors',

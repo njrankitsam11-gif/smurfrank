@@ -89,6 +89,7 @@ export default function BoostingPageClient({ services }) {
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
           <Tabs
             className="game"
+            label="Select game"
             options={GAME_LIST.map((g) => ({ label: g.label, value: g.key }))}
             value={game}
             onChange={setGame}
@@ -96,6 +97,7 @@ export default function BoostingPageClient({ services }) {
           {hasRankLadder && (
             <Tabs
               className="category"
+              label="Select boosting category"
               options={CATEGORIES.map((c) => ({ label: c, value: c }))}
               value={category}
               onChange={setCategory}

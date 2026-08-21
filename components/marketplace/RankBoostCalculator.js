@@ -70,7 +70,8 @@ export default function RankBoostCalculator({ game }) {
       <div className="rounded-2xl border border-ink-600 bg-ink-800/60 p-6">
         <div className="mb-4 text-xs font-bold uppercase tracking-wider text-ink-300">Current Rank</div>
         <Select
-          label="Rank"
+          id="currentRank"
+          label="Current rank"
           value={currentRankIndex}
           onChange={(e) => setCurrentRankIndex(Number(e.target.value))}
         >
@@ -97,7 +98,8 @@ export default function RankBoostCalculator({ game }) {
       <div className="rounded-2xl border border-ink-600 bg-ink-800/60 p-6" style={{ boxShadow: `inset 0 0 0 1px ${theme.accentSoft}` }}>
         <div className="mb-4 text-xs font-bold uppercase tracking-wider text-ink-300">Desired Rank</div>
         <Select
-          label="Rank"
+          id="desiredRank"
+          label="Desired rank"
           value={desiredRankIndex}
           onChange={(e) => setDesiredRankIndex(Number(e.target.value))}
         >
@@ -106,7 +108,7 @@ export default function RankBoostCalculator({ game }) {
           ))}
         </Select>
         <div className="mt-4">
-          <Select label="Server" value={server} onChange={(e) => setServer(e.target.value)}>
+          <Select id="server" label="Server" value={server} onChange={(e) => setServer(e.target.value)}>
             {SERVERS.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -119,6 +121,7 @@ export default function RankBoostCalculator({ game }) {
 
         <Tabs
           className="tabs-mode"
+          label="Solo or duo queue"
           options={[{ label: 'Solo', value: 'solo' }, { label: 'Duo', value: 'duo' }]}
           value={mode}
           onChange={(v) => { setMode(v); setAdded(false); }}
