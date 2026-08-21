@@ -2,6 +2,7 @@ import AdminLoginForm from './AdminLoginForm';
 
 export const metadata = {
   title: 'Admin Login | SmurfRank',
+  robots: { index: false, follow: false },
 };
 
 export default function AdminLoginPage() {
