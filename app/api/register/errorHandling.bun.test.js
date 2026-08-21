@@ -1,10 +1,14 @@
 import { describe, expect, it, mock, afterEach } from "bun:test";
 import { POST } from "./route.js";
 
+let reqCounter = 0;
 class MockRequest {
   constructor(url, init) {
     this.url = url;
     this.init = init;
+    this.headers = {
+      get: (key) => key === 'x-forwarded-for' ? 'test-ip-' + (++reqCounter) : (init.headers?.[key] || null)
+    };
   }
   async json() {
     return JSON.parse(this.init.body);
@@ -88,6 +92,7 @@ describe("Register API Error Handling", () => {
 
   it("should return a 500 error if parsing request body fails", async () => {
     const req = {
+      headers: { get: (key) => key === 'x-forwarded-for' ? 'test-ip-' + (++reqCounter) : null },
       json: async () => { throw new SyntaxError("Unexpected token"); }
     };
     const res = await POST(req);
