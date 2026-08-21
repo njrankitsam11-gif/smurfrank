@@ -58,8 +58,8 @@ prisma/
   schema.prisma                   Models: Listing (id, title, game, rank, region, price, level, wins, hours, type, instant, description, includes[], active, timestamps), User (id, email unique, password hash, name?, role default "buyer", createdAt)
   seed.js                         Seeds Listing table with hardcoded CS2/Valorant/GTA V sample data
 
-__tests__/                        Jest specs (api/auth, api/register, hooks, listings/[id])
-*.bun.test.js (scattered)         Bun specs colocated with source (CartContext, CartDrawer, register route sub-behaviors)
+__tests__/                        Jest specs (api/auth.test.js + nextauth.test.js both target the nextauth authorize/callbacks — kept separate on purpose, one covers core logic, the other rate-limiting; hooks; listings/[id]). NOTE: __tests__/hooks/useProductSort.test.js and components/Navbar.test.js currently fail under `npm run test:jest` (missing jsdom env) — pre-existing, not caused by any .Jules session, unverified fix.
+*.bun.test.js (scattered)         Bun specs colocated with source (CartContext, CartDrawer, register route sub-behaviors — app/api/register/{route,emailValidation,passwordValidation,errorHandling,rateLimit}.bun.test.js is the canonical/most-thorough coverage for the register route; a redundant Jest duplicate of the basic cases was removed, see below)
 
 .Jules/                           Persistent learnings logs (read + update these; see below)
 ```
@@ -71,6 +71,8 @@ __tests__/                        Jest specs (api/auth, api/register, hooks, lis
 - Checkout is fully mocked (no Stripe PaymentIntent, no webhook, no real charge) despite `stripe`/`@stripe/stripe-js` in package.json — treat "payment" as UI-only until this is built out.
 - Cart state lives in React Context (`CartContext`), separate from the Redux store — the two state systems are not unified.
 - Rate limiting (register route, next-auth authorize) is in-memory `Map`-based, per-process — will not work correctly across multiple serverless instances/regions. Fine for now, but not a real distributed rate limiter.
+- `__tests__/api/register/route.test.js` (Jest) was deleted — its cases (missing email/password, existing email, 400/201 responses, generic 500s) were a strict subset of the Bun suite in `app/api/register/*.bun.test.js`, which also covers hash failures and Prisma unique-constraint errors that the Jest file lacked. If you add new register-route coverage, add it to the Bun suite, not a new Jest file, to avoid re-introducing the split.
+- `__tests__/hooks/useProductSort.test.js` and `components/Navbar.test.js` fail under Jest with `ReferenceError: document is not defined` — looks like a missing/misconfigured jsdom test environment for those files specifically (other Jest specs pass). Not touched/fixed yet; verify and fix separately before trusting `npm run test:jest` output for those two.
 
 ## Repo hygiene / environment gotchas
 
