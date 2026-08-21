@@ -42,8 +42,26 @@ export default async function ListingDetailPage({ params }) {
     take: 12,
   });
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: listing.title,
+    description: listing.description || `Verified ${listing.game} account — ${listing.rank}, ${listing.region}.`,
+    category: `${listing.game} Accounts`,
+    brand: { '@type': 'Brand', name: 'SmurfRank' },
+    offers: {
+      '@type': 'Offer',
+      url: `https://smurfrank.vercel.app/listings/${listing.id}`,
+      priceCurrency: 'USD',
+      price: listing.price,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+    },
+  };
+
   return (
     <main className="min-h-screen bg-ink-950 text-ink-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <GameSubNav game={listing.game} />
 
       <div className="mx-auto max-w-7xl px-6 py-10">
@@ -53,7 +71,7 @@ export default async function ListingDetailPage({ params }) {
 
         <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_380px]">
           <div>
-            <ListingArt game={listing.game} size="hero" imageUrl={listing.images?.[0]} className="rounded-2xl border border-ink-600" />
+            <ListingArt game={listing.game} size="hero" imageUrl={listing.images?.[0]} seed={listing.id} rank={listing.rank} className="rounded-2xl border border-ink-600" />
 
             <h1 className="font-display mt-8 text-3xl font-bold leading-tight sm:text-4xl">{listing.title}</h1>
 

@@ -24,7 +24,7 @@ export default function ListingCard({ listing }) {
         className="focus-ring group flex h-full flex-col overflow-hidden rounded-2xl border border-ink-600 bg-ink-800/70 shadow-glow"
       >
         <div className="relative">
-          <ListingArt game={listing.game} size="card" imageUrl={listing.images?.[0]} />
+          <ListingArt game={listing.game} size="card" imageUrl={listing.images?.[0]} seed={listing.id} rank={listing.rank} />
           <div className="absolute left-3 top-3 flex gap-2">
             <Badge color={theme.accent}>{theme.label}</Badge>
           </div>
