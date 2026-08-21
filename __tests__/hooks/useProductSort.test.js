@@ -1,10 +1,7 @@
+/* @jest-environment jsdom */
 import { renderHook } from '@testing-library/react';
 import { useProductSort } from '../../hooks/useProductSort';
 import React from 'react';
-
-// Simple mock for React.useMemo since we are in a node environment for Jest
-// and we want to test the hook's logic.
-// Actually, with @testing-library/react and jsdom it should work if configured correctly.
 
 const products = [
   { id: '1', title: 'A', price: '$10.00' },
