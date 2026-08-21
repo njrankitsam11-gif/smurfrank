@@ -2,10 +2,12 @@
 import { useCart } from '../context/CartContext';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const { cart, setIsOpen } = useCart();
+  const { data: session, status } = useSession();
   const [mounted, setMounted] = useState(false);
   const [users, setUsers] = useState([0, 0, 0]);
 
@@ -49,9 +51,20 @@ export default function Navbar() {
           <Link href="/sell" className={styles.linkSell}>SELL</Link>
           
           <div className={styles.divider} />
-          
-          <Link href="/login" className={styles.linkSignIn}>SIGN IN</Link>
-          
+
+          {status === 'authenticated' ? (
+            <>
+              <span className={styles.linkSignIn} style={{ cursor: 'default' }}>
+                {session.user.name || session.user.email}
+              </span>
+              <button onClick={() => signOut({ callbackUrl: '/' })} className={styles.linkSignIn} style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit' }}>
+                SIGN OUT
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className={styles.linkSignIn}>SIGN IN</Link>
+          )}
+
           <button onClick={() => setIsOpen(true)} className={styles.cartButton}>
             CART ({cart.length})
           </button>
