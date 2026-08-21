@@ -60,13 +60,13 @@ export default function AdminSellersPage() {
                   <td style={{ padding: '10px' }}>{seller.sellerEmail}</td>
                   <td style={{ padding: '10px' }}>{seller.total}</td>
                   <td style={{ padding: '10px', color: '#5f5' }}>{seller.active}</td>
-                  <td style={{ padding: '10px', color: seller.pending > 0 ? '#D4AF37' : '#999' }}>{seller.pending}</td>
+                  <td style={{ padding: '10px', color: seller.pending > 0 ? '#FFC531' : '#999' }}>{seller.pending}</td>
                   <td style={{ padding: '10px', color: seller.rejected > 0 ? '#f55' : '#999' }}>{seller.rejected}</td>
                   <td style={{ padding: '10px', color: '#999' }}>
                     {new Date(seller.firstSubmission).toLocaleDateString()}
                   </td>
                   <td style={{ padding: '10px' }}>
-                    <Link href={`/admin/listings?seller=${encodeURIComponent(seller.sellerEmail)}`} style={{ color: '#D4AF37', fontSize: '12px' }}>
+                    <Link href={`/admin/listings?seller=${encodeURIComponent(seller.sellerEmail)}`} style={{ color: '#FFC531', fontSize: '12px' }}>
                       View Listings
                     </Link>
                   </td>

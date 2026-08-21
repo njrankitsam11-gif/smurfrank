@@ -41,7 +41,7 @@ export default async function AdminDashboardPage() {
               <div style={{ fontSize: '13px', color: '#999', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>
                 {stat.label}
               </div>
-              <div style={{ fontSize: '36px', fontWeight: 900, color: '#D4AF37' }}>
+              <div style={{ fontSize: '36px', fontWeight: 900, color: '#FFC531' }}>
                 {stat.value}
               </div>
             </>

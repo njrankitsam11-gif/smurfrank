@@ -24,7 +24,7 @@ export default function AdminNav({ userEmail }) {
       gap: '30px',
     }}>
       <div>
-        <div style={{ color: '#D4AF37', fontSize: '11px', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>
+        <div style={{ color: '#FFC531', fontSize: '11px', fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>
           SmurfRank
         </div>
         <div style={{ fontSize: '18px', fontWeight: 900, textTransform: 'uppercase' }}>Admin Console</div>
@@ -42,7 +42,7 @@ export default function AdminNav({ userEmail }) {
                 borderRadius: '10px',
                 textDecoration: 'none',
                 color: active ? '#050505' : '#ccc',
-                background: active ? '#D4AF37' : 'transparent',
+                background: active ? '#FFC531' : 'transparent',
                 fontWeight: active ? 700 : 500,
                 fontSize: '14px',
               }}

@@ -68,7 +68,7 @@ export default function AdminLoginForm() {
         />
       </div>
       <button type="submit" disabled={submitting} style={{
-        background: '#D4AF37', color: '#050505', fontWeight: 700, border: 'none',
+        background: '#FFC531', color: '#050505', fontWeight: 700, border: 'none',
         borderRadius: '8px', padding: '12px', cursor: submitting ? 'default' : 'pointer',
         fontSize: '14px', opacity: submitting ? 0.7 : 1, marginTop: '6px',
       }}>
