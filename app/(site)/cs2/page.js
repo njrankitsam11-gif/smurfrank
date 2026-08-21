@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Buy CS2 Prime Accounts | Global Elite & Faceit Level 10 | SmurfRank',
   description: 'Premium CS2 smurf accounts with high trust factor. Instant delivery on Global Elite, Premier ratings, and Prime enabled accounts.',
@@ -9,8 +11,14 @@ export const metadata = {
   }
 };
 
+import { prisma } from '../../../lib/prisma';
 import CS2PageClient from './page.client';
 
-export default function CS2Page() {
-  return <CS2PageClient />;
+export default async function CS2Page() {
+  const listings = await prisma.listing.findMany({
+    where: { game: 'CS2', active: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return <CS2PageClient listings={listings} />;
 }

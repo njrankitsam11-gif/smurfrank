@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Buy Valorant Radiant & Immortal Accounts | SmurfRank',
   description: 'Premium Valorant smurf accounts with rare skins and high ranks. Instant delivery on Radiant, Immortal, and iron smurfs ready for ranked.',
@@ -9,8 +11,14 @@ export const metadata = {
   }
 };
 
+import { prisma } from '../../../lib/prisma';
 import ValorantPageClient from './page.client';
 
-export default function ValorantPage() {
-  return <ValorantPageClient />;
+export default async function ValorantPage() {
+  const listings = await prisma.listing.findMany({
+    where: { game: 'Valorant', active: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return <ValorantPageClient listings={listings} />;
 }
