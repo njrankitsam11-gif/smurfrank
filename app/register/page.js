@@ -1,9 +1,10 @@
+import Link from 'next/link';
+import RegisterForm from './RegisterForm';
+
 export const metadata = {
   title: 'Register | RankVault',
   description: 'Join RankVault to buy and sell premium ranked accounts.',
 };
-
-import Link from 'next/link';
 
 export default function RegisterPage() {
   return (
@@ -21,21 +22,7 @@ export default function RegisterPage() {
           </Link>
           <h1 style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', marginTop: '20px', letterSpacing: '1px' }}>Join the Elite</h1>
         </div>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label htmlFor="username" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>Username <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-            <input id="username" className="focus-outline" required aria-required="true" type="text" autoComplete="username" placeholder="Gamer123" style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label htmlFor="email" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>Email <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-            <input id="email" className="focus-outline" required aria-required="true" type="email" autoComplete="email" placeholder="gamer@email.com" style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label htmlFor="password" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>Password <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-            <input id="password" className="focus-outline" required aria-required="true" type="password" autoComplete="new-password" placeholder="••••••••" style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }} />
-          </div>
-          <button type="submit" className="focus-outline" style={{ background: '#FF6A00', color: '#000', padding: '14px', fontWeight: 900, border: 'none', cursor: 'pointer', textTransform: 'uppercase' }}>Create Account</button>
-        </form>
+        <RegisterForm />
         <p style={{ textAlign: 'center', marginTop: '30px', fontSize: '13px', color: '#666' }}>
           Already have an account? <Link href="/login" className="focus-outline" style={{ color: '#FF6A00', textDecoration: 'none' }}>Sign in</Link>
         </p>
