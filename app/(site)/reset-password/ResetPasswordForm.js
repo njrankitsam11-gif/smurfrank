@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Input from '../../../components/ui/Input';
+import Button from '../../../components/ui/Button';
 
 export default function ResetPasswordForm() {
   const router = useRouter();
@@ -43,56 +45,51 @@ export default function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <p style={{ fontSize: '13px', color: '#f88' }}>
+      <p className="text-sm text-red-300">
         This reset link is missing its token. Request a new one from the{' '}
-        <Link href="/forgot-password" className="focus-outline" style={{ color: '#FF6A00' }}>forgot password page</Link>.
+        <Link href="/forgot-password" className="focus-ring font-bold text-gold-400 hover:text-gold-300">
+          forgot password page
+        </Link>
+        .
       </p>
     );
   }
 
   if (success) {
-    return <p style={{ fontSize: '13px', color: '#ccc' }}>Your password has been reset. Redirecting to sign in...</p>;
+    return <p className="text-sm text-ink-200">Your password has been reset. Redirecting to sign in...</p>;
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {error && (
-        <div role="alert" style={{ background: '#3a1010', border: '1px solid #a33', color: '#f88', padding: '10px 14px', borderRadius: '4px', fontSize: '13px' }}>
+        <div role="alert" className="rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-300">
           {error}
         </div>
       )}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <label htmlFor="password" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>New Password <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-        <input
-          id="password"
-          className="focus-outline"
-          required
-          type="password"
-          autoComplete="new-password"
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }}
-        />
-        <span style={{ fontSize: '11px', color: '#666' }}>At least 8 characters, with uppercase, lowercase, a number, and a symbol.</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <label htmlFor="confirmPassword" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>Confirm Password <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-        <input
-          id="confirmPassword"
-          className="focus-outline"
-          required
-          type="password"
-          autoComplete="new-password"
-          placeholder="••••••••"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }}
-        />
-      </div>
-      <button type="submit" disabled={submitting} className="focus-outline" style={{ background: '#FF6A00', color: '#000', padding: '14px', fontWeight: 900, border: 'none', cursor: submitting ? 'default' : 'pointer', textTransform: 'uppercase', opacity: submitting ? 0.7 : 1 }}>
+      <Input
+        id="password"
+        label="New Password"
+        required
+        type="password"
+        autoComplete="new-password"
+        placeholder="••••••••"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        hint="At least 8 characters, with uppercase, lowercase, a number, and a symbol."
+      />
+      <Input
+        id="confirmPassword"
+        label="Confirm Password"
+        required
+        type="password"
+        autoComplete="new-password"
+        placeholder="••••••••"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
+      <Button type="submit" disabled={submitting} variant="primary" size="lg" className="w-full">
         {submitting ? 'Saving...' : 'Set New Password'}
-      </button>
+      </Button>
     </form>
   );
 }

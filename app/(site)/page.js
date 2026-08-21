@@ -10,14 +10,6 @@ export const metadata = {
     description: 'Instant delivery on top-tier CS2, Valorant, and GTA V smurf accounts. Start dominating today.',
     url: 'https://smurfrank.vercel.app',
     siteName: 'SmurfRank',
-    images: [
-      {
-        url: 'https://smurfrank.vercel.app/favicon.ico', // Placeholder until final logo is ready
-        width: 800,
-        height: 600,
-        alt: 'SmurfRank Logo',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -25,7 +17,6 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'SmurfRank | #1 Account Marketplace',
     description: 'Buy premium ranked smurf accounts for CS2, Valorant, and GTA V with instant delivery.',
-    images: ['https://smurfrank.vercel.app/favicon.ico'],
   },
 };
 
