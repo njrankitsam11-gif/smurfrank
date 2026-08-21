@@ -1,7 +1,10 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Input from '../../../components/ui/Input';
+import Button from '../../../components/ui/Button';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -36,48 +39,40 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {error && (
-        <div role="alert" style={{ background: '#3a1010', border: '1px solid #a33', color: '#f88', padding: '10px 14px', borderRadius: '4px', fontSize: '13px' }}>
+        <div role="alert" className="rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-300">
           {error}
         </div>
       )}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <label htmlFor="email" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>Email <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-        <input
-          id="email"
-          className="focus-outline"
-          required
-          aria-required="true"
-          type="email"
-          autoComplete="email"
-          placeholder="gamer@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }}
-        />
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <label htmlFor="password" style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999' }}>Password <span aria-hidden="true" style={{ color: '#FF6A00' }}>*</span></label>
-        <input
+      <Input
+        id="email"
+        label="Email"
+        required
+        type="email"
+        autoComplete="email"
+        placeholder="gamer@email.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <div className="flex flex-col gap-2">
+        <Input
           id="password"
-          className="focus-outline"
+          label="Password"
           required
-          aria-required="true"
           type="password"
           autoComplete="current-password"
           placeholder="••••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: '12px', background: '#050507', border: '1px solid #1a1a1a', color: 'white' }}
         />
-        <a href="/forgot-password" className="focus-outline" style={{ alignSelf: 'flex-end', fontSize: '12px', color: '#FF6A00', textDecoration: 'none' }}>
+        <Link href="/forgot-password" className="focus-ring self-end text-xs text-gold-400 hover:text-gold-300">
           Forgot password?
-        </a>
+        </Link>
       </div>
-      <button type="submit" disabled={submitting} className="focus-outline" style={{ background: '#FF6A00', color: '#000', padding: '14px', fontWeight: 900, border: 'none', cursor: submitting ? 'default' : 'pointer', textTransform: 'uppercase', opacity: submitting ? 0.7 : 1 }}>
+      <Button type="submit" disabled={submitting} variant="primary" size="lg" className="w-full">
         {submitting ? 'Signing In...' : 'Sign In'}
-      </button>
+      </Button>
     </form>
   );
 }
