@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './page.module.css';
 
 const seo = {
   title: "Verified Seller Portal | List Your Account | SmurfRank",
@@ -47,22 +46,22 @@ export default function SellPage() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', background: '#050505', color: '#fff', paddingBottom: '100px' }}>
+    <main style={{ minHeight: '100vh', background: '#06070A', color: '#fff', paddingBottom: '100px' }}>
       {/* 1. HEADER */}
       <section style={{ textAlign: 'center', padding: '100px 20px 60px' }}>
-        <div style={{ color: '#D4AF37', fontSize: '12px', fontWeight: 900, letterSpacing: '3px', marginBottom: '20px', textTransform: 'uppercase' }}>
+        <div style={{ color: '#FFC531', fontSize: '12px', fontWeight: 900, letterSpacing: '3px', marginBottom: '20px', textTransform: 'uppercase' }}>
           Asset Deployment
         </div>
         <h1 style={{ fontSize: 'clamp(40px, 6vw, 75px)', fontWeight: 900, textTransform: 'uppercase', lineHeight: 1, letterSpacing: '-2px' }}>
-          LIST YOUR <span style={{ color: '#D4AF37', textShadow: '0 0 30px rgba(212, 175, 55, 0.3)' }}>LEGACY</span>
+          LIST YOUR <span style={{ color: '#FFC531', textShadow: '0 0 30px rgba(212, 175, 55, 0.3)' }}>LEGACY</span>
         </h1>
       </section>
 
       {/* 2. THE PREMIUM FORM */}
       <section style={{ maxWidth: '900px', margin: '0 auto 100px', padding: '0 20px' }}>
         <div style={{
-          background: 'linear-gradient(145deg, #111, #080808)',
-          border: '1px solid #D4AF37',
+          background: 'linear-gradient(145deg, #151923, #0A0C11)',
+          border: '1px solid #FFC531',
           borderRadius: '24px',
           padding: '50px',
           boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
@@ -79,7 +78,7 @@ export default function SellPage() {
               </p>
               <button
                 onClick={() => setSubmitted(false)}
-                style={{ marginTop: '30px', background: 'transparent', border: '1px solid #D4AF37', color: '#D4AF37', padding: '12px 24px', borderRadius: '8px', cursor: 'pointer', textTransform: 'uppercase', fontSize: '12px', fontWeight: 700 }}
+                style={{ marginTop: '30px', background: 'transparent', border: '1px solid #FFC531', color: '#FFC531', padding: '12px 24px', borderRadius: '8px', cursor: 'pointer', textTransform: 'uppercase', fontSize: '12px', fontWeight: 700 }}
               >
                 Submit Another Listing
               </button>
@@ -97,7 +96,7 @@ export default function SellPage() {
               <div style={{ gridColumn: 'span 2' }}>
                 <label htmlFor="listingTitle" style={labelStyle}>Listing Title</label>
                 <input
-                  className={styles.focusOutline}
+                  className={'focus-ring'}
                   id="listingTitle"
                   type="text"
                   required
@@ -111,7 +110,7 @@ export default function SellPage() {
               <div>
                 <label htmlFor="gameTier" style={labelStyle}>Game Tier</label>
                 <select
-                  className={styles.focusOutline}
+                  className={'focus-ring'}
                   id="gameTier"
                   style={inputStyle}
                   value={form.game}
@@ -126,7 +125,7 @@ export default function SellPage() {
               <div>
                 <label htmlFor="askingPrice" style={labelStyle}>Asking Price ($)</label>
                 <input
-                  className={styles.focusOutline}
+                  className={'focus-ring'}
                   id="askingPrice"
                   type="number"
                   required
@@ -142,7 +141,7 @@ export default function SellPage() {
               {/* --- 📸 SCREENSHOT UPLOAD SECTION (visual only, not stored yet) --- */}
               <div style={{ gridColumn: 'span 2' }}>
                 <span id="fileUploadLabel" style={labelStyle}>Account Visuals (Screenshots)</span>
-                <label htmlFor="fileUpload" className={styles.fileDropzone} style={{
+                <label htmlFor="fileUpload" className="file-dropzone" style={{
                   display: 'block',
                   border: '2px dashed #333',
                   borderRadius: '16px',
@@ -152,20 +151,20 @@ export default function SellPage() {
                   transition: 'border 0.3s ease',
                   cursor: 'pointer'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.borderColor = '#D4AF37'}
-                onMouseOut={(e) => e.currentTarget.style.borderColor = '#333'}
+                onMouseOver={(e) => e.currentTarget.style.borderColor = '#FFC531'}
+                onMouseOut={(e) => e.currentTarget.style.borderColor = '#3A4054'}
                 >
                   <div style={{ fontSize: '40px', marginBottom: '15px' }}>🖼️</div>
-                  <div style={{ fontSize: '14px', fontWeight: 700, color: '#D4AF37', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
+                  <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFC531', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
                   <div style={{ fontSize: '11px', color: '#555' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
-                  <input aria-labelledby="fileUploadLabel" className={styles.focusOutline} type="file" multiple style={{ opacity: 0, width: '1px', height: '1px', position: 'absolute' }} id="fileUpload" />
+                  <input aria-labelledby="fileUploadLabel" className={'focus-ring'} type="file" multiple style={{ opacity: 0, width: '1px', height: '1px', position: 'absolute' }} id="fileUpload" />
                   <span style={{
                     display: 'inline-block',
                     marginTop: '20px',
                     fontSize: '12px',
                     fontWeight: 900,
                     color: '#000',
-                    background: '#D4AF37',
+                    background: '#FFC531',
                     padding: '8px 20px',
                     borderRadius: '4px',
                     cursor: 'pointer'
@@ -176,7 +175,7 @@ export default function SellPage() {
               <div style={{ gridColumn: 'span 2' }}>
                 <label htmlFor="detailedDescription" style={labelStyle}>Detailed description</label>
                 <textarea
-                  className={styles.focusOutline}
+                  className={'focus-ring'}
                   id="detailedDescription"
                   required
                   placeholder="List all rare skins, peak ranks, and region info..."
@@ -190,10 +189,10 @@ export default function SellPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className={styles.focusOutline}
+                  className={'focus-ring'}
                   style={{
                     width: '100%',
-                    background: 'linear-gradient(45deg, #D4AF37, #AA8A2E)',
+                    background: 'linear-gradient(45deg, #FFC531, #AA8A2E)',
                     color: '#000',
                     padding: '20px',
                     borderRadius: '12px',
@@ -223,7 +222,7 @@ const labelStyle = {
   fontSize: '11px',
   fontWeight: 900,
   textTransform: 'uppercase',
-  color: '#D4AF37',
+  color: '#FFC531',
   marginBottom: '10px',
   letterSpacing: '1.5px'
 };

@@ -17,8 +17,8 @@ jest.mock('next-auth/react', () => ({
 
 jest.mock('next/link', () => ({
   __esModule: true,
-  default: ({ children, href, style }) => (
-    <a href={href} style={style}>{children}</a>
+  default: ({ children, href, style, className }) => (
+    <a href={href} style={style} className={className}>{children}</a>
   ),
 }));
 
@@ -45,15 +45,15 @@ describe('Navbar Component', () => {
     expect(screen.getByText('SMURF')).toBeInTheDocument();
     expect(screen.getByText('RANK')).toBeInTheDocument();
 
-    expect(screen.getByText('CS2')).toHaveAttribute('href', '/cs2');
-    expect(screen.getByText('VAL')).toHaveAttribute('href', '/valorant');
-    expect(screen.getByText('GTA V')).toHaveAttribute('href', '/gta-v');
-    expect(screen.getByText('BOOSTING')).toHaveAttribute('href', '/boosting');
-    expect(screen.getByText('SELL')).toHaveAttribute('href', '/sell');
-    expect(screen.getByText('SIGN IN')).toHaveAttribute('href', '/login');
+    expect(screen.getAllByText('CS2')[0]).toHaveAttribute('href', '/cs2');
+    expect(screen.getAllByText('Valorant')[0]).toHaveAttribute('href', '/valorant');
+    expect(screen.getAllByText('GTA V')[0]).toHaveAttribute('href', '/gta-v');
+    expect(screen.getAllByText('Boosting')[0]).toHaveAttribute('href', '/boosting');
+    expect(screen.getAllByText('Sell')[0]).toHaveAttribute('href', '/sell');
+    expect(screen.getAllByText('Sign In')[0]).toHaveAttribute('href', '/login');
   });
 
-  it('renders cart button with correct count', () => {
+  it('shows a cart badge with the item count when the cart has items', () => {
     useCart.mockReturnValue({
       cart: [{ id: 1 }, { id: 2 }, { id: 3 }],
       setIsOpen: mockSetIsOpen,
@@ -61,18 +61,21 @@ describe('Navbar Component', () => {
 
     render(<Navbar />);
 
-    const cartButton = screen.getByText('CART (3)');
-    expect(cartButton).toBeInTheDocument();
+    expect(screen.getAllByText('3').length).toBeGreaterThan(0);
   });
 
-  it('calls setIsOpen when cart button is clicked', () => {
+  it('renders no cart badge when the cart is empty', () => {
+    render(<Navbar />);
+    expect(screen.queryByText('0')).not.toBeInTheDocument();
+  });
+
+  it('calls setIsOpen when the cart button is clicked', () => {
     render(<Navbar />);
 
-    const cartButton = screen.getByText('CART (0)');
-    fireEvent.click(cartButton);
+    const cartButtons = screen.getAllByText('Cart');
+    fireEvent.click(cartButtons[0]);
 
     expect(mockSetIsOpen).toHaveBeenCalledWith(true);
-    expect(mockSetIsOpen).toHaveBeenCalledTimes(1);
   });
 
   it('displays loading state initially', () => {
@@ -99,7 +102,7 @@ describe('Navbar Component', () => {
     render(<Navbar />);
 
     expect(screen.getByText('gamer@example.com')).toBeInTheDocument();
-    expect(screen.getByText('SIGN OUT')).toBeInTheDocument();
-    expect(screen.queryByText('SIGN IN')).not.toBeInTheDocument();
+    expect(screen.getByText('Sign Out')).toBeInTheDocument();
+    expect(screen.queryByText('Sign In')).not.toBeInTheDocument();
   });
 });

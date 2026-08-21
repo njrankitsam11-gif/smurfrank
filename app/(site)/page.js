@@ -29,9 +29,18 @@ export const metadata = {
   },
 };
 
+import { prisma } from '../../lib/prisma';
 import HomePageClient from './page.client';
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  const featuredListings = await prisma.listing.findMany({
+    where: { active: true },
+    orderBy: { createdAt: 'desc' },
+    take: 8,
+  });
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -50,7 +59,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <HomePageClient />
+      <HomePageClient featuredListings={featuredListings} />
     </>
   );
 }

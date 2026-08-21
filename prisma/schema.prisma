@@ -21,6 +21,7 @@ model Listing {
   instant     Boolean  @default(true)
   description String
   includes    String[]
+  images      String[] @default([])
   active      Boolean  @default(true)
   status      String   @default("active")
   sellerEmail String?

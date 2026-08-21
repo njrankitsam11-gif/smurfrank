@@ -1,21 +1,18 @@
 import { useMemo } from 'react';
 
-export function useProductSort(products, activeSort) {
+export function useProductSort(listings, activeSort) {
   return useMemo(() => {
     if (activeSort === 'BEST_SELLER') {
-      return [...products].reverse();
+      return [...listings].reverse();
     }
 
     if (activeSort === 'LOW_HIGH' || activeSort === 'HIGH_LOW') {
-      const parsedProducts = products.map(p => ({
-        ...p,
-        numericPrice: parseFloat(p.price.replace(/[^0-9.-]+/g, ""))
-      }));
-
-      parsedProducts.sort((a, b) => activeSort === 'LOW_HIGH' ? a.numericPrice - b.numericPrice : b.numericPrice - a.numericPrice);
-      return parsedProducts;
+      const sorted = [...listings].sort((a, b) =>
+        activeSort === 'LOW_HIGH' ? a.price - b.price : b.price - a.price
+      );
+      return sorted;
     }
 
-    return [...products];
-  }, [products, activeSort]);
+    return listings;
+  }, [listings, activeSort]);
 }

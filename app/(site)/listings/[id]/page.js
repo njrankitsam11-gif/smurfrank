@@ -22,6 +22,12 @@ export async function generateMetadata({ params }) {
 
 import Link from 'next/link';
 import BuyButton from './BuyButton';
+import ListingArt from '../../../../components/marketplace/ListingArt';
+import SpecGrid from '../../../../components/marketplace/SpecGrid';
+import PriceSidebar from '../../../../components/marketplace/PriceSidebar';
+import RelatedListings from '../../../../components/marketplace/RelatedListings';
+import GameSubNav from '../../../../components/marketplace/GameSubNav';
+import { getGameTheme } from '../../../../lib/gameTheme';
 
 export default async function ListingDetailPage({ params }) {
   const { id } = await params;
@@ -29,125 +35,65 @@ export default async function ListingDetailPage({ params }) {
 
   if (!listing) notFound();
 
+  const theme = getGameTheme(listing.game);
+  const related = await prisma.listing.findMany({
+    where: { game: listing.game, active: true, id: { not: listing.id } },
+    orderBy: { createdAt: 'desc' },
+    take: 12,
+  });
+
   return (
-    <main style={{backgroundColor: '#050507', minHeight: '100vh', fontFamily: 'sans-serif', color: 'white'}}>
-      
-      {/* 
-        NOTE: The old <nav> is permanently removed from here! 
-        Your Master Nav handles everything automatically now. 
-      */}
+    <main className="min-h-screen bg-ink-950 text-ink-50">
+      <GameSubNav game={listing.game} />
 
-      {/* Main Content Grid */}
-      <div style={{maxWidth: '1200px', margin: '0 auto', padding: '60px 40px', display: 'grid', gridTemplateColumns: '1fr 350px', gap: '60px'}}>
-        
-        {/* LEFT COLUMN: Details */}
-        <div>
-          <Link href="/" style={{color: '#FF6A00', textDecoration: 'none', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px'}}>← Back to Marketplace</Link>
-          
-          <h1 style={{fontSize: '48px', fontWeight: 900, textTransform: 'uppercase', margin: '24px 0 32px', lineHeight: 1.1}}>
-            {listing.title}
-          </h1>
+      <div className="mx-auto max-w-7xl px-6 py-10">
+        <Link href={theme.href} className="focus-ring text-xs font-bold uppercase tracking-wide text-gold-400">
+          ← Back to {theme.label} Accounts
+        </Link>
 
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', backgroundColor: '#1a1a1a', border: '1px solid #1a1a1a', marginBottom: '40px'}}>
-            <div style={{backgroundColor: '#0f0f17', padding: '24px'}}>
-              <div style={{color: '#555', fontSize: '11px', textTransform: 'uppercase', fontWeight: 900, marginBottom: '8px'}}>Game</div>
-              <div style={{fontSize: '18px', fontWeight: 700}}>{listing.game}</div>
-            </div>
-            <div style={{backgroundColor: '#0f0f17', padding: '24px'}}>
-              <div style={{color: '#555', fontSize: '11px', textTransform: 'uppercase', fontWeight: 900, marginBottom: '8px'}}>Rank Tier</div>
-              <div style={{fontSize: '18px', fontWeight: 700}}>{listing.rank}</div>
-            </div>
-            <div style={{backgroundColor: '#0f0f17', padding: '24px'}}>
-              <div style={{color: '#555', fontSize: '11px', textTransform: 'uppercase', fontWeight: 900, marginBottom: '8px'}}>Region</div>
-              <div style={{fontSize: '18px', fontWeight: 700}}>{listing.region}</div>
-            </div>
-            <div style={{backgroundColor: '#0f0f17', padding: '24px'}}>
-              <div style={{color: '#555', fontSize: '11px', textTransform: 'uppercase', fontWeight: 900, marginBottom: '8px'}}>Delivery</div>
-              <div style={{fontSize: '18px', fontWeight: 700, color: '#FF6A00'}}>INSTANT</div>
-            </div>
-          </div>
+        <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_380px]">
+          <div>
+            <ListingArt game={listing.game} size="hero" imageUrl={listing.images?.[0]} className="rounded-2xl border border-ink-600" />
 
-          {/* 🪄 FUN & PREMIUM DESCRIPTION SECTION */}
-          <div style={{ 
-            marginTop: '20px', 
-            background: 'linear-gradient(135deg, #0f0f17 0%, #050507 100%)', 
-            padding: '40px', 
-            borderRadius: '16px', 
-            border: '1px solid #1a1a1a',
-            borderLeft: '4px solid #FF6A00', 
-            position: 'relative', 
-            overflow: 'hidden',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
-          }}>
-            
-            {/* Faded background icon for that gaming vibe */}
-            <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '150px', opacity: '0.02', pointerEvents: 'none' }}>
-              🎮
+            <h1 className="font-display mt-8 text-3xl font-bold leading-tight sm:text-4xl">{listing.title}</h1>
+
+            <div className="mt-8">
+              <SpecGrid listing={listing} />
             </div>
 
-            <h2 style={{ 
-              fontSize: '22px', 
-              fontWeight: 900, 
-              textTransform: 'uppercase', 
-              marginBottom: '20px', 
-              letterSpacing: '2px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '12px' 
-            }}>
-              <span style={{ color: '#FF6A00' }}>✦</span> Account Dossier
-            </h2>
+            {listing.includes?.length > 0 && (
+              <div className="mt-8">
+                <h2 className="mb-3 text-xs font-bold uppercase tracking-wider text-ink-300">What&apos;s Included</h2>
+                <div className="flex flex-wrap gap-2">
+                  {listing.includes.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-ink-600 bg-ink-800/60 px-3 py-1.5 text-xs font-semibold text-ink-100"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
-            <p style={{ 
-              fontSize: '16px', 
-              color: '#b3b3b3', 
-              lineHeight: '1.8', 
-              marginBottom: '32px',
-              fontFamily: 'monospace' 
-            }}>
-              {listing.description || `This is a verified ${listing.game} account. It features a ${listing.rank} rank and is located in the ${listing.region} region. Upon purchase, you will receive full access credentials including the original email.`}
-            </p>
-
-            {/* Premium "Loot Drop" Tags */}
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <span style={{ background: 'rgba(255, 106, 0, 0.1)', color: '#FF6A00', padding: '8px 16px', borderRadius: '4px', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', border: '1px solid rgba(255,106,0,0.2)' }}>
-                ✅ Anti-Ban Secure
-              </span>
-              <span style={{ background: 'rgba(0, 255, 102, 0.1)', color: '#00FF66', padding: '8px 16px', borderRadius: '4px', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', border: '1px solid rgba(0,255,102,0.2)' }}>
-                🔒 Full OGE Access
-              </span>
-              <span style={{ background: 'rgba(157, 0, 255, 0.1)', color: '#9D00FF', padding: '8px 16px', borderRadius: '4px', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', border: '1px solid rgba(157,0,255,0.2)' }}>
-                ⚡ Matchmaking Ready
-              </span>
+            <div className="mt-8 rounded-2xl border border-ink-600 bg-ink-800/50 p-8">
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ink-50">
+                <span style={{ color: theme.accent }}>✦</span> Account Details
+              </h2>
+              <p className="text-sm leading-relaxed text-ink-200">
+                {listing.description ||
+                  `This is a verified ${listing.game} account. It features a ${listing.rank} rank and is located in the ${listing.region} region. Upon purchase, you will receive full access credentials including the original email.`}
+              </p>
             </div>
           </div>
 
-        </div>
-
-        {/* RIGHT COLUMN: Sticky Sidebar */}
-        <div style={{position: 'relative'}}>
-          <div style={{position: 'sticky', top: '100px', backgroundColor: '#0f0f17', border: '1px solid #1a1a1a', padding: '32px'}}>
-            <div style={{color: '#555', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '8px'}}>Buy Now For</div>
-            <div style={{fontSize: '48px', fontWeight: 900, color: '#FF6A00', marginBottom: '32px'}}>
-              ${Number(listing.price).toFixed(2)}
-            </div>
-            
+          <PriceSidebar price={listing.price}>
             <BuyButton listing={listing} />
-            
-            <div style={{marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '16px'}}>
-              <div style={{display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#888'}}>
-                <span style={{color: '#FF6A00'}}>✔</span> Instant Delivery via Email
-              </div>
-              <div style={{display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#888'}}>
-                <span style={{color: '#FF6A00'}}>✔</span> Secure Escrow Protection
-              </div>
-              <div style={{display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#888'}}>
-                <span style={{color: '#FF6A00'}}>✔</span> Verified Seller Account
-              </div>
-            </div>
-          </div>
+          </PriceSidebar>
         </div>
 
+        <RelatedListings listings={related} game={listing.game} />
       </div>
     </main>
   );
