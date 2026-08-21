@@ -10,6 +10,21 @@ mock.module("../context/CartContext", () => {
 
 const { useCart } = await import("../context/CartContext");
 
+// Raw React elements can carry component functions (e.g. next/link, whose
+// module object self-references via `.default`) in `type`, and internal
+// `_owner`/`_store` fields — none of which JSON.stringify can traverse
+// safely. Strip them so we can still search the tree for rendered content.
+const safeStringify = (node) => JSON.stringify(node, (key, value) => {
+    if (key === '_owner' || key === '_store' || key === 'ref') return undefined;
+    // `type` is a DOM tag name (string) for host elements, but a function or
+    // forwardRef/memo object for components (e.g. next/link) — never walk
+    // into the latter, just identify it.
+    if (key === 'type' && value !== null && typeof value !== 'string') {
+        return value.displayName || value.name || 'Component';
+    }
+    return value;
+});
+
 describe("CartDrawer Component", () => {
     beforeEach(() => {
         useCart.mockReset();
@@ -41,7 +56,7 @@ describe("CartDrawer Component", () => {
         expect(result).not.toBeNull();
         expect(result.type).toBe('div');
 
-        const treeStr = JSON.stringify(result);
+        const treeStr = safeStringify(result);
         expect(treeStr).toContain("YOUR ");
         expect(treeStr).toContain("CART");
         expect(treeStr).toContain("Empty.");
@@ -64,7 +79,7 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        const treeStr = JSON.stringify(result);
+        const treeStr = safeStringify(result);
 
         expect(treeStr).toContain("Test Product");
         expect(treeStr).toContain("10.00"); // formatted item price 10.00 * 1
