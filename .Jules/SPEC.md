@@ -72,6 +72,12 @@ __tests__/                        Jest specs (api/auth, api/register, hooks, lis
 - Cart state lives in React Context (`CartContext`), separate from the Redux store — the two state systems are not unified.
 - Rate limiting (register route, next-auth authorize) is in-memory `Map`-based, per-process — will not work correctly across multiple serverless instances/regions. Fine for now, but not a real distributed rate limiter.
 
+## Repo hygiene / environment gotchas
+
+- **Case-sensitivity trap (resolved once, can recur):** Prior sessions on a case-insensitive filesystem (macOS) accidentally committed both `.Jules/*` and `.jules/*` as *separate tracked git paths* pointing at what is really one file on disk. Because macOS treats `.Jules` and `.jules` as the same path, whichever casing was last written silently overwrote the other in the working tree, while git kept both blobs in its index with diverging content — this caused real content loss in `bolt.md`/`sentinel.md`/`palette.md` across sessions before it was caught and fixed (PR #210, commit `f852e5b`). All `.Jules/*.md` content should be trusted as canonical going forward; only ever write to the `.Jules/` (capital J) path.
+- **Symptom if it recurs:** `git status` shows a phantom modified file (`.Jules/palette.md` or `.jules/palette.md`) with no session-initiated edit behind it, and `git pull`/`git stash pop` loops between two diff states instead of resolving — because checking out one case-variant path always dirties the other on disk. If you see this, don't trust `git checkout -- <file>` to fix it (it will just flip which variant is dirty); check `git ls-files | grep -i jules` for duplicate tracked paths first.
+- **Fix if it recurs:** diff `git show HEAD:.Jules/<f>` vs `git show HEAD:.jules/<f>` to find any content that exists in only one, merge into a single canonical `.Jules/<f>` on disk, `git rm --cached` the lowercase duplicate, `git add` the canonical file, and commit. If a normal `git pull` is blocked by the resulting phantom diff and stashing doesn't clear it, `git fetch` + `git reset --hard origin/<branch>` (after confirming with the user, since it's destructive) jumps straight to the fixed remote state without walking through the broken intermediate one.
+
 ## Conventions established in this repo (from prior sessions — see .Jules/*.md for full detail)
 
 - Bound all Prisma `findMany` with `take`/`skip`; use `Promise.all` for count+findMany pagination pairs.
