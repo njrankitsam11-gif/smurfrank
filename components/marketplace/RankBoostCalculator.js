@@ -72,6 +72,7 @@ export default function RankBoostCalculator({ game }) {
         <Select
           id="currentRank"
           label="Current rank"
+          hideLabel
           value={currentRankIndex}
           onChange={(e) => setCurrentRankIndex(Number(e.target.value))}
         >
@@ -100,6 +101,7 @@ export default function RankBoostCalculator({ game }) {
         <Select
           id="desiredRank"
           label="Desired rank"
+          hideLabel
           value={desiredRankIndex}
           onChange={(e) => setDesiredRankIndex(Number(e.target.value))}
         >
