@@ -169,8 +169,8 @@ function AdminListingsPageInner() {
 
       {sellerFilter && (
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', fontSize: '13px', color: '#ccc' }}>
-          Showing listings from <strong style={{ color: '#D4AF37' }}>{sellerFilter}</strong>
-          <a href="/admin/listings" style={{ color: '#D4AF37' }}>Clear filter</a>
+          Showing listings from <strong style={{ color: '#FFC531' }}>{sellerFilter}</strong>
+          <a href="/admin/listings" style={{ color: '#FFC531' }}>Clear filter</a>
         </div>
       )}
 
@@ -183,7 +183,7 @@ function AdminListingsPageInner() {
       {pendingListings.length > 0 && (
         <div style={{
           background: 'linear-gradient(145deg, #1a1400, #110d00)',
-          border: '1px solid #D4AF37',
+          border: '1px solid #FFC531',
           borderRadius: '16px',
           padding: '20px 24px',
           marginBottom: '30px',
@@ -205,7 +205,7 @@ function AdminListingsPageInner() {
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <button onClick={() => approveListing(listing)} style={{
-                    background: '#D4AF37', color: '#050505', fontWeight: 700, border: 'none',
+                    background: '#FFC531', color: '#050505', fontWeight: 700, border: 'none',
                     borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '12px',
                   }}>
                     Approve
@@ -306,7 +306,7 @@ function AdminListingsPageInner() {
 
         <div style={{ gridColumn: 'span 3', display: 'flex', gap: '10px' }}>
           <button type="submit" disabled={saving} style={{
-            background: '#D4AF37', color: '#050505', fontWeight: 700, border: 'none',
+            background: '#FFC531', color: '#050505', fontWeight: 700, border: 'none',
             borderRadius: '10px', padding: '10px 20px', cursor: 'pointer', fontSize: '13px',
           }}>
             {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Create Listing'}
@@ -347,7 +347,7 @@ function AdminListingsPageInner() {
                   <td style={{ padding: '10px' }}>{listing.rank}</td>
                   <td style={{ padding: '10px' }}>${listing.price.toFixed(2)}</td>
                   <td style={{ padding: '10px' }}>
-                    <span style={{ color: listing.status === 'pending' ? '#D4AF37' : listing.status === 'rejected' ? '#f55' : listing.active ? '#5f5' : '#999' }}>
+                    <span style={{ color: listing.status === 'pending' ? '#FFC531' : listing.status === 'rejected' ? '#f55' : listing.active ? '#5f5' : '#999' }}>
                       {listing.status === 'pending' ? 'Pending' : listing.status === 'rejected' ? 'Rejected' : listing.active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
@@ -371,7 +371,7 @@ function AdminListingsPageInner() {
 const linkBtn = {
   background: 'transparent',
   border: 'none',
-  color: '#D4AF37',
+  color: '#FFC531',
   cursor: 'pointer',
   fontSize: '12px',
   padding: 0,

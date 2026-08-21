@@ -95,7 +95,7 @@ export default function AdminPipelinePage() {
                             disabled={busyId === order.id}
                             onClick={() => setStatus(order, stage.next)}
                             style={{
-                              background: '#D4AF37', color: '#050505', fontWeight: 700, border: 'none',
+                              background: '#FFC531', color: '#050505', fontWeight: 700, border: 'none',
                               borderRadius: '6px', padding: '6px 10px', cursor: 'pointer', fontSize: '11px',
                             }}
                           >

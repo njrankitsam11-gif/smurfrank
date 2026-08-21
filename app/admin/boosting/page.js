@@ -160,7 +160,7 @@ export default function AdminBoostingPage() {
 
         <div style={{ gridColumn: 'span 3', display: 'flex', gap: '10px' }}>
           <button type="submit" disabled={saving} style={{
-            background: '#D4AF37', color: '#050505', fontWeight: 700, border: 'none',
+            background: '#FFC531', color: '#050505', fontWeight: 700, border: 'none',
             borderRadius: '10px', padding: '10px 20px', cursor: 'pointer', fontSize: '13px',
           }}>
             {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Create Service'}
@@ -223,7 +223,7 @@ export default function AdminBoostingPage() {
 const linkBtn = {
   background: 'transparent',
   border: 'none',
-  color: '#D4AF37',
+  color: '#FFC531',
   cursor: 'pointer',
   fontSize: '12px',
   padding: 0,
