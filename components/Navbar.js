@@ -2,12 +2,20 @@
 import { useCart } from '../context/CartContext';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import styles from './Navbar.module.css';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GAME_LIST } from '../lib/gameTheme';
+
+const NAV_LINKS = [
+  ...GAME_LIST.map((g) => ({ href: g.href, label: g.label })),
+  { href: '/boosting', label: 'Boosting', accent: '#FFC531' },
+  { href: '/sell', label: 'Sell', accent: '#8890A6' },
+];
 
 export default function Navbar() {
   const { cart, setIsOpen } = useCart();
   const [mounted, setMounted] = useState(false);
   const [users, setUsers] = useState([0, 0, 0]);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,41 +30,132 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className={styles.header}>
-      {/* MOVING LIVE FEED */}
-      <div className={styles.liveFeedContainer}>
+    <header className="sticky top-0 z-50 border-b border-ink-600 bg-ink-950/90 backdrop-blur-md">
+      <div className="overflow-hidden whitespace-nowrap border-b border-ink-600 bg-ink-900/80 py-2 text-[10px] font-bold text-ink-200">
         <div className="live-feed-animation">
           {mounted ? (
             <>
-              LIVE: USER_{users[0]} PURCHASED GTA V 2BN ACCOUNT — 1m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              LIVE: USER_{users[0]} PURCHASED GTA V ACCOUNT — 1m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               LIVE: USER_{users[1]} PURCHASED CS2 GLOBAL ELITE — 3m AGO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               LIVE: USER_{users[2]} PURCHASED VALORANT RADIANT — 5m AGO
             </>
           ) : (
-            "LOADING RECENT SALES..."
+            'LOADING RECENT SALES...'
           )}
         </div>
       </div>
 
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>SMURF<span className={styles.logoHighlight}>RANK</span></Link>
-        
-        <div className={styles.navLinks}>
-          <Link href="/cs2" className={styles.link}>CS2</Link>
-          <Link href="/valorant" className={styles.link}>VAL</Link>
-          <Link href="/gta-v" className={styles.link}>GTA V</Link>
-          <Link href="/boosting" className={styles.linkBoosting}>BOOSTING</Link>
-          <Link href="/sell" className={styles.linkSell}>SELL</Link>
-          
-          <div className={styles.divider} />
-          
-          <Link href="/login" className={styles.linkSignIn}>SIGN IN</Link>
-          
-          <button onClick={() => setIsOpen(true)} className={styles.cartButton}>
-            CART ({cart.length})
+      <nav className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6">
+        <Link href="/" className="font-display shrink-0 text-lg font-bold tracking-tight text-ink-50 sm:text-xl">
+          SMURF<span className="text-gold-400">RANK</span>
+        </Link>
+
+        <form action="/search" method="GET" className="mx-2 hidden max-w-md flex-1 items-center lg:flex">
+          <div className="flex w-full items-center gap-2 rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 focus-within:border-gold-400">
+            <span aria-hidden="true" className="text-ink-300">⌕</span>
+            <input
+              name="q"
+              placeholder="Search accounts by rank, game, region..."
+              aria-label="Search accounts"
+              className="w-full bg-transparent text-sm text-ink-50 outline-none placeholder:text-ink-300"
+            />
+          </div>
+        </form>
+
+        <div className="ml-auto hidden items-center gap-6 md:flex">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="focus-ring text-xs font-bold uppercase tracking-wide text-ink-200 transition-colors hover:text-ink-50"
+              style={link.accent ? { color: link.accent } : undefined}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="h-5 w-px bg-ink-600" />
+          <Link href="/login" className="focus-ring text-xs font-bold uppercase tracking-wide text-ink-200 hover:text-ink-50">
+            Sign In
+          </Link>
+          <button
+            onClick={() => setIsOpen(true)}
+            className="focus-ring relative rounded-lg border border-ink-500 px-4 py-2 text-xs font-bold uppercase tracking-wide text-ink-50 transition-colors hover:border-gold-400"
+          >
+            Cart
+            <AnimatePresence>
+              {cart.length > 0 && (
+                <motion.span
+                  key={cart.length}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+                  className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-gold-400 text-[10px] font-bold text-ink-950"
+                >
+                  {cart.length}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </button>
         </div>
+
+        <button
+          onClick={() => setIsOpen(true)}
+          className="focus-ring ml-auto rounded-lg border border-ink-500 px-3 py-2 text-xs font-bold text-ink-50 md:hidden"
+          aria-label={`Open cart (${cart.length} items)`}
+        >
+          🛒 {cart.length}
+        </button>
+        <button
+          onClick={() => setMobileOpen((o) => !o)}
+          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+          className="focus-ring rounded-lg border border-ink-500 p-2 text-ink-50 md:hidden"
+        >
+          {mobileOpen ? '✕' : '☰'}
+        </button>
       </nav>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-ink-600 md:hidden"
+          >
+            <div className="flex flex-col gap-1 px-4 py-4">
+              <form action="/search" method="GET" className="mb-3 flex items-center gap-2 rounded-lg border border-ink-500 bg-ink-800 px-3 py-2">
+                <span aria-hidden="true" className="text-ink-300">⌕</span>
+                <input
+                  name="q"
+                  placeholder="Search accounts..."
+                  aria-label="Search accounts"
+                  className="w-full bg-transparent text-sm text-ink-50 outline-none placeholder:text-ink-300"
+                />
+              </form>
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="focus-ring rounded-lg px-3 py-3 text-sm font-bold uppercase tracking-wide text-ink-200 hover:bg-ink-800 hover:text-ink-50"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="focus-ring rounded-lg px-3 py-3 text-sm font-bold uppercase tracking-wide text-ink-200 hover:bg-ink-800 hover:text-ink-50"
+              >
+                Sign In
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

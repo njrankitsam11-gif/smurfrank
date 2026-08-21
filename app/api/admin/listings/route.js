@@ -15,7 +15,7 @@ export async function POST(request) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await request.json();
-  const { title, game, rank, region, price, level, wins, hours, type, instant, description, includes, active } = body;
+  const { title, game, rank, region, price, level, wins, hours, type, instant, description, includes, images, active } = body;
 
   if (!title || !game || !rank || !region || price === undefined || !description) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -35,6 +35,7 @@ export async function POST(request) {
       instant: instant ?? true,
       description,
       includes: Array.isArray(includes) ? includes : [],
+      images: Array.isArray(images) ? images : [],
       active: active ?? true,
     },
   });

@@ -1,4 +1,5 @@
 import { expect, test, describe, mock, beforeEach } from "bun:test";
+import { AnimatePresence } from "framer-motion";
 import CartDrawer from "./CartDrawer";
 
 // Mock the dependency before importing component
@@ -17,8 +18,8 @@ const { useCart } = await import("../context/CartContext");
 const safeStringify = (node) => JSON.stringify(node, (key, value) => {
     if (key === '_owner' || key === '_store' || key === 'ref') return undefined;
     // `type` is a DOM tag name (string) for host elements, but a function or
-    // forwardRef/memo object for components (e.g. next/link) — never walk
-    // into the latter, just identify it.
+    // forwardRef/memo object for components (e.g. next/link, motion.div) —
+    // never walk into the latter, just identify it.
     if (key === 'type' && value !== null && typeof value !== 'string') {
         return value.displayName || value.name || 'Component';
     }
@@ -30,7 +31,10 @@ describe("CartDrawer Component", () => {
         useCart.mockReset();
     });
 
-    test("returns null when isOpen is false", () => {
+    // The drawer is now always mounted inside AnimatePresence (so the exit
+    // animation can play) — when closed, it renders AnimatePresence with a
+    // falsy child instead of returning null outright.
+    test("renders nothing visible when isOpen is false", () => {
         useCart.mockReturnValue({
             isOpen: false,
             cart: [],
@@ -40,7 +44,8 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        expect(result).toBeNull();
+        expect(result.type).toBe(AnimatePresence);
+        expect(result.props.children).toBeFalsy();
     });
 
     test("renders correctly when isOpen is true and cart is empty", () => {
@@ -53,13 +58,13 @@ describe("CartDrawer Component", () => {
         });
 
         const result = CartDrawer();
-        expect(result).not.toBeNull();
-        expect(result.type).toBe('div');
+        expect(result.type).toBe(AnimatePresence);
+        expect(result.props.children.type).toBe('div');
 
         const treeStr = safeStringify(result);
         expect(treeStr).toContain("YOUR ");
         expect(treeStr).toContain("CART");
-        expect(treeStr).toContain("Empty.");
+        expect(treeStr).toContain("Your cart is empty.");
         expect(treeStr).toContain("0.00"); // It renders as ["$", "0.00"]
     });
 

@@ -1,4 +1,6 @@
 import { expect, it, describe, mock } from "bun:test";
+import * as ReactActual from "react";
+import * as NavigationActual from "next/navigation";
 
 // Mock react/jsx-dev-runtime to avoid ERR_MODULE_NOT_FOUND when importing the page
 mock.module("react/jsx-dev-runtime", () => ({
@@ -7,8 +9,10 @@ mock.module("react/jsx-dev-runtime", () => ({
   jsxDEV: () => null,
 }));
 
-// Mock next/navigation
+// Only override notFound — spreading the real module keeps other exports
+// (useRouter, etc.) intact for anything pulled in transitively (BuyButton).
 mock.module("next/navigation", () => ({
+  ...NavigationActual,
   notFound: mock(),
 }));
 
@@ -17,17 +21,21 @@ mock.module("next/link", () => ({
   default: () => null,
 }));
 
-// Mock react cache before importing the page
+// Only override react's `cache` — spreading the real module keeps every
+// other export (createContext, etc.) intact for anything pulled in
+// transitively while importing the page.
 mock.module("react", () => ({
+  ...ReactActual,
   cache: (fn) => fn,
 }));
 
-// Mock prisma before importing the page
-const mockFindUnique = mock();
+// Mock prisma before importing the page. The page filters out inactive/
+// pending listings via findFirst({ where: { id, active: true } }).
+const mockFindFirst = mock();
 mock.module("../../../lib/prisma", () => ({
   prisma: {
     listing: {
-      findUnique: mockFindUnique,
+      findFirst: mockFindFirst,
     },
   },
 }));
@@ -46,7 +54,7 @@ describe("Listing Detail generateMetadata", () => {
       region: "NA",
       price: 500,
     };
-    mockFindUnique.mockResolvedValueOnce(mockListing);
+    mockFindFirst.mockResolvedValueOnce(mockListing);
 
     const params = Promise.resolve({ id: "123" });
     const metadata = await generateMetadata({ params });
@@ -55,13 +63,13 @@ describe("Listing Detail generateMetadata", () => {
       title: "Pro Valorant Account | Buy Valorant Accounts",
       description: "Securely buy this Valorant account. Rank: Radiant, Region: NA. Instant delivery and escrow protection guaranteed.",
     });
-    expect(mockFindUnique).toHaveBeenCalledWith({
-      where: { id: "123" },
+    expect(mockFindFirst).toHaveBeenCalledWith({
+      where: { id: "123", active: true },
     });
   });
 
   it("returns 'Listing Not Found' when listing does not exist", async () => {
-    mockFindUnique.mockResolvedValueOnce(null);
+    mockFindFirst.mockResolvedValueOnce(null);
 
     const params = Promise.resolve({ id: "nonexistent" });
     const metadata = await generateMetadata({ params });

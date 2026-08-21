@@ -1,129 +1,224 @@
 'use client';
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useCart } from '../../context/CartContext';
-import HotDealsFeed from '../../components/HotDealsFeed';
+import { GAME_LIST } from '../../lib/gameTheme';
+import { fadeInUp, staggerContainer, tileTilt, viewportOnce, heroWord } from '../../lib/motion';
+import Button from '../../components/ui/Button';
+import Accordion, { AccordionItem } from '../../components/ui/Accordion';
+import TrustBar from '../../components/marketplace/TrustBar';
+import ListingGrid from '../../components/marketplace/ListingGrid';
+import ListingArt from '../../components/marketplace/ListingArt';
 
-export default function HomePage() {
-  const { addToCart } = useCart();
+const HERO_LINE_1 = ['LEVEL', 'UP', 'YOUR'];
+const HERO_LINE_2 = ['GAME.'];
 
+const FAQ = [
+  { q: 'How fast is delivery?', a: 'Accounts are delivered instantly to your email the moment payment is confirmed.' },
+  { q: 'Are the accounts safe?', a: 'Yes — every account is sourced and hand-checked by our own team before it ever goes live, never a third-party seller.' },
+  { q: 'Do you offer refunds?', a: 'We back every purchase with a money-back guarantee. If something is wrong on our end, we replace it or refund you.' },
+  { q: 'How does boosting work?', a: 'Pick your current and desired rank on the Boosting page, get an instant price, and one of our own boosters gets to work securely.' },
+];
+
+export default function HomePage({ featuredListings = [] }) {
   return (
-    <main style={{ background: '#F0FFF0', minHeight: '100vh', paddingBottom: '100px', color: '#1D3631' }}>
-      {/* 🪄 HERO */}
-      <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        style={{ textAlign: 'center', padding: '100px 20px 80px' }}>
-        <h1 style={{ fontSize: 'clamp(50px, 10vw, 100px)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-5px', margin: 0, lineHeight: 0.9, color: '#1D3631' }}>
-          LEVEL UP <br/> <span style={{ color: '#5A9B90' }}>SMURF RANK</span>
-        </h1>
-      </motion.section>
+    <main className="min-h-screen bg-ink-950 pb-24 text-ink-50">
+      {/* HERO */}
+      <section className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-28">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <motion.div
+            className="absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-gold-500/20 blur-[120px]"
+            animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
+            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute top-10 right-1/4 h-80 w-80 rounded-full bg-valorant/20 blur-[120px]"
+            animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
+            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-gtav/15 blur-[120px]"
+            animate={{ x: [0, 20, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </div>
 
-      {/* ⚡ HOT DEALS */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', color: '#1D3631' }}>HOT <span style={{ color: '#5A9B90' }}>DEALS</span></h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-          {[
-            { id: 'h1', title: 'CS2 GLOBAL ELITE', price: '$45.00', desc: 'Prime • Instant', img: 'https://cdn.akamai.steamstatic.com/steam/apps/730/capsule_616x353.jpg' },
-            { id: 'h2', title: 'VALORANT RADIANT', price: '$125.00', desc: 'Skins • Peak Rank', img: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg' },
-            { id: 'h3', title: 'GTA V MODDED 2BN', price: '$29.00', desc: 'Level 500 • Unlocks', img: 'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/640/V.jpg' }
-          ].map((acc) => (
-            <motion.div
-              key={acc.id}
-              whileHover={{ scale: 1.05, rotateX: 10, rotateY: -10, boxShadow: '0px 10px 30px rgba(90, 155, 144, 0.2)' }}
-              style={{ background: '#FFFFFF', borderRadius: '15px', border: '1px solid #D1E8D1', perspective: '1000px', transformStyle: 'preserve-3d', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ width: '100%', height: '180px', backgroundImage: `url(${acc.img})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundColor: '#F9FCF9', borderBottom: '2px solid #5A9B90' }}></div>
-              <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <h3 style={{ fontWeight: 900, marginBottom: '8px', fontSize: '20px', color: '#1D3631' }}>{acc.title}</h3>
-                <p style={{ color: '#43766D', fontSize: '13px', marginBottom: 'auto', minHeight: '30px' }}>{acc.desc}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
-                  <span style={{ fontWeight: 900, fontSize: '22px', color: '#5A9B90' }}>{acc.price}</span>
-                  <button onClick={() => addToCart(acc)} style={{ background: '#5A9B90', color: '#FFFFFF', border: 'none', padding: '10px 18px', borderRadius: '4px', fontWeight: 900, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 10px rgba(90,155,144,0.3)' }}>ADD TO CART</button>
-                </div>
-              </div>
+        <div className="relative mx-auto max-w-4xl text-center">
+          <h1 className="font-display text-[13vw] font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl md:text-8xl">
+            <span className="block">
+              {HERO_LINE_1.map((word, i) => (
+                <motion.span key={word} custom={i} initial="hidden" animate="show" variants={heroWord} className="mr-4 inline-block">
+                  {word}
+                </motion.span>
+              ))}
+            </span>
+            <span className="block text-gold-400">
+              {HERO_LINE_2.map((word, i) => (
+                <motion.span key={word} custom={i + HERO_LINE_1.length} initial="hidden" animate="show" variants={heroWord} className="inline-block">
+                  {word}
+                </motion.span>
+              ))}
+            </span>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="mx-auto mt-6 max-w-xl text-sm text-ink-200 sm:text-base"
+          >
+            Verified CS2, Valorant &amp; GTA V accounts we procure and check ourselves —
+            instant delivery, real money-back guarantee, no third-party sellers.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65, duration: 0.6 }}
+            className="mt-9 flex flex-wrap items-center justify-center gap-4"
+          >
+            <Button href="/cs2" variant="primary" size="lg">Browse Accounts</Button>
+            <Button href="/boosting" variant="outline" size="lg">Get Boosted</Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* GAME TILES */}
+      <motion.section
+        initial="hidden"
+        whileInView="show"
+        viewport={viewportOnce()}
+        variants={staggerContainer}
+        className="mx-auto max-w-7xl px-6"
+      >
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3" style={{ perspective: 1200 }}>
+          {GAME_LIST.map((game) => (
+            <motion.div key={game.slug} variants={fadeInUp}>
+              <Link href={game.href} className="focus-ring group block">
+                <motion.div
+                  initial="rest"
+                  whileHover="hover"
+                  variants={tileTilt}
+                  className="overflow-hidden rounded-2xl border border-ink-600 bg-ink-800/60"
+                >
+                  <ListingArt game={game.key} size="hero" className="!h-56" />
+                  <div className="p-6">
+                    <div className="text-xs font-bold uppercase tracking-wider" style={{ color: game.accent }}>
+                      {game.tagline}
+                    </div>
+                    <div className="font-display mt-1 flex items-center justify-between text-2xl font-bold">
+                      {game.label}
+                      <span className="text-gold-400 transition-transform group-hover:translate-x-1">→</span>
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
             </motion.div>
           ))}
         </div>
+      </motion.section>
+
+      {/* TRUST BAR */}
+      <section className="mx-auto max-w-7xl px-6 pt-16">
+        <TrustBar />
       </section>
 
-      {/* ⚡ HOT DEALS LIVE FEED */}
-      <div style={{ marginBottom: '100px' }}><HotDealsFeed /></div>
+      {/* FEATURED LISTINGS */}
+      <section className="mx-auto max-w-7xl px-6 pt-20">
+        <motion.h2
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce()}
+          variants={fadeInUp}
+          className="font-display mb-8 text-3xl font-bold"
+        >
+          Fresh <span className="text-gold-400">Inventory</span>
+        </motion.h2>
+        <ListingGrid listings={featuredListings} />
+      </section>
 
-      {/* 🟣 BOOSTING SECTION (RESTORED) */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
-        <div style={{ background: 'linear-gradient(45deg, #E0FFE0, #F0FFF0)', border: '1px solid #D1E8D1', borderRadius: '24px', padding: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '40px' }}>
-          <div style={{ flex: '1', minWidth: '300px' }}>
-            <h2 style={{ fontSize: '40px', fontWeight: 900, marginBottom: '20px', color: '#1D3631' }}>NEED A <span style={{ color: '#5A9B90' }}>RANK BOOST?</span></h2>
-            <p style={{ color: '#43766D', marginBottom: '30px', fontSize: '18px' }}>Radiant & Global Elite boosters ready. 100% Win Rate Guaranteed.</p>
-            <button
-              onClick={() => window.location.href = '/boosting'}
-              style={{ background: '#5A9B90', color: '#FFFFFF', border: 'none', padding: '15px 40px', borderRadius: '5px', fontWeight: 900, cursor: 'pointer', boxShadow: '0 4px 10px rgba(90,155,144,0.3)' }}>START BOOST →</button>
+      {/* BOOSTING CTA */}
+      <motion.section
+        initial="hidden"
+        whileInView="show"
+        viewport={viewportOnce()}
+        variants={fadeInUp}
+        className="mx-auto max-w-7xl px-6 pt-20"
+      >
+        <div className="relative overflow-hidden rounded-3xl border border-gold-600/30 bg-gradient-to-br from-ink-800 to-ink-900 p-10 sm:p-16">
+          <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold-500/10 blur-[100px]" />
+          <div className="relative flex flex-wrap items-center justify-between gap-8">
+            <div className="max-w-lg">
+              <h2 className="font-display text-3xl font-bold sm:text-4xl">
+                NEED A <span className="text-gold-400">RANK BOOST?</span>
+              </h2>
+              <p className="mt-4 text-sm text-ink-200 sm:text-base">
+                Pick your current and target rank and get an instant price — fulfilled by our own boosters, never a stranger.
+              </p>
+            </div>
+            <Button href="/boosting" variant="primary" size="lg">Start Boost →</Button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* 👑 GOLD SELLER SECTION */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
-        <div style={{
-          background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FFF0 100%)',
-          border: '1px solid #5A9B90',
-          borderRadius: '24px',
-          padding: '60px',
-          textAlign: 'center',
-          boxShadow: '0 10px 30px rgba(90, 155, 144, 0.1)'
-        }}>
-          <h2 style={{ fontWeight: 900, fontSize: '35px', marginBottom: '15px', color: '#5A9B90' }}>BECOME A <span style={{ color: '#1D3631' }}>VERIFIED SELLER</span></h2>
-          <p style={{ color: '#43766D', marginBottom: '35px', maxWidth: '600px', margin: '0 auto 35px' }}>
-            Cash out your high-rank accounts. We offer the lowest fees and fastest payouts in the industry.
+      {/* SELL CTA */}
+      <motion.section
+        initial="hidden"
+        whileInView="show"
+        viewport={viewportOnce()}
+        variants={fadeInUp}
+        className="mx-auto max-w-7xl px-6 pt-10"
+      >
+        <div className="rounded-3xl border border-ink-600 bg-ink-800/40 p-10 text-center sm:p-16">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">
+            HAVE AN ACCOUNT TO <span className="text-gold-400">SELL?</span>
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-ink-200">
+            Submit your account details — our team reviews and lists it once verified.
           </p>
-          <button
-            onClick={() => window.location.href = '/sell'}
-            style={{ background: '#5A9B90', color: '#FFFFFF', border: 'none', padding: '18px 50px', borderRadius: '5px', fontWeight: 900, cursor: 'pointer', fontSize: '14px', boxShadow: '0 4px 10px rgba(90,155,144,0.3)' }}
-          >
-            START SELLING NOW
-          </button>
+          <div className="mt-7">
+            <Button href="/sell" variant="outline" size="lg">Submit a Listing</Button>
+          </div>
         </div>
-      </section>
+      </motion.section>
 
-
-
-      {/* ❓ FAQ SECTION */}
-      <section id="faq" style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 20px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', textAlign: 'center', color: '#1D3631' }}>FREQUENTLY ASKED <span style={{ color: '#5A9B90' }}>QUESTIONS</span></h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          {[
-            { q: "How fast is delivery?", a: "Accounts are delivered instantly to your email upon payment confirmation." },
-            { q: "Are the accounts safe?", a: "Yes, all our smurf and modded accounts are hand-leveled and 100% safe from bans." },
-            { q: "Do you offer refunds?", a: "We offer a 7-day warranty on all accounts. If an account is banned due to a defect on our end, we'll replace it or refund you." },
-            { q: "How does boosting work?", a: "After purchasing a boost, a professional Radiant/Global player will securely log into your account and rank it up to your desired level." },
-          ].map((faq, i) => (
-            <div key={i} style={{ background: '#FFFFFF', padding: '25px', borderRadius: '10px', border: '1px solid #D1E8D1' }}>
-              <h3 style={{ fontWeight: 700, fontSize: '18px', marginBottom: '10px', color: '#1D3631' }}>{faq.q}</h3>
-              <p style={{ color: '#43766D', fontSize: '14px', lineHeight: '1.5' }}>{faq.a}</p>
-            </div>
+      {/* FAQ */}
+      <section id="faq" className="mx-auto max-w-4xl px-6 pt-24">
+        <motion.h2
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce()}
+          variants={fadeInUp}
+          className="font-display mb-8 text-center text-3xl font-bold"
+        >
+          Frequently Asked <span className="text-gold-400">Questions</span>
+        </motion.h2>
+        <Accordion>
+          {FAQ.map((item) => (
+            <AccordionItem key={item.q} title={item.q}>
+              {item.a}
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </section>
 
-      {/* 📜 TERMS & CONDITIONS SECTION */}
-      <section id="terms" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '40px', textAlign: 'center', color: '#1D3631' }}>TERMS & <span style={{ color: '#5A9B90' }}>CONDITIONS</span></h2>
-        <div style={{ background: '#FFFFFF', padding: '40px', borderRadius: '15px', border: '1px solid #D1E8D1', color: '#43766D', fontSize: '14px', lineHeight: '1.6' }}>
-          <p style={{ marginBottom: '20px' }}>
-            Welcome to SmurfRank. By accessing our marketplace, purchasing accounts, or utilizing our boosting services, you agree to comply with and be bound by the following terms and conditions. Please read these carefully before completing any transaction.
+      {/* TERMS */}
+      <section id="terms" className="mx-auto max-w-4xl px-6 pt-16">
+        <h2 className="font-display mb-6 text-center text-2xl font-bold">
+          Terms &amp; <span className="text-gold-400">Conditions</span>
+        </h2>
+        <div className="rounded-2xl border border-ink-600 bg-ink-800/60 p-8 text-sm leading-relaxed text-ink-200">
+          <p className="mb-4">
+            By purchasing accounts or boosting services on SmurfRank, you agree to the following terms.
           </p>
-          <p style={{ marginBottom: '20px' }}>
-            <strong>1. Account Delivery:</strong> All account details are sent automatically to the provided email address upon successful payment. It is the buyer's responsibility to ensure the email is correct and to change the account passwords immediately after receipt.
+          <p className="mb-4">
+            <strong className="text-ink-50">1. Delivery:</strong> Account details are sent to your registered email immediately after payment. Change the password right away.
           </p>
-          <p style={{ marginBottom: '20px' }}>
-            <strong>2. Warranty & Refunds:</strong> SmurfRank provides a standard 7-day warranty on all accounts against original owner recalls or pre-existing bans. If an account gets banned due to the buyer's actions (e.g., toxicity, cheating), the warranty is voided. Refunds or replacements are issued at the sole discretion of the support team.
-          </p>
-          <p style={{ marginBottom: '20px' }}>
-            <strong>3. Boosting Policies:</strong> For boosting services, users must not log into the account while a booster is active. Doing so may result in the termination of the service without a refund. We ensure all boosters use VPNs and refrain from using any third-party software.
+          <p className="mb-4">
+            <strong className="text-ink-50">2. Warranty:</strong> Every purchase carries our standard money-back guarantee against pre-existing bans or recall. Bans caused by buyer conduct void the warranty.
           </p>
           <p>
-            <strong>4. Liability:</strong> SmurfRank is not affiliated with, endorsed, or sponsored by Valve Corporation, Riot Games, or Rockstar Games. We are not liable for any actions taken against your account by game developers post-purchase, outside of the warranty period.
+            <strong className="text-ink-50">3. Liability:</strong> SmurfRank is not affiliated with Valve, Riot Games, or Rockstar Games.
           </p>
         </div>
       </section>

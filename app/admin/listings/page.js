@@ -14,7 +14,7 @@ const inputStyle = {
 const emptyForm = {
   title: '', game: 'Valorant', rank: '', region: '', price: '',
   level: '', wins: '', hours: '', type: '', instant: true,
-  description: '', includes: '', active: true,
+  description: '', includes: '', images: '', active: true,
 };
 
 export default function AdminListingsPage() {
@@ -48,7 +48,7 @@ export default function AdminListingsPage() {
       title: listing.title, game: listing.game, rank: listing.rank, region: listing.region,
       price: String(listing.price), level: listing.level, wins: listing.wins, hours: listing.hours,
       type: listing.type, instant: listing.instant, description: listing.description,
-      includes: listing.includes.join(', '), active: listing.active,
+      includes: listing.includes.join(', '), images: (listing.images || []).join(', '), active: listing.active,
     });
   }
 
@@ -65,6 +65,7 @@ export default function AdminListingsPage() {
       ...form,
       price: Number(form.price),
       includes: form.includes.split(',').map((s) => s.trim()).filter(Boolean),
+      images: form.images.split(',').map((s) => s.trim()).filter(Boolean),
     };
     try {
       const url = editingId ? `/api/admin/listings/${editingId}` : '/api/admin/listings';
@@ -267,6 +268,11 @@ export default function AdminListingsPage() {
         <div style={{ gridColumn: 'span 3' }}>
           <label style={{ fontSize: '12px', color: '#999' }}>Includes (comma separated)</label>
           <input style={inputStyle} value={form.includes} onChange={(e) => setForm({ ...form, includes: e.target.value })} />
+        </div>
+
+        <div style={{ gridColumn: 'span 3' }}>
+          <label style={{ fontSize: '12px', color: '#999' }}>Image URLs (comma separated, optional — falls back to illustrated art)</label>
+          <input style={inputStyle} value={form.images} onChange={(e) => setForm({ ...form, images: e.target.value })} />
         </div>
 
         <label style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '8px' }}>
