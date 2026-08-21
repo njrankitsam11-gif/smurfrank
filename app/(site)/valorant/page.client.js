@@ -3,18 +3,13 @@ import React, { useState } from 'react';
 import { useCart } from '../../../context/CartContext';
 import SortFilter from '../../../components/SortFilter';
 import { useProductSort } from '../../../hooks/useProductSort';
+import { listingToProduct } from '../../../lib/listingToProduct';
 
-export default function ValorantPage() {
+export default function ValorantPage({ listings }) {
   const { addToCart } = useCart();
   const [activeSort, setActiveSort] = useState('TOP_RATED');
 
-  const products = [
-    { id: 'v1', title: 'RADIANT PEAK ACCOUNT', price: '$125.00', desc: 'All Agents • Exclusive Skins • High Elo Guaranteed', game: 'VAL' },
-    { id: 'v2', title: 'IMMORTAL 3 SMURF', price: '$85.00', desc: 'Ready for Ranked • Clean History • Instant Delivery', game: 'VAL' },
-    { id: 'v3', title: 'ASCENDANT 1 FRESH', price: '$45.00', desc: 'Original Email Access • Instant Login • Secure', game: 'VAL' },
-    { id: 'v4', title: 'SKIN STACKED ACCOUNT', price: '$150.00', desc: 'Rare Vandal & Phantom Skins • Level 100+', game: 'VAL' }
-  ];
-
+  const products = listings.map(listingToProduct);
   const sortedProducts = useProductSort(products, activeSort);
 
   return (
@@ -28,46 +23,49 @@ export default function ValorantPage() {
 
         <SortFilter activeSort={activeSort} onSort={setActiveSort} themeColor="#FF4655" />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
-          {sortedProducts.map((p) => (
-            <div key={p.id} style={{
-              background: '#111',
-              padding: '30px 20px',
-              borderRadius: '18px',
-              border: '1px solid #222',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              minHeight: '260px'
-            }}>
-              <div>
-                <h3 style={{ fontWeight: 900, fontSize: '18px', marginBottom: '10px' }}>{p.title}</h3>
-                <p style={{ color: '#555', fontSize: '13px', marginBottom: '20px', fontWeight: 600, lineHeight: '1.4' }}>{p.desc}</p>
-              </div>
+        {sortedProducts.length === 0 ? (
+          <p style={{ color: '#888', padding: '60px 0', textAlign: 'center' }}>No Valorant accounts available right now. Check back soon.</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
+            {sortedProducts.map((p) => (
+              <div key={p.id} style={{
+                background: '#111',
+                padding: '30px 20px',
+                borderRadius: '18px',
+                border: '1px solid #222',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '260px'
+              }}>
+                <div>
+                  <h3 style={{ fontWeight: 900, fontSize: '18px', marginBottom: '10px' }}>{p.title}</h3>
+                  <p style={{ color: '#555', fontSize: '13px', marginBottom: '20px', fontWeight: 600, lineHeight: '1.4' }}>{p.desc}</p>
+                </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
-                <span style={{ fontWeight: 900, fontSize: '20px', color: '#fff' }}>{p.price}</span>
-                <button
-                  onClick={() => addToCart(p)}
-                  style={{
-                    background: '#fff',
-                    color: '#000',
-                    border: 'none',
-                    padding: '6px 12px',
-                    fontSize: '10px',
-                    borderRadius: '5px',
-                    fontWeight: 900,
-                    cursor: 'pointer',
-                    fontSize: '11px',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  ADD TO CART
-                </button>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+                  <span style={{ fontWeight: 900, fontSize: '20px', color: '#fff' }}>{p.price}</span>
+                  <button
+                    onClick={() => addToCart(p)}
+                    style={{
+                      background: '#fff',
+                      color: '#000',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '5px',
+                      fontWeight: 900,
+                      cursor: 'pointer',
+                      fontSize: '11px',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );

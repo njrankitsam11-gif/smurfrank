@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic';
+
+import { prisma } from '../../../lib/prisma';
 import GTAVPageClient from './page.client';
 
 export const metadata = {
@@ -11,6 +14,11 @@ export const metadata = {
   }
 };
 
-export default function GTAVPage() {
-  return <GTAVPageClient />;
+export default async function GTAVPage() {
+  const listings = await prisma.listing.findMany({
+    where: { game: 'GTA V', active: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return <GTAVPageClient listings={listings} />;
 }
