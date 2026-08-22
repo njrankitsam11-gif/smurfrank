@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession, signOut } from 'next-auth/react';
 import { GAME_LIST } from '../lib/gameTheme';
+import ThemeToggle from './ui/ThemeToggle';
 
 const NAV_LINKS = [
   ...GAME_LIST.map((g) => ({ href: g.href, label: g.label })),
@@ -77,6 +78,8 @@ export default function Navbar() {
           ))}
           <div className="h-5 w-px bg-ink-600" />
 
+          <ThemeToggle />
+
           {status === 'authenticated' ? (
             <div className="flex items-center gap-4">
               <span className="text-xs font-bold uppercase tracking-wide text-ink-200">
@@ -117,9 +120,10 @@ export default function Navbar() {
           </button>
         </div>
 
+        <ThemeToggle className="ml-auto md:hidden" />
         <button
           onClick={() => setIsOpen(true)}
-          className="focus-ring ml-auto rounded-lg border border-ink-500 px-3 py-2 text-xs font-bold text-ink-50 md:hidden"
+          className="focus-ring rounded-lg border border-ink-500 px-3 py-2 text-xs font-bold text-ink-50 md:hidden"
           aria-label={`Open cart (${cart.length} items)`}
         >
           🛒 {cart.length}
