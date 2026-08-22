@@ -10,7 +10,7 @@ const STATS = [
 
 export default function TrustBar({ className = '' }) {
   return (
-    <div className={`rounded-2xl border border-ink-600 bg-ink-800/30 p-4 ${className}`}>
+    <div className={`rounded-2xl border border-gold-500/40 bg-gold-500/[0.06] p-4 shadow-[0_0_24px_-4px_rgba(245,183,46,0.25)] ${className}`}>
       <motion.div
         initial="hidden"
         whileInView="show"
