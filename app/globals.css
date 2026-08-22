@@ -2,11 +2,41 @@
 @config '../tailwind.config.js';
 
 @layer base {
-  :root {
-    --background: #06070A;
-    --foreground: #F4F5F8;
+  :root,
+  :root.dark {
+    --ink-950: #06070A;
+    --ink-900: #0A0C11;
+    --ink-800: #0F1219;
+    --ink-700: #151923;
+    --ink-600: #1C212E;
+    --ink-500: #262C3B;
+    --ink-400: #3A4054;
+    --ink-300: #565D74;
+    --ink-200: #8890A6;
+    --ink-100: #B8BECF;
+    --ink-50: #F4F5F8;
+
+    --background: var(--ink-950);
+    --foreground: var(--ink-50);
     --font-display: 'Rajdhani', system-ui, sans-serif;
     --font-sans: 'Inter', system-ui, sans-serif;
+  }
+
+  :root.light {
+    --ink-950: #FFFFFF;
+    --ink-900: #F7F8FA;
+    --ink-800: #EEF0F4;
+    --ink-700: #E2E5EC;
+    --ink-600: #C9CEDA;
+    --ink-500: #9AA1B5;
+    --ink-400: #6B7288;
+    --ink-300: #4A5068;
+    --ink-200: #2E3348;
+    --ink-100: #181B29;
+    --ink-50: #0A0C14;
+
+    --background: var(--ink-950);
+    --foreground: var(--ink-50);
   }
 
   html,
@@ -21,6 +51,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   ::selection {
