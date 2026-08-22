@@ -7,6 +7,7 @@ const links = [
   { href: '/admin/pipeline', label: 'Pipeline' },
   { href: '/admin/listings', label: 'Listings' },
   { href: '/admin/sellers', label: 'Sellers' },
+  { href: '/admin/inquiries', label: 'Inquiries' },
   { href: '/admin/boosting', label: 'Boosting' },
   { href: '/admin/users', label: 'Users' },
 ];

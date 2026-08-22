@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
+import GoogleButton from '../../../components/auth/GoogleButton';
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -48,7 +49,14 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
+      <GoogleButton callbackUrl="/" label="Sign up with Google" />
+      <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-wide text-ink-300">
+        <span className="h-px flex-1 bg-ink-600" />
+        or
+        <span className="h-px flex-1 bg-ink-600" />
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {error && (
         <div role="alert" className="rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-300">
           {error}
@@ -88,6 +96,7 @@ export default function RegisterForm() {
       <Button type="submit" disabled={submitting} variant="primary" size="lg" className="w-full">
         {submitting ? 'Creating Account...' : 'Create Account'}
       </Button>
-    </form>
+      </form>
+    </div>
   );
 }
