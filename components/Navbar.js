@@ -8,7 +8,7 @@ import { GAME_LIST } from '../lib/gameTheme';
 import ThemeToggle from './ui/ThemeToggle';
 
 const NAV_LINKS = [
-  ...GAME_LIST.map((g) => ({ href: g.href, label: g.label })),
+  ...GAME_LIST.map((g) => ({ href: g.href, label: g.label, accent: g.accent })),
   { href: '/boosting', label: 'Boosting', accent: '#FFC531' },
   { href: '/sell', label: 'Sell', accent: '#8890A6' },
 ];
