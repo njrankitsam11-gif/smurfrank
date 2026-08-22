@@ -1,6 +1,5 @@
 import './globals.css';
 import { Rajdhani, Inter } from 'next/font/google';
-import { ReduxProvider } from '@/components/ReduxProvider';
 
 const rajdhani = Rajdhani({
   subsets: ['latin'],
@@ -25,9 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${rajdhani.variable} ${inter.variable}`}>
       <body style={{ margin: 0, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+        {children}
       </body>
     </html>
   );
