@@ -15,6 +15,10 @@ jest.mock('next-auth/react', () => ({
   signOut: jest.fn(),
 }));
 
+jest.mock('../context/ThemeContext', () => ({
+  useTheme: () => ({ theme: 'dark', setTheme: jest.fn(), toggleTheme: jest.fn() }),
+}));
+
 jest.mock('next/link', () => ({
   __esModule: true,
   default: ({ children, href, style, className }) => (
