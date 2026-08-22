@@ -46,7 +46,7 @@ export default function SellPage() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', background: '#06070A', color: '#fff', paddingBottom: '100px' }}>
+    <main style={{ minHeight: '100vh', background: 'var(--ink-950)', color: 'var(--ink-50)', paddingBottom: '100px' }}>
       {/* 1. HEADER */}
       <section style={{ textAlign: 'center', padding: '100px 20px 60px' }}>
         <div style={{ color: '#FFC531', fontSize: '12px', fontWeight: 900, letterSpacing: '3px', marginBottom: '20px', textTransform: 'uppercase' }}>
@@ -60,7 +60,7 @@ export default function SellPage() {
       {/* 2. THE PREMIUM FORM */}
       <section style={{ maxWidth: '900px', margin: '0 auto 100px', padding: '0 20px' }}>
         <div style={{
-          background: 'linear-gradient(145deg, #151923, #0A0C11)',
+          background: 'linear-gradient(145deg, var(--ink-700), var(--ink-900))',
           border: '1px solid #FFC531',
           borderRadius: '24px',
           padding: '50px',
@@ -73,7 +73,7 @@ export default function SellPage() {
               <div style={{ fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', marginBottom: '10px' }}>
                 Listing submitted for review
               </div>
-              <p style={{ color: '#999', fontSize: '14px', maxWidth: '500px', margin: '0 auto' }}>
+              <p style={{ color: 'var(--ink-200)', fontSize: '14px', maxWidth: '500px', margin: '0 auto' }}>
                 Our team will review your account details and activate the listing once approved.
               </p>
               <button
@@ -143,7 +143,7 @@ export default function SellPage() {
                 <span id="fileUploadLabel" style={labelStyle}>Account Visuals (Screenshots)</span>
                 <label htmlFor="fileUpload" className="file-dropzone" style={{
                   display: 'block',
-                  border: '2px dashed #333',
+                  border: '2px dashed var(--ink-600)',
                   borderRadius: '16px',
                   padding: '40px',
                   textAlign: 'center',
@@ -152,11 +152,11 @@ export default function SellPage() {
                   cursor: 'pointer'
                 }}
                 onMouseOver={(e) => e.currentTarget.style.borderColor = '#FFC531'}
-                onMouseOut={(e) => e.currentTarget.style.borderColor = '#3A4054'}
+                onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--ink-400)'}
                 >
                   <div style={{ fontSize: '40px', marginBottom: '15px' }}>🖼️</div>
                   <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFC531', marginBottom: '5px' }}>UPLOAD PROOF OF OWNERSHIP</div>
-                  <div style={{ fontSize: '11px', color: '#555' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
+                  <div style={{ fontSize: '11px', color: 'var(--ink-300)' }}>Drag and drop screenshots of your lobby, skins, or rank (PNG, JPG)</div>
                   <input aria-labelledby="fileUploadLabel" className={'focus-ring'} type="file" multiple style={{ opacity: 0, width: '1px', height: '1px', position: 'absolute' }} id="fileUpload" />
                   <span style={{
                     display: 'inline-block',
@@ -229,11 +229,11 @@ const labelStyle = {
 
 const inputStyle = {
   width: '100%',
-  background: '#0a0a0b',
-  border: '1px solid #222',
+  background: 'var(--ink-900)',
+  border: '1px solid var(--ink-600)',
   padding: '18px',
   borderRadius: '10px',
-  color: '#fff',
+  color: 'var(--ink-50)',
   fontSize: '14px',
   outline: 'none',
   boxSizing: 'border-box'

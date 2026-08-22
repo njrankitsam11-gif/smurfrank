@@ -72,10 +72,10 @@ export default function CheckoutPage() {
       {/* ── HEADER ── */}
       <div style={{ textAlign: 'center', marginBottom: 48 }}>
         <p style={{ color: '#FFC531', fontSize: 11, fontWeight: 900, letterSpacing: 4, margin: '0 0 8px' }}>SECURE CHECKOUT</p>
-        <h1 style={{ fontSize: 36, fontWeight: 900, letterSpacing: '-1.5px', margin: 0, color: '#F4F5F8' }}>
+        <h1 style={{ fontSize: 36, fontWeight: 900, letterSpacing: '-1.5px', margin: 0, color: 'var(--ink-50)' }}>
           Complete Your <span style={{ color: '#FFC531' }}>Order</span>
         </h1>
-        <p style={{ color: '#8890A6', fontSize: 12, marginTop: 10 }}>🔒 256-bit SSL encrypted · Money-back guarantee · Instant delivery</p>
+        <p style={{ color: 'var(--ink-200)', fontSize: 12, marginTop: 10 }}>🔒 256-bit SSL encrypted · Money-back guarantee · Instant delivery</p>
       </div>
 
       <div style={s.grid} className="checkout-grid">
@@ -96,10 +96,10 @@ export default function CheckoutPage() {
                 <label key={m.id} style={{
                   display: 'flex', alignItems: 'center', gap: 16,
                   padding: '14px 18px',
-                  border: `1px solid ${selectedMethod === m.id ? '#FFC531' : '#1C212E'}`,
+                  border: `1px solid ${selectedMethod === m.id ? '#FFC531' : 'var(--ink-600)'}`,
                   borderRadius: 8, cursor: 'pointer',
-                  background: selectedMethod === m.id ? 'rgba(255, 197, 49, 0.08)' : '#0F1219',
-                  color: '#F4F5F8',
+                  background: selectedMethod === m.id ? 'rgba(255, 197, 49, 0.08)' : 'var(--ink-800)',
+                  color: 'var(--ink-50)',
                   transition: 'all 0.2s',
                 }}>
                   <input
@@ -122,8 +122,8 @@ export default function CheckoutPage() {
           {/* PAYMENT DETAILS */}
           <div style={s.card}>
             <Label>2. Payment Details</Label>
-            <p style={{ color: '#8890A6', fontSize: 12, fontStyle: 'italic', margin: '12px 0 20px' }}>
-              API integration for <strong style={{ color: '#F4F5F8' }}>{PAYMENT_METHODS.find(m => m.id === selectedMethod)?.name}</strong> will be configured with your keys.
+            <p style={{ color: 'var(--ink-200)', fontSize: 12, fontStyle: 'italic', margin: '12px 0 20px' }}>
+              API integration for <strong style={{ color: 'var(--ink-50)' }}>{PAYMENT_METHODS.find(m => m.id === selectedMethod)?.name}</strong> will be configured with your keys.
             </p>
 
             {/* CREDIT CARD */}
@@ -132,20 +132,20 @@ export default function CheckoutPage() {
                 {/* Card Visual */}
                 <div style={s.cardPreview}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ fontWeight: 900, fontSize: 13, letterSpacing: 2, color: '#F4F5F8' }}>SMURFRANK</span>
+                    <span style={{ fontWeight: 900, fontSize: 13, letterSpacing: 2, color: 'var(--ink-50)' }}>SMURFRANK</span>
                     <span style={{ fontSize: 22 }}>💳</span>
                   </div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 18, letterSpacing: 4, color: '#F4F5F8', marginTop: 18 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 18, letterSpacing: 4, color: 'var(--ink-50)', marginTop: 18 }}>
                     {cardNum || '•••• •••• •••• ••••'}
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14 }}>
                     <div>
-                      <div style={{ fontSize: 9, color: '#8890A6', letterSpacing: 2 }}>CARD HOLDER</div>
-                      <div style={{ fontSize: 13, fontWeight: 800, color: '#F4F5F8' }}>{nameOnCard || 'YOUR NAME'}</div>
+                      <div style={{ fontSize: 9, color: 'var(--ink-200)', letterSpacing: 2 }}>CARD HOLDER</div>
+                      <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--ink-50)' }}>{nameOnCard || 'YOUR NAME'}</div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: 9, color: '#8890A6', letterSpacing: 2 }}>EXPIRES</div>
-                      <div style={{ fontSize: 13, fontWeight: 800, color: '#F4F5F8' }}>{expiry || 'MM/YY'}</div>
+                      <div style={{ fontSize: 9, color: 'var(--ink-200)', letterSpacing: 2 }}>EXPIRES</div>
+                      <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--ink-50)' }}>{expiry || 'MM/YY'}</div>
                     </div>
                   </div>
                 </div>
@@ -179,8 +179,8 @@ export default function CheckoutPage() {
                   <div style={{ fontSize: 60, marginBottom: 16 }}>
                     {PAYMENT_METHODS.find(m => m.id === selectedMethod)?.icon}
                   </div>
-                  <p style={{ color: '#8890A6', lineHeight: 1.7, marginBottom: 20, fontSize: 14 }}>
-                    You'll be redirected to the <strong style={{ color: '#F4F5F8' }}>
+                  <p style={{ color: 'var(--ink-200)', lineHeight: 1.7, marginBottom: 20, fontSize: 14 }}>
+                    You'll be redirected to the <strong style={{ color: 'var(--ink-50)' }}>
                       {PAYMENT_METHODS.find(m => m.id === selectedMethod)?.name}</strong> secure portal.
                     Your order details will be pre-filled.
                   </p>
@@ -202,10 +202,10 @@ export default function CheckoutPage() {
                     {CRYPTO_COINS.map(c => <option key={c}>{c}</option>)}
                   </select>
                 </Field>
-                <div style={{ background: '#0F1219', border: '1px solid #1C212E', borderRadius: 10, padding: 18 }}>
+                <div style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)', borderRadius: 10, padding: 18 }}>
                   <p style={{ color: '#FFC531', fontSize: 11, letterSpacing: 2, margin: '0 0 10px', fontWeight: 800 }}>WALLET ADDRESS</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <code style={{ color: '#F4F5F8', fontSize: 12, wordBreak: 'break-all', flex: 1 }}>
+                    <code style={{ color: 'var(--ink-50)', fontSize: 12, wordBreak: 'break-all', flex: 1 }}>
                       WALLET_ADDRESS_PENDING_SETUP
                     </code>
                     <button type="button" style={s.ghostBtn}
@@ -232,7 +232,7 @@ export default function CheckoutPage() {
             <div style={{ marginTop: 16 }}>
               {cart.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '30px 0' }}>
-                  <p style={{ color: '#8890A6', marginBottom: 16 }}>Your cart is empty.</p>
+                  <p style={{ color: 'var(--ink-200)', marginBottom: 16 }}>Your cart is empty.</p>
                   <Link href="/" style={{ color: '#FFC531', fontSize: 13, fontWeight: 800 }}>← Browse Listings</Link>
                 </div>
               ) : (
@@ -240,10 +240,10 @@ export default function CheckoutPage() {
                   const qty = item.quantity || 1;
                   const itemTotal = (parseFloat(String(item.price).replace('$', '')) * qty).toFixed(2);
                   return (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '14px 0', borderBottom: '1px solid #1C212E' }}>
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '14px 0', borderBottom: '1px solid var(--ink-600)' }}>
                       <div style={{ flex: 1, paddingRight: '15px' }}>
-                        <p style={{ margin: 0, fontWeight: 800, fontSize: 13, color: '#F4F5F8' }}>{item.title}</p>
-                        {item.game && <p style={{ margin: '4px 0 0', fontSize: 10, color: '#8890A6', fontWeight: 700, letterSpacing: 1 }}>{item.game} {qty > 1 && <span style={{ color: '#FFC531', fontWeight: 900, marginLeft: 6 }}>x {qty}</span>}</p>}
+                        <p style={{ margin: 0, fontWeight: 800, fontSize: 13, color: 'var(--ink-50)' }}>{item.title}</p>
+                        {item.game && <p style={{ margin: '4px 0 0', fontSize: 10, color: 'var(--ink-200)', fontWeight: 700, letterSpacing: 1 }}>{item.game} {qty > 1 && <span style={{ color: '#FFC531', fontWeight: 900, marginLeft: 6 }}>x {qty}</span>}</p>}
                         {!item.game && qty > 1 && <p style={{ margin: '4px 0 0', fontSize: 10, color: '#FFC531', fontWeight: 900, letterSpacing: 1 }}>x {qty}</p>}
                       </div>
                       <span style={{ fontWeight: 900, color: '#FFC531', whiteSpace: 'nowrap', marginLeft: 12 }}>${itemTotal}</span>
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
               <div style={{ marginTop: 20 }}>
                 <PriceLine label="Subtotal" val={`$${total.toFixed(2)}`} />
                 <PriceLine label="Processing Fee (2.5%)" val={`$${fee.toFixed(2)}`} dim />
-                <div style={{ borderTop: '1px solid #1C212E', marginTop: 16, paddingTop: 16 }}>
+                <div style={{ borderTop: '1px solid var(--ink-600)', marginTop: 16, paddingTop: 16 }}>
                   <PriceLine label="TOTAL" val={`$${grandTotal.toFixed(2)}`} bold color="#FFC531" />
                 </div>
               </div>
@@ -274,8 +274,8 @@ export default function CheckoutPage() {
               <div key={b.title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: 16 }}>
                 <span style={{ fontSize: 22, width: 32, flexShrink: 0, marginTop: 2 }}>{b.icon}</span>
                 <div>
-                  <p style={{ margin: 0, fontWeight: 900, fontSize: 12, color: '#F4F5F8' }}>{b.title}</p>
-                  <p style={{ margin: '4px 0 0', fontSize: 11, color: '#8890A6', lineHeight: 1.5 }}>{b.desc}</p>
+                  <p style={{ margin: 0, fontWeight: 900, fontSize: 12, color: 'var(--ink-50)' }}>{b.title}</p>
+                  <p style={{ margin: '4px 0 0', fontSize: 11, color: 'var(--ink-200)', lineHeight: 1.5 }}>{b.desc}</p>
                 </div>
               </div>
             ))}
@@ -284,8 +284,8 @@ export default function CheckoutPage() {
           {/* LOYALTY REWARD */}
           <div style={{ background: 'rgba(255, 197, 49, 0.06)', border: '1px dashed #FFC531', borderRadius: 10, padding: '18px 20px' }}>
             <p style={{ color: '#FFC531', fontWeight: 900, margin: '0 0 6px', fontSize: 12 }}>🔥 LOYALTY REWARD</p>
-            <p style={{ color: '#8890A6', margin: 0, fontSize: 11, lineHeight: 1.5 }}>
-              Complete this order and get an <strong style={{ color: '#F4F5F8' }}>11% OFF coupon</strong> for your next purchase — sent instantly to your inbox.
+            <p style={{ color: 'var(--ink-200)', margin: 0, fontSize: 11, lineHeight: 1.5 }}>
+              Complete this order and get an <strong style={{ color: 'var(--ink-50)' }}>11% OFF coupon</strong> for your next purchase — sent instantly to your inbox.
             </p>
           </div>
         </div>
@@ -303,7 +303,7 @@ function Label({ children }) {
 function Field({ id, label, required, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: '#8890A6' }}>{label.toUpperCase()}</label>
+      <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: 'var(--ink-200)' }}>{label.toUpperCase()}</label>
       {children}
     </div>
   );
@@ -312,8 +312,8 @@ function Field({ id, label, required, children }) {
 function PriceLine({ label, val, dim, bold, color }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-      <span style={{ fontSize: bold ? 14 : 12, fontWeight: bold ? 900 : 700, color: dim ? '#8890A6' : '#F4F5F8' }}>{label}</span>
-      <span style={{ fontSize: bold ? 20 : 13, fontWeight: 900, color: color || '#F4F5F8' }}>{val}</span>
+      <span style={{ fontSize: bold ? 14 : 12, fontWeight: bold ? 900 : 700, color: dim ? 'var(--ink-200)' : 'var(--ink-50)' }}>{label}</span>
+      <span style={{ fontSize: bold ? 20 : 13, fontWeight: 900, color: color || 'var(--ink-50)' }}>{val}</span>
     </div>
   );
 }
@@ -322,8 +322,8 @@ function PayBtn({ isProcessing, total, label }) {
   return (
     <button type="submit" disabled={isProcessing} className="focus-ring" style={{
       width: '100%', padding: '16px',
-      background: isProcessing ? '#3A4054' : '#FFC531',
-      color: isProcessing ? '#8890A6' : '#06070A',
+      background: isProcessing ? 'var(--ink-400)' : '#FFC531',
+      color: isProcessing ? 'var(--ink-200)' : '#06070A',
       fontWeight: 900, fontSize: 14, letterSpacing: 2,
       border: 'none', borderRadius: 6,
       cursor: isProcessing ? 'not-allowed' : 'pointer',
@@ -339,10 +339,10 @@ function PayBtn({ isProcessing, total, label }) {
 const s = {
   page: {
     minHeight: '100vh',
-    background: '#06070A',
+    background: 'var(--ink-950)',
     padding: '60px 5vw 80px',
     fontFamily: 'Inter, Arial, sans-serif',
-    color: '#F4F5F8',
+    color: 'var(--ink-50)',
   },
   grid: {
     display: 'grid',
@@ -352,14 +352,14 @@ const s = {
     margin: '0 auto',
   },
   card: {
-    background: '#0F1219',
-    border: '1px solid #1C212E',
+    background: 'var(--ink-800)',
+    border: '1px solid var(--ink-600)',
     borderRadius: 12,
     padding: '28px',
   },
   cardPreview: {
-    background: 'linear-gradient(135deg,#151923 0%,#1C212E 50%,#262C3B 100%)',
-    border: '1px solid #1C212E',
+    background: 'linear-gradient(135deg,var(--ink-700) 0%,var(--ink-600) 50%,var(--ink-500) 100%)',
+    border: '1px solid var(--ink-600)',
     borderRadius: 14,
     padding: '22px 26px',
     height: 160,
@@ -369,11 +369,11 @@ const s = {
   },
   input: {
     width: '100%',
-    background: '#151923',
-    border: '1px solid #1C212E',
+    background: 'var(--ink-700)',
+    border: '1px solid var(--ink-600)',
     borderRadius: 8,
     padding: '13px 16px',
-    color: '#F4F5F8',
+    color: 'var(--ink-50)',
     fontSize: 14,
     fontFamily: 'Inter, monospace',
     outline: 'none',
@@ -390,7 +390,7 @@ const s = {
   },
   ghostBtn: {
     background: 'none',
-    border: '1px solid #1C212E',
+    border: '1px solid var(--ink-600)',
     color: '#FFC531',
     borderRadius: 6,
     cursor: 'pointer',
