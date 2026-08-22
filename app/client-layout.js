@@ -6,6 +6,7 @@ import AuthProvider from '../components/AuthProvider';
 import Navbar from '../components/Navbar';
 import CartDrawer from '../components/CartDrawer';
 import Footer from '../components/Footer';
+import EnquireWidget from '../components/EnquireWidget';
 
 export default function ClientLayout({ children }) {
   return (
@@ -19,6 +20,7 @@ export default function ClientLayout({ children }) {
               {children}
             </main>
             <Footer />
+            <EnquireWidget />
           </CartProvider>
         </MotionConfig>
       </AuthProvider>

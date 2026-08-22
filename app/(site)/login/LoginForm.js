@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
+import GoogleButton from '../../../components/auth/GoogleButton';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -39,7 +40,14 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
+      <GoogleButton callbackUrl={callbackUrl} />
+      <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-wide text-ink-300">
+        <span className="h-px flex-1 bg-ink-600" />
+        or
+        <span className="h-px flex-1 bg-ink-600" />
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {error && (
         <div role="alert" className="rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-300">
           {error}
@@ -73,6 +81,7 @@ export default function LoginForm() {
       <Button type="submit" disabled={submitting} variant="primary" size="lg" className="w-full">
         {submitting ? 'Signing In...' : 'Sign In'}
       </Button>
-    </form>
+      </form>
+    </div>
   );
 }
