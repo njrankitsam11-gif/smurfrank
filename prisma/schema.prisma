@@ -28,19 +28,28 @@ model Listing {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   orders      Order[]
+
+  @@index([active, createdAt])
+  @@index([game, active, createdAt])
+  @@index([status])
+  @@index([sellerEmail])
 }
 
 model Order {
-  id          String   @id @default(cuid())
-  buyerEmail  String?
-  itemTitle   String
-  itemPrice   Float
-  quantity    Int      @default(1)
-  status      String   @default("paid")
-  listingId   String?
-  listing     Listing? @relation(fields: [listingId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  buyerEmail String?
+  itemTitle  String
+  itemPrice  Float
+  quantity   Int      @default(1)
+  status     String   @default("paid")
+  listingId  String?
+  listing    Listing? @relation(fields: [listingId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([listingId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 model BoostingService {
@@ -63,6 +72,8 @@ model User {
   createdAt           DateTime  @default(now())
   resetToken          String?   @unique
   resetTokenExpiresAt DateTime?
+
+  @@index([role])
 }
 
 model Inquiry {
@@ -75,6 +86,9 @@ model Inquiry {
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   messages     InquiryMessage[]
+
+  @@index([updatedAt])
+  @@index([status])
 }
 
 model InquiryMessage {
@@ -84,4 +98,6 @@ model InquiryMessage {
   sender    String
   body      String
   createdAt DateTime @default(now())
+
+  @@index([inquiryId, createdAt])
 }

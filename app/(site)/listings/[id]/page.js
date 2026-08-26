@@ -2,6 +2,8 @@ import { cache } from 'react';
 import { prisma } from '../../../../lib/prisma';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 60;
+
 // ⚡ BOLT OPTIMIZATION: Wrap Prisma call in React.cache()
 // 💡 What: Deduplicate direct database queries across generateMetadata and the Server Component.
 // 🎯 Why: Next.js does not automatically deduplicate direct database ORM calls during a request cycle.
