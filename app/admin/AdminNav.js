@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 const links = [
   { href: '/admin', label: 'Dashboard' },
@@ -54,9 +55,28 @@ export default function AdminNav({ userEmail }) {
         })}
       </div>
 
-      <div style={{ marginTop: 'auto', fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
-        Signed in as<br />
-        <span style={{ color: '#999' }}>{userEmail}</span>
+      <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <div style={{ fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
+          Signed in as<br />
+          <span style={{ color: '#999' }}>{userEmail}</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => signOut({ callbackUrl: '/admin-login' })}
+          style={{
+            padding: '10px 14px',
+            borderRadius: '10px',
+            border: '1px solid #333',
+            background: 'transparent',
+            color: '#ccc',
+            fontWeight: 600,
+            fontSize: '13px',
+            cursor: 'pointer',
+            textAlign: 'left',
+          }}
+        >
+          Log Out
+        </button>
       </div>
     </nav>
   );
