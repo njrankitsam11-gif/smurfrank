@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export const metadata = {
   title: 'Buy Valorant Radiant & Immortal Accounts | SmurfRank',

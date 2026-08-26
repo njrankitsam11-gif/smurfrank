@@ -23,7 +23,7 @@ export const metadata = {
 import { prisma } from '../../lib/prisma';
 import HomePageClient from './page.client';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function HomePage() {
   const featuredListings = await prisma.listing.findMany({
