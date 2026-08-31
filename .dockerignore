@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+build
+coverage
+.git
+.gitignore
+.env*
+!.env.example
+dev.log
+dev_server.log
+npm-debug.log*
+.claude
+.Jules
+.DS_Store
+*.md
