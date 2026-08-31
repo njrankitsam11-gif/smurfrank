@@ -81,7 +81,7 @@ export default function Slideshow({
       ref={containerRef}
       role="region"
       aria-label={ariaLabel}
-      className={cn('relative overflow-hidden', className)}
+      className={cn('relative overflow-hidden bg-ink-950', className)}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
@@ -96,7 +96,7 @@ export default function Slideshow({
           animate={{ opacity: 0 }}
           transition={{ duration: fadeDuration, ease: EASE_OUT }}
         >
-          <Image src={previous.src} alt="" fill sizes="100vw" className="object-cover object-center" />
+          <Image src={previous.src} alt="" fill sizes="100vw" className="object-contain" />
         </motion.div>
       )}
       <motion.div
@@ -112,7 +112,7 @@ export default function Slideshow({
           fill
           sizes="100vw"
           priority={priority && currentIndex === 0}
-          className="object-cover object-center"
+          className="object-contain"
         />
       </motion.div>
 
