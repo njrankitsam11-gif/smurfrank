@@ -21,7 +21,19 @@ const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp']);
 // Source subfolders -> destination slug (must match lib/gameTheme.js slugs).
 // Folder names are matched exactly, including the trailing space on "Valorant ".
 const FOLDERS = [
-  { dir: 'CS GO 2', slug: 'cs2', exclude: new Set(['Rainbow Six Siege Spetsnaz.png']) },
+  {
+    dir: 'CS GO 2',
+    slug: 'cs2',
+    // The two "Global Offensive" files are bare logo/icon treatments (gold
+    // "CS:GO" text, a plain silhouette) rather than scene art — thin and
+    // awkward as a full-bleed hero slide, so they're excluded like the
+    // Valorant logo below.
+    exclude: new Set([
+      'Rainbow Six Siege Spetsnaz.png',
+      'Counter-Strike Global Offensive Wallpaper 3840x1600.png',
+      'Counter-Strike Global Offensive Wallpaper 3840x2160.png',
+    ]),
+  },
   { dir: 'GTA 5', slug: 'gta-v', exclude: new Set() },
   {
     dir: 'Valorant ',
