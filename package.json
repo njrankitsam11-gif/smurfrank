@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test:jest": "jest",
     "test:bun": "bun test bun.test",
-    "test": "npm run test:jest && npm run test:bun"
+    "test": "npm run test:jest && npm run test:bun",
+    "optimize-art": "node scripts/optimize-game-art.mjs"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -41,6 +42,7 @@
     "jest-environment-jsdom": "^30.3.0",
     "playwright": "^1.58.2",
     "postcss": "^8.5.8",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
   }
