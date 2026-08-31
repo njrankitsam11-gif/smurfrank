@@ -3,8 +3,10 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { GAME_LIST } from '../../lib/gameTheme';
+import { HOMEPAGE_HERO_ART } from '../../lib/gameArt';
 import { fadeInUp, staggerContainer, tileTilt, viewportOnce, heroWord } from '../../lib/motion';
 import Button from '../../components/ui/Button';
+import Slideshow from '../../components/ui/Slideshow';
 import Accordion, { AccordionItem } from '../../components/ui/Accordion';
 import TrustBar from '../../components/marketplace/TrustBar';
 import ListingGrid from '../../components/marketplace/ListingGrid';
@@ -24,27 +26,11 @@ export default function HomePage({ featuredListings = [] }) {
   return (
     <main className="min-h-screen bg-ink-950 pb-24 text-ink-50">
       {/* HERO */}
-      <section className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-28">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <motion.div
-            className="absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-gold-500/20 blur-[120px]"
-            animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute top-10 right-1/4 h-80 w-80 rounded-full bg-valorant/20 blur-[120px]"
-            animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-gtav/15 blur-[120px]"
-            animate={{ x: [0, 20, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
+      <section className="relative flex min-h-[520px] flex-col justify-center overflow-hidden px-6 pb-24 pt-20 sm:min-h-[560px] sm:pt-28 lg:min-h-[620px]">
+        <Slideshow images={HOMEPAGE_HERO_ART} priority className="absolute inset-0" ariaLabel="Featured game art" />
 
-        <div className="relative mx-auto max-w-4xl text-center">
-          <h1 className="font-display text-[13vw] font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl md:text-8xl">
+        <div className="relative z-20 mx-auto max-w-4xl text-center">
+          <h1 className="font-display text-[13vw] font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl">
             <span className="block">
               {HERO_LINE_1.map((word, i) => (
                 <motion.span key={word} custom={i} initial="hidden" animate="show" variants={heroWord} className="mr-4 inline-block">
@@ -65,7 +51,7 @@ export default function HomePage({ featuredListings = [] }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="mx-auto mt-6 max-w-xl text-sm text-ink-200 sm:text-base"
+            className="mx-auto mt-6 max-w-xl text-sm text-white/80 sm:text-base"
           >
             Verified CS2, Valorant &amp; GTA V accounts we procure and check ourselves —
             instant delivery, real money-back guarantee, no third-party sellers.
@@ -78,7 +64,7 @@ export default function HomePage({ featuredListings = [] }) {
             className="mt-9 flex flex-wrap items-center justify-center gap-4"
           >
             <Button href="/cs2" variant="primary" size="lg">Browse Accounts</Button>
-            <Button href="/boosting" variant="outline" size="lg">Get Boosted</Button>
+            <Button href="/boosting" variant="outline" size="lg" className="text-white hover:text-gold-300">Get Boosted</Button>
           </motion.div>
         </div>
       </section>
