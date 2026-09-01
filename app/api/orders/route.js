@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../lib/authOptions';
+import { sendOrderConfirmationEmail } from '../../../lib/email/orderConfirmation';
 
 export async function POST(request) {
   const session = await getServerSession(authOptions);
@@ -31,6 +32,10 @@ export async function POST(request) {
   const orders = await prisma.$transaction(
     cleanItems.map((data) => prisma.order.create({ data }))
   );
+
+  if (session?.user?.email) {
+    await sendOrderConfirmationEmail({ to: session.user.email, orders });
+  }
 
   return NextResponse.json({ orders }, { status: 201 });
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
+import { sendInquiryNotificationEmail } from '../../../lib/email/inquiryNotification';
 
 const TOPICS = ['sell', 'buy', 'boosting', 'partnership', 'other'];
 const rateLimitMap = new Map();
@@ -56,6 +57,8 @@ export async function POST(request) {
       },
     },
   });
+
+  await sendInquiryNotificationEmail({ topic, name: name.trim(), email: email.trim(), message: message.trim() });
 
   return NextResponse.json({ id: inquiry.id, token: inquiry.contactToken }, { status: 201 });
 }
