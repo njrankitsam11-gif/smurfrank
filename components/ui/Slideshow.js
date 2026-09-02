@@ -96,7 +96,7 @@ export default function Slideshow({
           animate={{ opacity: 0 }}
           transition={{ duration: fadeDuration, ease: EASE_OUT }}
         >
-          <Image src={previous.src} alt="" fill sizes="100vw" className="object-contain" />
+          <Image src={previous.src} alt="" fill sizes="100vw" className="object-cover sm:object-contain" />
         </motion.div>
       )}
       <motion.div
@@ -112,7 +112,7 @@ export default function Slideshow({
           fill
           sizes="100vw"
           priority={priority && currentIndex === 0}
-          className="object-contain"
+          className="object-cover sm:object-contain"
         />
       </motion.div>
 
