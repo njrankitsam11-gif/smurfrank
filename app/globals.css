@@ -98,6 +98,15 @@
       grid-template-columns: 1fr !important;
     }
   }
+
+  @media (max-width: 640px) {
+    .sell-form-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .sell-form-grid > * {
+      grid-column: 1 / -1 !important;
+    }
+  }
 }
 
 /* Respect reduced-motion preference, and act as a safety net so
