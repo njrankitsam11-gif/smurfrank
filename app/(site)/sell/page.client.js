@@ -63,7 +63,7 @@ export default function SellPage() {
           background: 'linear-gradient(145deg, var(--ink-700), var(--ink-900))',
           border: '1px solid #FFC531',
           borderRadius: '24px',
-          padding: '50px',
+          padding: 'clamp(20px, 6vw, 50px)',
           boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
         }}>
 
@@ -84,7 +84,7 @@ export default function SellPage() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+            <form onSubmit={handleSubmit} className="sell-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
 
               {error && (
                 <div role="alert" style={{ gridColumn: 'span 2', background: '#3a1010', border: '1px solid #a33', color: '#f88', padding: '12px 16px', borderRadius: '8px', fontSize: '13px' }}>

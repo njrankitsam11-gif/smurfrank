@@ -21,9 +21,9 @@ export default function RelatedListings({ listings, game }) {
           More {theme.label} <span style={{ color: theme.accent }}>Listings</span>
         </h2>
         {totalPages > 1 && (
-          <div className="flex items-center gap-3 text-sm text-ink-200">
+          <div className="flex items-center gap-1 text-sm text-ink-200">
             <button
-              className="focus-ring disabled:opacity-30"
+              className="focus-ring flex h-9 w-9 items-center justify-center rounded-lg hover:bg-ink-800 disabled:opacity-30"
               disabled={page === 1}
               onClick={() => setPage((p) => p - 1)}
               aria-label="Previous page"
@@ -32,7 +32,7 @@ export default function RelatedListings({ listings, game }) {
             </button>
             <span>Page {page} of {totalPages}</span>
             <button
-              className="focus-ring disabled:opacity-30"
+              className="focus-ring flex h-9 w-9 items-center justify-center rounded-lg hover:bg-ink-800 disabled:opacity-30"
               disabled={page === totalPages}
               onClick={() => setPage((p) => p + 1)}
               aria-label="Next page"
